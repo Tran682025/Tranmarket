@@ -22,3 +22,27 @@ body {
   background-image: linear-gradient(135deg, #25e8c8, #7b2bf9);
   color: #111322;
 }
+/* ===== HEADER ===== */
+.trm-header {
+  text-align: center;
+  padding: 32px 12px;
+}
+
+.trm-logo {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #d4b574; /* vàng premium */
+  margin-bottom: 4px;
+}
+
+.trm-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 6px 0;
+}
+
+.trm-tagline {
+  font-size: 1rem;
+  color: #b9b2c8;
+  margin: 4px 0 12px 0;
+}
