@@ -195,3 +195,25 @@ body {
   }
   .trm-hero-title { font-size: 1.8rem; }
 }
+/* LOGO NAVBAR */
+.trm-logo-img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 12px rgba(131, 47, 255, 0.7);
+}
+
+/* LOGO HERO */
+.trm-hero-logo-wrap {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.trm-hero-logo {
+  max-width: 230px;
+  width: 60%;
+  height: auto;
+  filter: drop-shadow(0 0 30px rgba(131, 47, 255, 0.9));
+}
