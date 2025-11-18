@@ -1,0 +1,24 @@
+/* TRM UI v1 — nền tím + nút xanh ngọc */
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: radial-gradient(circle at top, #241f3b 0, #191627 46%, #100e1d 100%);
+  color: #eaf6ff;
+}
+
+/* nút gọi chính */
+.trm-btn {
+  padding: 14px 22px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.trm-btn-primary {
+  background-image: linear-gradient(135deg, #25e8c8, #7b2bf9);
+  color: #111322;
+}
