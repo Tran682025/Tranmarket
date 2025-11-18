@@ -121,3 +121,62 @@ body {
 }
 
 /*
+/* GIỮ CÁC CLASS CŨ TRONG FILE CSS — CHỈ BỔ SUNG PHẦN DƯỚI */
+.trm-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(14px);
+  background: rgba(7, 3, 28, 0.92);
+  border-bottom: 1px solid rgba(123, 43, 249, 0.55);
+}
+.trm-navbar-left { display: flex; align-items: center; gap: 10px; }
+.trm-logo-dot { width: 20px; height: 20px; border-radius: 50%; background: radial-gradient(circle,#31d7ff,#7b2bf9); box-shadow: 0 0 12px #7b2bf9; }
+.trm-navbar-title { font-size: .95rem; font-weight: 700; color: #fff; display: flex; flex-direction: column; }
+.trm-navbar-sub { font-size: .7rem; color: #b6b0ff; }
+
+/* HERO */
+.trm-hero { padding: 18px 16px; }
+.trm-hero-title { font-size: 1.4rem; color: #fff; }
+.trm-hero-title span { color: #31d7ff; }
+.trm-hero-subtitle { font-size: .9rem; color: #c8c1ff; }
+
+/* SEARCH */
+.trm-search-section { padding: 10px 16px; }
+.trm-search-bar { display: flex; gap: 8px; align-items: center; border: 1px solid rgba(123,43,249,.7); border-radius: 20px; padding: 6px 8px; }
+.trm-search-input { flex: 1; background: none; border: none; outline: none; color: #fff; font-size: .85rem; }
+.trm-search-btn { padding: 6px 14px; border-radius: 999px; border: 1px solid #31d7ff; color: #fff; background: rgba(49,215,255,.16); }
+
+/* FILTER */
+.trm-filter-row { margin-top: 10px; display: flex; gap: 8px; overflow-x: auto; }
+.trm-filter-chip { padding: 5px 10px; border: 1px solid #7b2bf9; border-radius: 20px; background: #0b0620; color: #c8c1ff; font-size: .78rem; }
+.trm-filter-chip-active { border-color: #31d7ff; background: rgba(49,215,255,.16); color: #fff; }
+
+/* SECTION */
+.trm-section { padding: 18px 16px 10px; }
+.trm-section-title { color: #fff; font-size: 1.05rem; margin: 0 0 6px; }
+.trm-section-sub { font-size: .78rem; color: #9adfff; margin-left: 4px; }
+.trm-section-desc { font-size: .86rem; color: #c7c1ff; margin-bottom: 10px; }
+
+/* GRID */
+.trm-services-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+
+/* CTA IN CARD */
+.trm-card-cta { margin-top: 10px; width: 100%; padding: 7px; border: 1px dashed #7b2bf9; border-radius: 20px; background: #0b0620; color: #a9a2ff; }
+
+/* REGISTER */
+.trm-primary-btn { display: inline-flex; justify-content: center; align-items: center; padding: 8px 18px; border: 1px solid #31d7ff; border-radius: 30px; color: #fff; background: rgba(49,215,255,.16); text-decoration: none; }
+
+/* FOOTER */
+.trm-footer { text-align: center; color: #8e88d2; font-size: .75rem; padding: 20px 0; }
+
+/* DESKTOP */
+@media (min-width: 768px) {
+  .trm-services-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .trm-hero { padding: 30px 7vw; }
+  .trm-section { padding-inline: 7vw; }
+}
