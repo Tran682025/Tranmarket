@@ -1,245 +1,238 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Tranmarket</title>
-  <link rel="stylesheet" href="trm-ui.css">
-</head>
-<body>
-<div class="trm-header">
-  <div class="trm-logo">TRM</div>
-  <div class="trm-title">Tranmarket</div>
-  <div class="trm-tagline">
-    Dịch vụ người Việt tại Séc & EU
-    <div class="trm-tagline-en">(Services for Vietnamese in EU & Czechia)</div>
-  </div>
-</div>
+/* DAY 2 – UX TRANG CHỦ – BỔ SUNG CHO CSS NEON TÍM XANH */
+/* GIỮ NGUYÊN BODY, .trm-navbar, .trm-service-card… NHƯ ĐÃ CÓ, CHỈ THÊM PHẦN DƯỚI NÀY */
 
- <h2 class="trm-section-title">
-  Danh mục dịch vụ Tranmarket
-  <span style="font-size:0.8em; font-weight:500; color:#9adfff;">
-    (Services of Tranmarket)
-  </span>
-</h2>
+/* NAVBAR BỔ SUNG CHI TIẾT */
+.trm-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(14px);
+  background: linear-gradient(
+    90deg,
+    rgba(5, 4, 21, 0.94),
+    rgba(7, 3, 28, 0.92)
+  );
+  border-bottom: 1px solid rgba(123, 43, 249, 0.55);
+}
 
-<p style="margin-top:6px; color:#c7c1ff; font-size:0.9rem; letter-spacing:0.01em;">
-  Trung tâm kết nối dịch vụ cho cộng đồng người Việt tại Séc &amp; EU — uy tín, minh bạch, hỗ trợ song ngữ.
-</p>
-  
-  <div class="trm-services-grid">
+.trm-navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-    <!-- 1. GỬI HÀNG EU ↔ VIỆT NAM -->
-    <div class="trm-service-card">
-      <div class="trm-service-title">Gửi hàng EU ↔ Việt Nam</div>
-      <div class="trm-service-title-sub">
-        EU–Vietnam Shipping · Doručení EU–Vietnam
-      </div>
-      <div class="trm-service-desc">
-        Nhận gửi hàng hai chiều EU – Việt Nam, tư vấn tuyến đường, thời gian và chi phí rõ ràng.
-      </div>
-      <div class="trm-service-desc-sub">
-        Support: boxes, quà tặng, hồ sơ, hành lý… / Balíky, dárky, dokumenty, zavazadla.
-      </div>
-      <span class="trm-service-badge">Logistics</span>
-    </div>
+.trm-logo-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 20%, #31d7ff, #7b2bf9);
+  box-shadow: 0 0 18px rgba(123, 43, 249, 0.9);
+}
 
-    <!-- 2. CHUYỂN TIỀN – MUA HỘ – THU HỘ – GỬI QUÀ -->
-    <div class="trm-service-card">
-      <div class="trm-service-title">Chuyển tiền – mua hộ – thu hộ – gửi quà</div>
-      <div class="trm-service-title-sub">
-        Money transfer & proxy purchase · Převod peněz & nákup na pomoc
-      </div>
-      <div class="trm-service-desc">
-        Hỗ trợ tìm kênh chuyển tiền, nhờ mua hộ, thu hộ / trả hộ chi phí trong EU và về Việt Nam.
-      </div>
-      <div class="trm-service-desc-sub">
-        Không tư vấn đầu tư tài chính, chỉ tập trung kênh an toàn & minh bạch.
-      </div>
-      <span class="trm-service-badge">Payment help</span>
-    </div>
+.trm-navbar-title {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f8f3ff;
+}
 
-    <!-- 3. DỊCH GIẤY TỜ – PHIÊN DỊCH – HÀNH CHÍNH -->
-    <div class="trm-service-card">
-      <div class="trm-service-title">Dịch giấy tờ – phiên dịch – hỗ trợ hành chính</div>
-      <div class="trm-service-title-sub">
-        Document translation & interpreting · Překlad dokumentů & tlumočení
-      </div>
-      <div class="trm-service-desc">
-        Dịch hợp đồng, thư từ, giấy tờ cư trú, hỗ trợ đi cơ quan, bệnh viện, trường học.
-      </div>
-      <div class="trm-service-desc-sub">
-        Tiếng Việt – Séc – Anh / Viet – Czech – English.
-      </div>
-      <span class="trm-service-badge">Translation</span>
-    </div>
+.trm-navbar-sub {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: #b6b0ff;
+  text-transform: none;
+}
 
-    <!-- 4. SỬA CHỮA – BẢO TRÌ NHÀ CỬA -->
-    <div class="trm-service-card">
-      <div class="trm-service-title">Sửa chữa – bảo trì – điện – nước – boiler – xây dựng</div>
-      <div class="trm-service-title-sub">
-        Home repair & maintenance · Opravy a údržba domu
-      </div>
-      <div class="trm-service-desc">
-        Kết nối thợ tin cậy: điện nước, heating/boiler, lợp mái, sơn sửa, cải tạo nhà cửa.
-      </div>
-      <div class="trm-service-desc-sub">
-        Hỗ trợ mô tả hỏng hóc bằng tiếng Séc cho thợ bản địa nếu cần.
-      </div>
-      <span class="trm-service-badge">Home service</span>
-    </div>
+/* HERO */
+.trm-hero {
+  padding: 18px 16px 8px 16px;
+}
 
-    <!-- 5. XE & GARAGE – BẢO HIỂM – CỨU HỘ -->
-    <div class="trm-service-card">
-      <div class="trm-service-title">Xe & Garage – bảo hiểm – đăng kiểm – cứu hộ</div>
-      <div class="trm-service-title-sub">
-        Car & garage services · Autoservis & pojištění
-      </div>
-      <div class="trm-service-desc">
-        Garage, sửa xe, thay lốp, đăng kiểm, tư vấn bảo hiểm, hỗ trợ liên hệ cứu hộ khi sự cố.
-      </div>
-      <div class="trm-service-desc-sub">
-        Pomoc s komunikací v češtině, vysvětlení podmínek smluv.
-      </div>
-      <span class="trm-service-badge">Auto service</span>
-    </div>
+.trm-hero-title {
+  font-size: 1.4rem;
+  line-height: 1.25;
+  color: #ffffff;
+  margin: 0 0 8px 0;
+}
 
-    <!-- 6. NAIL – SPA – LÀM ĐẸP -->
-    <div class="trm-service-card">
-      <div class="trm-service-title">Nail – Spa – Làm đẹp – Cắt tóc – Makeup</div>
-      <div class="trm-service-title-sub">
-        Beauty, hair & spa · Krása, vlasy & spa
-      </div>
-      <div class="trm-service-desc">
-        Đặt lịch làm đẹp, salon tóc, nail, spa, makeup cô dâu, chụp hình kỷ niệm.
-      </div>
-      <div class="trm-service-desc-sub">
-        Hỗ trợ review và gợi ý địa chỉ uy tín cho cộng đồng người Việt.
-      </div>
-      <span class="trm-service-badge">Beauty</span>
-    </div>
+.trm-hero-title span {
+  color: #31d7ff;
+}
 
-    <!-- 7. GIA SƯ – DẠY TIẾNG – LUYỆN THI -->
-    <div class="trm-service-card">
-      <div class="trm-service-title">Gia sư – dạy tiếng – luyện thi – kèm trẻ</div>
-      <div class="trm-service-title-sub">
-        Tutoring & language lessons · Doučování & jazykové kurzy
-      </div>
-      <div class="trm-service-desc">
-        Kết nối gia sư cho trẻ em và người lớn: tiếng Séc, Anh, Đức, Toán – Lý – Hóa – Tin.
-      </div>
-      <div class="trm-service-desc-sub">
-        Online hoặc offline tùy khu vực và thỏa thuận.
-      </div>
-      <span class="trm-service-badge">Education</span>
-    </div>
+.trm-hero-subtitle {
+  font-size: 0.9rem;
+  color: #c8c1ff;
+  margin: 0;
+}
 
-    <!-- 8. Y TẾ – TƯ VẤN SỨC KHỎE – TRỊ LIỆU -->
-    <div class="trm-service-card">
-      <div class="trm-service-title">Y tế – tư vấn sức khỏe – vật lý trị liệu – massage</div>
-      <div class="trm-service-title-sub">
-        Health & therapy support · Zdravotní a terapeutická podpora
-      </div>
-      <div class="trm-service-desc">
-        Hỗ trợ tìm bác sĩ, phòng khám, vật lý trị liệu, massage trị liệu, chăm sóc lâu dài.
-      </div>
-      <div class="trm-service-desc-sub">
-        Không thay thế lời khuyên y khoa; chỉ hỗ trợ kết nối và giải thích thông tin.
-      </div>
-      <span class="trm-service-badge">Health</span>
-    </div>
+/* SEARCH SECTION */
+.trm-search-section {
+  padding: 8px 16px 4px 16px;
+}
 
-    <!-- 9. ĐẶC SẢN VIỆT – ĐỒ QUÊ – THỰC PHẨM -->
-    <div class="trm-service-card">
-      <div class="trm-service-title">Đặc sản Việt – đồ quê – thực phẩm vùng miền</div>
-      <div class="trm-service-title-sub">
-        Vietnamese specialties & foods · Vietnamské speciality & potraviny
-      </div>
-      <div class="trm-service-desc">
-        Kết nối người bán đặc sản quê, thực phẩm vùng miền, đồ khô – đồ tươi an toàn.
-      </div>
-      <div class="trm-service-desc-sub">
-        Hỗ trợ tìm nguồn rõ ràng, ưu tiên chuẩn sạch & minh bạch.
-      </div>
-      <span class="trm-service-badge">Food & goods</span>
-    </div>
+.trm-search-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: rgba(9, 6, 36, 0.95);
+  border-radius: 999px;
+  padding: 6px 8px;
+  border: 1px solid rgba(123, 43, 249, 0.7);
+}
 
-    <!-- 10. NHÀ HÀNG – SHIP ĐỒ ĂN VIỆT -->
-    <div class="trm-service-card">
-      <div class="trm-service-title">Nhà hàng – đặt món – ship đồ ăn Việt</div>
-      <div class="trm-service-title-sub">
-        Vietnamese restaurants & delivery · Vietnamské restaurace & dovoz jídla
-      </div>
-      <div class="trm-service-desc">
-        Gợi ý quán ăn Việt, đặt món, ship đồ ăn đến nhà, liên hoan, sinh nhật, sự kiện.
-      </div>
-      <div class="trm-service-desc-sub">
-        Hỗ trợ menu song ngữ Việt – Séc nếu cần.
-      </div>
-      <span class="trm-service-badge">Food service</span>
-    </div>
+.trm-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f5f5ff;
+  font-size: 0.85rem;
+}
 
-    <!-- 11. THUÊ NGƯỜI SỬA – GIÚP VIỆC – TRÔNG TRẺ -->
-    <div class="trm-service-card">
-      <div class="trm-service-title">Thuê người sửa – thuê người làm – giúp việc – trông trẻ</div>
-      <div class="trm-service-title-sub">
-        Helpers, handymen & babysitting · Výpomoc v domácnosti & hlídání dětí
-      </div>
-      <div class="trm-service-desc">
-        Kết nối người hỗ trợ dọn dẹp, trông trẻ, chuyển đồ, lặt vặt trong nhà theo giờ.
-      </div>
-      <div class="trm-service-desc-sub">
-        Ưu tiên người có giới thiệu rõ ràng, tránh rủi ro cho gia đình.
-      </div>
-      <span class="trm-service-badge">Home help</span>
-    </div>
+.trm-search-input::placeholder {
+  color: #8c85d5;
+}
 
-    <!-- 12. TƯ VẤN PHÁP LÝ – LUẬT – HỢP ĐỒNG -->
-    <div class="trm-service-card">
-      <div class="trm-service-title">Tư vấn pháp lý – luật – hợp đồng – ly hôn – doanh nghiệp</div>
-      <div class="trm-service-title-sub">
-        Legal & contract consulting · Právní poradenství & smlouvy
-      </div>
-      <div class="trm-service-desc">
-        Hỗ trợ tìm luật sư, giải thích cơ bản điều khoản hợp đồng, chuẩn bị câu hỏi làm việc với luật sư.
-      </div>
-      <div class="trm-service-desc-sub">
-        Không thay thế dịch vụ pháp lý chuyên nghiệp; chỉ định hướng & chuẩn bị thông tin.
-      </div>
-      <span class="trm-service-badge">Legal</span>
-    </div>
+.trm-search-btn {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(49, 215, 255, 0.9);
+  background: radial-gradient(circle at 0% 0%, rgba(49, 215, 255, 0.3), transparent 60%);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #f5fbff;
+  cursor: pointer;
+}
 
-    <!-- 13. SƯU TẦM – ĐỒ GỖ – PHONG THỦY – NGHỆ THUẬT -->
-    <div class="trm-service-card">
-      <div class="trm-service-title">Sưu tầm – đồ gỗ – phong thủy – đồ nghệ thuật</div>
-      <div class="trm-service-title-sub">
-        Collectibles, feng shui & art · Sběratelské, feng shui & umění
-      </div>
-      <div class="trm-service-desc">
-        Kết nối người sưu tầm, thợ gỗ, tranh – tượng, vật phẩm phong thủy, đồ trang trí đặc biệt.
-      </div>
-      <div class="trm-service-desc-sub">
-        Hỗ trợ trao đổi kinh nghiệm, tránh mua nhầm hàng kém chất lượng.
-      </div>
-      <span class="trm-service-badge">Lifestyle</span>
-    </div>
+.trm-search-btn:active {
+  transform: translateY(1px);
+}
 
-    <!-- 14. DỊCH VỤ KHÁC -->
-    <div class="trm-service-card">
-      <div class="trm-service-title">Dịch vụ khác</div>
-      <div class="trm-service-title-sub">
-        Other services · Ostatní služby
-      </div>
-      <div class="trm-service-desc">
-        Những nhu cầu đặc biệt chưa nằm trong các danh mục trên: tổ chức sự kiện, media, IT, thiết kế…
-      </div>
-      <div class="trm-service-desc-sub">
-        Mô tả cụ thể nhu cầu của bạn để Tranmarket gợi ý hướng kết nối phù hợp.
-      </div>
-      <span class="trm-service-badge">Others</span>
-    </div>
+/* FILTER CHIPS */
+.trm-filter-row {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
 
-  </div>
-</section>
-</body>
-</html>
-V2
+.trm-filter-row::-webkit-scrollbar {
+  height: 0;
+}
+
+.trm-filter-chip {
+  flex: 0 0 auto;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  border: 1px solid rgba(123, 43, 249, 0.8);
+  background: rgba(12, 8, 40, 0.98);
+  color: #d7d1ff;
+  cursor: pointer;
+}
+
+.trm-filter-chip-active {
+  border-color: rgba(49, 215, 255, 0.95);
+  background: rgba(49, 215, 255, 0.16);
+  color: #f5fbff;
+}
+
+/* SECTION TITLE + DESC */
+.trm-section {
+  padding: 18px 16px 10px 16px;
+}
+
+.trm-section-title {
+  font-size: 1.05rem;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+}
+
+.trm-section-sub {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #9adfff;
+  margin-left: 4px;
+}
+
+.trm-section-desc {
+  font-size: 0.86rem;
+  color: #c7c1ff;
+  margin: 0 0 10px 0;
+}
+
+/* GRID DỊCH VỤ: MOBILE FIRST */
+.trm-services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+/* CTA TRONG CARD (CHƯA HOẠT ĐỘNG – PLACEHOLDER PHASE 1) */
+.trm-card-cta {
+  margin-top: 10px;
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px dashed rgba(123, 43, 249, 0.6);
+  background: rgba(7, 4, 30, 0.9);
+  color: #a9a2ff;
+  font-size: 0.8rem;
+}
+
+/* SECTION ĐĂNG KÝ DỊCH VỤ */
+.trm-section-register {
+  margin-top: 4px;
+}
+
+.trm-primary-btn {
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(49, 215, 255, 0.95);
+  background: radial-gradient(circle at 0% 0%, rgba(49, 215, 255, 0.28), transparent 60%);
+  color: #f4fbff;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* FOOTER */
+.trm-footer {
+  padding: 12px 16px 18px 16px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #948dce;
+}
+
+/* RESPONSIVE DESKTOP */
+@media (min-width: 768px) {
+  .trm-hero {
+    padding: 24px 7vw 12px 7vw;
+  }
+
+  .trm-search-section,
+  .trm-section,
+  .trm-footer {
+    padding-inline: 7vw;
+  }
+
+  .trm-services-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+
+  .trm-hero-title {
+    font-size: 1.8rem;
+  }
+}
