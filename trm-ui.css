@@ -54,7 +54,7 @@ body {
   font-weight: 500;
 }
 .trm-services {
-  max-width: 960px;
+  max-width: 1100px;
   margin: 40px auto 80px;
   padding: 0 16px;
 }
@@ -62,40 +62,62 @@ body {
 .trm-section-title {
   font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .trm-services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 18px;
 }
 
 .trm-service-card {
-  background: rgba(10, 8, 26, 0.72);
-  border-radius: 16px;
-  padding: 16px 14px;
-  border: 1px solid rgba(144, 128, 255, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  background: rgba(7, 4, 28, 0.9);
+  border-radius: 18px;
+  padding: 14px 14px 16px;
+  border: 1px solid #7b2bf9; /* viền tím đậm hơn nền */
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
 }
 
 .trm-service-title {
   font-size: 1.05rem;
   font-weight: 650;
+  margin-bottom: 4px;
+}
+
+.trm-service-title-sub {
+  font-size: 0.85rem;
+  color: #d8cffc;
   margin-bottom: 6px;
 }
 
 .trm-service-desc {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   color: #c9c2dd;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+}
+
+.trm-service-desc-sub {
+  font-size: 0.8rem;
+  color: #a5a0c7;
 }
 
 .trm-service-badge {
   display: inline-block;
-  font-size: 0.8rem;
+  margin-top: 8px;
+  font-size: 0.78rem;
   padding: 4px 10px;
   border-radius: 999px;
-  background: rgba(37, 232, 200, 0.12);
+  background: rgba(123, 43, 249, 0.16);
   color: #25e8c8;
+  border: 1px solid rgba(123, 43, 249, 0.7);
 }
+
+/* RESPONSIVE NHẸ */
+@media (max-width: 600px) {
+  .trm-services {
+    margin-top: 28px;
+  }
+}
+
+/*
