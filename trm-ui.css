@@ -1,182 +1,198 @@
-/* TRM UI v1 — nền tím + nút xanh ngọc */
+/* GLOBAL */
+* { box-sizing: border-box; }
+
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
-  background: radial-gradient(circle at top, #241f3b 0, #191627 46%, #100e1d 100%);
-  color: #eaf6ff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #170a3b, #050318 60%);
+  color: #ffffff;
 }
 
-/* nút gọi chính */
-.trm-btn {
-  padding: 14px 22px;
-  font-size: 1.15rem;
-  font-weight: 600;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  display: inline-block;
-  margin-top: 20px;
-}
-
-.trm-btn-primary {
-  background-image: linear-gradient(135deg, #25e8c8, #7b2bf9);
-  color: #111322;
-}
-/* ===== HEADER ===== */
-.trm-header {
-  text-align: center;
-  padding: 32px 12px;
-}
-
-.trm-logo {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #d4b574; /* vàng premium */
-  margin-bottom: 4px;
-}
-
-.trm-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin: 6px 0;
-}
-
-.trm-tagline {
-  font-size: 1rem;
-  color: #b9b2c8;
-  margin: 4px 0 12px 0;
-}
-.trm-tagline-en {
-  font-size: 0.95rem;
-  color: #d2c9ff; /* tím nhạt tinh tế */
-  margin-top: 2px;
-  opacity: 0.9;
-  font-weight: 500;
-}
-.trm-services {
-  max-width: 1100px;
-  margin: 40px auto 80px;
-  padding: 0 16px;
-}
-
-.trm-section-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 18px;
-}
-
-.trm-services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 18px;
-}
-
-.trm-service-card {
-  background: rgba(7, 4, 28, 0.9);
-  border-radius: 18px;
-  padding: 14px 14px 16px;
-  border: 1px solid #7b2bf9; /* viền tím đậm hơn nền */
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
-}
-
-.trm-service-title {
-  font-size: 1.05rem;
-  font-weight: 650;
-  margin-bottom: 4px;
-}
-
-.trm-service-title-sub {
-  font-size: 0.85rem;
-  color: #d8cffc;
-  margin-bottom: 6px;
-}
-
-.trm-service-desc {
-  font-size: 0.92rem;
-  color: #c9c2dd;
-  margin-bottom: 8px;
-}
-
-.trm-service-desc-sub {
-  font-size: 0.8rem;
-  color: #a5a0c7;
-}
-
-.trm-service-badge {
-  display: inline-block;
-  margin-top: 8px;
-  font-size: 0.78rem;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(123, 43, 249, 0.16);
-  color: #25e8c8;
-  border: 1px solid rgba(123, 43, 249, 0.7);
-}
-
-/* RESPONSIVE NHẸ */
-@media (max-width: 600px) {
-  .trm-services {
-    margin-top: 28px;
-  }
-}
-
-/*
-/* GIỮ CÁC CLASS CŨ TRONG FILE CSS — CHỈ BỔ SUNG PHẦN DƯỚI */
+/* NAVBAR */
 .trm-navbar {
   position: sticky;
   top: 0;
   z-index: 50;
   padding: 10px 16px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   backdrop-filter: blur(14px);
-  background: rgba(7, 3, 28, 0.92);
-  border-bottom: 1px solid rgba(123, 43, 249, 0.55);
+  background: rgba(6, 3, 24, 0.92);
+  border-bottom: 1px solid rgba(123, 43, 249, 0.6);
 }
 .trm-navbar-left { display: flex; align-items: center; gap: 10px; }
-.trm-logo-dot { width: 20px; height: 20px; border-radius: 50%; background: radial-gradient(circle,#31d7ff,#7b2bf9); box-shadow: 0 0 12px #7b2bf9; }
-.trm-navbar-title { font-size: .95rem; font-weight: 700; color: #fff; display: flex; flex-direction: column; }
-.trm-navbar-sub { font-size: .7rem; color: #b6b0ff; }
+.trm-logo-dot {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: radial-gradient(circle at 30% 20%, #31d7ff, #7b2bf9);
+  box-shadow: 0 0 14px rgba(123, 43, 249, 0.9);
+}
+.trm-navbar-title {
+  display: flex; flex-direction: column;
+  font-size: 0.95rem; font-weight: 700; color: #f8f3ff;
+}
+.trm-navbar-sub {
+  font-size: 0.7rem; font-weight: 400; color: #b6b0ff;
+}
 
 /* HERO */
-.trm-hero { padding: 18px 16px; }
-.trm-hero-title { font-size: 1.4rem; color: #fff; }
+.trm-hero { padding: 20px 16px 8px; }
+.trm-hero-title {
+  font-size: 1.4rem; line-height: 1.25; margin: 0 0 8px; color: #ffffff;
+}
 .trm-hero-title span { color: #31d7ff; }
-.trm-hero-subtitle { font-size: .9rem; color: #c8c1ff; }
+.trm-hero-subtitle { margin: 0; font-size: 0.9rem; color: #c8c1ff; }
 
 /* SEARCH */
-.trm-search-section { padding: 10px 16px; }
-.trm-search-bar { display: flex; gap: 8px; align-items: center; border: 1px solid rgba(123,43,249,.7); border-radius: 20px; padding: 6px 8px; }
-.trm-search-input { flex: 1; background: none; border: none; outline: none; color: #fff; font-size: .85rem; }
-.trm-search-btn { padding: 6px 14px; border-radius: 999px; border: 1px solid #31d7ff; color: #fff; background: rgba(49,215,255,.16); }
+.trm-search-section { padding: 8px 16px 4px; }
+.trm-search-bar {
+  display: flex; gap: 8px; align-items: center;
+  background: rgba(9, 6, 36, 0.95);
+  border-radius: 999px;
+  padding: 6px 8px;
+  border: 1px solid rgba(123, 43, 249, 0.8);
+}
+.trm-search-input {
+  flex: 1; background: transparent; border: none; outline: none;
+  color: #f5f5ff; font-size: 0.85rem;
+}
+.trm-search-input::placeholder { color: #8c85d5; }
+.trm-search-btn {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(49, 215, 255, 0.9);
+  background: radial-gradient(circle at 0% 0%, rgba(49, 215, 255, 0.3), transparent 60%);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #f5fbff;
+  cursor: pointer;
+}
 
 /* FILTER */
-.trm-filter-row { margin-top: 10px; display: flex; gap: 8px; overflow-x: auto; }
-.trm-filter-chip { padding: 5px 10px; border: 1px solid #7b2bf9; border-radius: 20px; background: #0b0620; color: #c8c1ff; font-size: .78rem; }
-.trm-filter-chip-active { border-color: #31d7ff; background: rgba(49,215,255,.16); color: #fff; }
+.trm-filter-row {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.trm-filter-row::-webkit-scrollbar { height: 0; }
+.trm-filter-chip {
+  flex: 0 0 auto;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  border: 1px solid rgba(123, 43, 249, 0.8);
+  background: rgba(12, 8, 40, 0.98);
+  color: #d7d1ff;
+}
+.trm-filter-chip-active {
+  border-color: rgba(49, 215, 255, 0.95);
+  background: rgba(49, 215, 255, 0.16);
+  color: #f5fbff;
+}
 
 /* SECTION */
 .trm-section { padding: 18px 16px 10px; }
-.trm-section-title { color: #fff; font-size: 1.05rem; margin: 0 0 6px; }
-.trm-section-sub { font-size: .78rem; color: #9adfff; margin-left: 4px; }
-.trm-section-desc { font-size: .86rem; color: #c7c1ff; margin-bottom: 10px; }
+.trm-section-title {
+  font-size: 1.05rem; margin: 0 0 6px; color: #ffffff;
+}
+.trm-section-sub {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #9adfff;
+  margin-left: 4px;
+}
+.trm-section-desc {
+  font-size: 0.86rem;
+  color: #c7c1ff;
+  margin: 0 0 10px;
+}
 
-/* GRID */
-.trm-services-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+/* GRID DỊCH VỤ */
+.trm-services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.trm-service-card {
+  background: rgba(8, 2, 30, 0.95);
+  border-radius: 16px;
+  padding: 14px 14px 12px;
+  border: 1px solid rgba(123, 43, 249, 0.7);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+.trm-service-title {
+  font-size: 1.0rem;
+  font-weight: 650;
+  margin-bottom: 4px;
+}
+.trm-service-title-sub {
+  font-size: 0.8rem;
+  color: #b6d7ff;
+  margin-bottom: 6px;
+}
+.trm-service-desc {
+  font-size: 0.82rem;
+  color: #e0dcff;
+  margin-bottom: 8px;
+}
+.trm-service-badge {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.75rem;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(49, 215, 255, 0.14);
+  color: #25c4ff;
+  border: 1px solid rgba(49, 215, 255, 0.7);
+}
 
-/* CTA IN CARD */
-.trm-card-cta { margin-top: 10px; width: 100%; padding: 7px; border: 1px dashed #7b2bf9; border-radius: 20px; background: #0b0620; color: #a9a2ff; }
+/* CTA TRONG CARD */
+.trm-card-cta {
+  margin-top: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px dashed rgba(123, 43, 249, 0.7);
+  background: rgba(7, 4, 30, 0.9);
+  color: #aaa4ff;
+  font-size: 0.8rem;
+}
 
-/* REGISTER */
-.trm-primary-btn { display: inline-flex; justify-content: center; align-items: center; padding: 8px 18px; border: 1px solid #31d7ff; border-radius: 30px; color: #fff; background: rgba(49,215,255,.16); text-decoration: none; }
+/* ĐĂNG KÝ DỊCH VỤ */
+.trm-section-register { margin-top: 4px; }
+.trm-primary-btn {
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(49, 215, 255, 0.95);
+  background: radial-gradient(circle at 0% 0%, rgba(49, 215, 255, 0.28), transparent 60%);
+  color: #f4fbff;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+}
 
 /* FOOTER */
-.trm-footer { text-align: center; color: #8e88d2; font-size: .75rem; padding: 20px 0; }
+.trm-footer {
+  padding: 16px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #948dce;
+}
 
 /* DESKTOP */
 @media (min-width: 768px) {
-  .trm-services-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-  .trm-hero { padding: 30px 7vw; }
-  .trm-section { padding-inline: 7vw; }
+  .trm-hero { padding: 26px 7vw 12px; }
+  .trm-search-section,
+  .trm-section,
+  .trm-footer { padding-inline: 7vw; }
+  .trm-services-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .trm-hero-title { font-size: 1.8rem; }
 }
