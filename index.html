@@ -7,20 +7,23 @@
   <link rel="stylesheet" href="trm-ui.css" />
 </head>
 <body>
+  <!-- NAVBAR -->
   <header class="trm-navbar">
     <div class="trm-navbar-left">
       <img src="trm-logo-nav.png" alt="Tranmarket Logo" class="trm-logo-img" />
       <div class="trm-navbar-title">
-        <div>Tranmarket</div>
+        <span>Tranmarket</span>
         <span class="trm-navbar-sub">Vietnamese Services · EU &amp; VN</span>
       </div>
     </div>
   </header>
 
+  <!-- HERO -->
   <section class="trm-hero">
     <div class="trm-hero-logo-wrap">
       <img src="trm-logo-hero.png" alt="Tranmarket TRM Pi coin" class="trm-hero-logo" />
     </div>
+
     <h1 class="trm-hero-title">
       Tìm dịch vụ người Việt <span>uy tín</span> tại Séc, EU &amp; Việt Nam
     </h1>
@@ -29,212 +32,226 @@
     </p>
   </section>
 
+  <!-- SEARCH + FILTER -->
   <section class="trm-search-section">
     <div class="trm-search-bar">
       <input
         type="text"
         class="trm-search-input"
-        placeholder="Tìm dịch vụ, từ khóa, thành phố… (ví dụ: nail Praha, gửi hàng Brno)…">
+        placeholder="Tìm dịch vụ, từ khóa, thành phố… (ví dụ: nail Praha, gửi hàng Brno)…"
+      />
       <button class="trm-search-btn">Tìm</button>
     </div>
 
     <div class="trm-filter-row">
       <button class="trm-filter-chip trm-filter-chip-active">Tất cả dịch vụ</button>
-      <button class="trm-filter-chip">Séc</button>
-      <button class="trm-filter-chip">EU khác</button>
+      <button class="trm-filter-chip">Séc/EU</button>
       <button class="trm-filter-chip">Việt Nam</button>
-      <button class="trm-filter-chip">Gần tôi</button>
+      <button class="trm-filter-chip">Online</button>
     </div>
   </section>
 
+  <!-- SERVICE CARDS -->
   <section class="trm-section">
-    <h2 class="trm-section-title">
-      Danh mục dịch vụ Tranmarket
-      <span class="trm-section-sub">(Services of Tranmarket)</span>
-    </h2>
+    <h2 class="trm-section-title">Danh mục dịch vụ Tranmarket</h2>
+    <p class="trm-section-sub">(Services of Tranmarket)</p>
     <p class="trm-section-desc">
-      Đánh giá &amp; xếp hạng dịch vụ người Việt — minh bạch, trách nhiệm, không trung gian giao dịch.
+      Đánh giá &amp; xếp hạng dịch vụ người Việt – minh bạch, trách nhiệm, không trung gian giao dịch.
     </p>
 
     <div class="trm-services-grid">
-
-      <div class="trm-service-card">
-        <div class="trm-service-title">Gửi hàng EU ↔ Việt Nam</div>
-        <div class="trm-service-title-sub">EU–Vietnam shipping</div>
-        <div class="trm-service-desc">
-          Đánh giá các dịch vụ gửi hàng từ EU về Việt Nam và ngược lại — uy tín &amp; minh bạch chi phí.
-        </div>
+      <!-- 1 Gửi hàng EU ↔ Việt Nam -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Gửi hàng EU ↔ Việt Nam</h3>
+        <p class="trm-service-title-sub">EU–Vietnam shipping</p>
+        <p class="trm-service-desc">
+          Đánh giá các dịch vụ gửi hàng từ EU về Việt Nam và ngược lại – uy tín &amp; minh bạch chi phí.
+        </p>
         <span class="trm-service-badge">Logistics</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
 
-      <div class="trm-service-card">
-        <div class="trm-service-title">Chuyển tiền – mua hộ – thu hộ – gửi quà</div>
-        <div class="trm-service-title-sub">Money transfer &amp; proxy purchase</div>
-        <div class="trm-service-desc">
-          Đánh giá các đơn vị hỗ trợ chuyển tiền, mua hộ – thu hộ — phí dịch vụ rõ ràng, đúng hẹn.
-        </div>
+      <!-- 2 Chuyển tiền – mua hộ – thu hộ – gửi quà -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Chuyển tiền – mua hộ – thu hộ – gửi quà</h3>
+        <p class="trm-service-title-sub">Money transfer &amp; proxy purchase</p>
+        <p class="trm-service-desc">
+          Đánh giá các đơn vị chuyển tiền, mua hộ, thu hộ &amp; gửi quà cho gia đình, người thân ở VN / EU.
+        </p>
         <span class="trm-service-badge">Payment help</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
 
-      <div class="trm-service-card">
-        <div class="trm-service-title">Dịch giấy tờ – phiên dịch – hỗ trợ hành chính</div>
-        <div class="trm-service-title-sub">Document translation &amp; admin help</div>
-        <div class="trm-service-desc">
-          Đánh giá dịch vụ dịch thuật, công chứng, hồ sơ hành chính tại EU &amp; Việt Nam.
-        </div>
+      <!-- 3 Dịch giấy tờ – phiên dịch – hỗ trợ hành chính -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Dịch giấy tờ – phiên dịch – hỗ trợ hành chính</h3>
+        <p class="trm-service-title-sub">Translation &amp; admin support</p>
+        <p class="trm-service-desc">
+          Dịch thuật, công chứng giấy tờ, hỗ trợ giấy tờ cư trú, bảo hiểm, thuế, khai sinh… cho người Việt.
+        </p>
         <span class="trm-service-badge">Translation</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
 
-      <div class="trm-service-card">
-        <div class="trm-service-title">Sửa chữa – bảo trì – điện – nước – boiler – xây dựng</div>
-        <div class="trm-service-title-sub">Repair &amp; construction</div>
-        <div class="trm-service-desc">
-          Đánh giá thợ sửa chữa – điện – boiler – nước – xây dựng — chất lượng &amp; đúng hẹn.
-        </div>
+      <!-- 4 Sửa chữa – bảo trì – điện – nước – boiler – xây dựng -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Sửa chữa – bảo trì – điện – nước – boiler – xây dựng</h3>
+        <p class="trm-service-title-sub">Repair &amp; construction</p>
+        <p class="trm-service-desc">
+          Đánh giá thợ sửa chữa – boiler – nhà – điện – nước – xây dựng cho gia đình &amp; công ty.
+        </p>
         <span class="trm-service-badge">Home service</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
 
-      <div class="trm-service-card">
-        <div class="trm-service-title">Xe &amp; Garage – bảo hiểm – đăng kiểm – cứu hộ</div>
-        <div class="trm-service-title-sub">Car &amp; garage services</div>
-        <div class="trm-service-desc">
-          Đánh giá dịch vụ sửa xe – cứu hộ – bảo hiểm – đăng kiểm — chi phí &amp; thái độ phục vụ.
-        </div>
+      <!-- 5 Xe & Garage – bảo hiểm – đăng kiểm – cứu hộ -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Xe &amp; Garage – bảo hiểm – đăng kiểm – cứu hộ</h3>
+        <p class="trm-service-title-sub">Car &amp; insurance services</p>
+        <p class="trm-service-desc">
+          Đánh giá các dịch vụ sửa xe – garage – cứu hộ – đăng kiểm – bảo hiểm – giấy tờ xe…
+        </p>
         <span class="trm-service-badge">Auto service</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
 
-      <div class="trm-service-card">
-        <div class="trm-service-title">Taxi – chở khách – tra cứu giờ tàu – xe – máy bay</div>
-        <div class="trm-service-title-sub">Taxi &amp; transfers</div>
-        <div class="trm-service-desc">
-          Đánh giá taxi – chở khách – đưa đón sân bay – hỗ trợ tra cứu giờ tàu, xe, chuyến bay.
-        </div>
-        <span class="trm-service-badge">Taxi transfer</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+      <!-- 6 Taxi – đặt khách – tra cứu giờ tàu xe – máy bay -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Taxi – đặt khách – tra cứu giờ tàu xe – máy bay</h3>
+        <p class="trm-service-title-sub">Taxi &amp; travel assist</p>
+        <p class="trm-service-desc">
+          Đánh giá dịch vụ taxi, đặt đón sân bay – tàu xe, hỗ trợ tra cứu, đặt vé &amp; chuyến đi.
+        </p>
+        <span class="trm-service-badge">Travel</span>
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
 
-      <div class="trm-service-card">
-        <div class="trm-service-title">Dịch vụ du lịch – đặt tour – hướng dẫn viên – vé tham quan</div>
-        <div class="trm-service-title-sub">Tourism &amp; travel guides</div>
-        <div class="trm-service-desc">
-          Đánh giá hướng dẫn viên, đơn vị dẫn tour, đặt vé tham quan — trải nghiệm thực tế.
-        </div>
+      <!-- 7 Dịch vụ du lịch – đặt tour – hướng dẫn viên – tham quan -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Dịch vụ du lịch – đặt tour – hướng dẫn viên – tham quan</h3>
+        <p class="trm-service-title-sub">Tourism &amp; travel guides</p>
+        <p class="trm-service-desc">
+          Đánh giá hướng dẫn viên, đơn vị đặt tour, dịch vụ tham quan – trải nghiệm tại châu Âu &amp; Việt Nam.
+        </p>
         <span class="trm-service-badge">Tourism</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
 
-      <div class="trm-service-card">
-        <div class="trm-service-title">Nail – Spa – Làm đẹp – Cắt tóc – Makeup</div>
-        <div class="trm-service-title-sub">Beauty services</div>
-        <div class="trm-service-desc">
-          Đánh giá salon, spa, nail, cắt tóc — phong thái phục vụ &amp; chất lượng dịch vụ.
-        </div>
+      <!-- 8 Nail – Spa – Làm đẹp – Cắt tóc – Makeup -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Nail – Spa – Làm đẹp – Cắt tóc – Makeup</h3>
+        <p class="trm-service-title-sub">Beauty services</p>
+        <p class="trm-service-desc">
+          Đánh giá salon, spa, tiệm làm đẹp – cắt tóc – trang điểm – chăm sóc da chuẩn Việt.
+        </p>
         <span class="trm-service-badge">Beauty</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
 
-      <div class="trm-service-card">
-        <div class="trm-service-title">Gia sư – dạy tiếng – luyện thi – kèm trẻ</div>
-        <div class="trm-service-title-sub">Tutoring &amp; language lessons</div>
-        <div class="trm-service-desc">
-          Đánh giá giáo viên, lớp học, online/offline — sự tiến bộ &amp; trải nghiệm thực tế.
-        </div>
+      <!-- 9 Gia sư – dạy tiếng – luyện thi – kèm trẻ -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Gia sư – dạy tiếng – luyện thi – kèm trẻ</h3>
+        <p class="trm-service-title-sub">Tutoring &amp; language lessons</p>
+        <p class="trm-service-desc">
+          Đánh giá các gia sư dạy kèm cho trẻ em và người lớn – tiếng Séc, Anh, Đức, Việt, Toán – Lý – Hóa…
+        </p>
         <span class="trm-service-badge">Education</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
 
-      <div class="trm-service-card">
-        <div class="trm-service-title">Y tế – tư vấn sức khỏe – vật lý trị liệu – massage</div>
-        <div class="trm-service-title-sub">Health &amp; wellness support</div>
-        <div class="trm-service-desc">
-          Đánh giá bác sĩ gia đình, dịch vụ trị liệu, xoa bóp, hỗ trợ sức khỏe — tin cậy &amp; chuyên môn.
-        </div>
+      <!-- 10 Y tế – tư vấn sức khỏe – vật lý trị liệu – massage -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Y tế – tư vấn sức khỏe – vật lý trị liệu – massage</h3>
+        <p class="trm-service-title-sub">Health &amp; wellness support</p>
+        <p class="trm-service-desc">
+          Đánh giá hỗ trợ phiên dịch – đặt lịch bác sĩ – tư vấn sức khỏe – vật lý trị liệu, massage chuẩn khoa học.
+        </p>
         <span class="trm-service-badge">Health</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
 
-      <div class="trm-service-card">
-        <div class="trm-service-title">Nhà hàng – đặt món – ship đồ ăn Việt – takeaway</div>
-        <div class="trm-service-title-sub">Vietnamese restaurants &amp; delivery</div>
-        <div class="trm-service-desc">
+      <!-- 11 Nhà hàng – quán ăn – ship đồ ăn Việt -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Nhà hàng – quán ăn – ship đồ ăn Việt</h3>
+        <p class="trm-service-title-sub">Vietnamese restaurants &amp; delivery</p>
+        <p class="trm-service-desc">
           Đánh giá nhà hàng, quán ăn, dịch vụ ship đồ ăn Việt tại EU &amp; Việt Nam.
-        </div>
-        <span class="trm-service-badge">Food service</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+        </p>
+        <span class="trm-service-badge">Food &amp; drink</span>
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
 
-      <div class="trm-service-card">
-        <div class="trm-service-title">Đặc sản Việt – đồ quê – thực phẩm vùng miền</div>
-        <div class="trm-service-title-sub">Vietnamese food &amp; specialties</div>
-        <div class="trm-service-desc">
-          Đánh giá dịch vụ bán đặc sản Việt — chất lượng, nguồn gốc &amp; uy tín giao hàng.
-        </div>
+      <!-- 12 Đặc sản Việt – đồ quê – thực phẩm vùng miền -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Đặc sản Việt – đồ quê – thực phẩm vùng miền</h3>
+        <p class="trm-service-title-sub">Vietnamese food &amp; specialties</p>
+        <p class="trm-service-desc">
+          Đánh giá các đơn vị cung cấp đặc sản – đồ quê – thực phẩm vùng miền chuẩn Việt cho cộng đồng.
+        </p>
         <span class="trm-service-badge">Food &amp; goods</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
 
-      <div class="trm-service-card">
-        <div class="trm-service-title">Thuê người sửa – thuê người làm – giúp việc – dọn dẹp – trông trẻ</div>
-        <div class="trm-service-title-sub">Home help &amp; daily support</div>
-        <div class="trm-service-desc">
-          Đánh giá người hỗ trợ tại nhà — việc vặt, dọn dẹp, trông trẻ, giúp việc theo giờ.
-        </div>
+      <!-- 13 Thuê người sửa – thuê người làm – giúp việc – dọn dẹp – trông trẻ -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Thuê người sửa – thuê người làm – giúp việc – dọn dẹp – trông trẻ</h3>
+        <p class="trm-service-title-sub">Home help &amp; daily support</p>
+        <p class="trm-service-desc">
+          Đánh giá người giúp việc, dọn dẹp, hỗ trợ việc nhà, trông trẻ, chăm sóc người già…
+        </p>
         <span class="trm-service-badge">Home help</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
 
-      <div class="trm-service-card">
-        <div class="trm-service-title">Tư vấn pháp lý – luật – hợp đồng – ly hôn – doanh nghiệp</div>
-        <div class="trm-service-title-sub">Legal &amp; contract consulting</div>
-        <div class="trm-service-desc">
-          Đánh giá luật sư &amp; chuyên gia pháp lý — kinh nghiệm, xử lý hồ sơ &amp; trách nhiệm.
-        </div>
+      <!-- 14 Tư vấn pháp lý – luật – hợp đồng – doanh nghiệp – ly hôn -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Tư vấn pháp lý – luật – hợp đồng – doanh nghiệp – ly hôn</h3>
+        <p class="trm-service-title-sub">Legal &amp; business consulting</p>
+        <p class="trm-service-desc">
+          Đánh giá luật sư, văn phòng tư vấn, dịch vụ pháp lý cho cá nhân &amp; doanh nghiệp.
+        </p>
         <span class="trm-service-badge">Legal</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
 
-      <div class="trm-service-card">
-        <div class="trm-service-title">Sưu tầm – đồ gỗ – phong thủy – đồ nghệ thuật</div>
-        <div class="trm-service-title-sub">Collectibles &amp; feng shui</div>
-        <div class="trm-service-desc">
-          Đánh giá cửa hàng &amp; nghệ nhân — chất lượng &amp; uy tín giao dịch lâu dài.
-        </div>
+      <!-- 15 Sưu tầm – đồ gỗ – phong thủy – đồ nghệ thuật -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Sưu tầm – đồ gỗ – phong thủy – đồ nghệ thuật</h3>
+        <p class="trm-service-title-sub">Collectibles &amp; fine goods</p>
+        <p class="trm-service-desc">
+          Đánh giá các dịch vụ sưu tầm, sản xuất – kinh doanh đồ gỗ – phong thủy – đồ nghệ thuật.
+        </p>
         <span class="trm-service-badge">Lifestyle</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
 
-      <div class="trm-service-card">
-        <div class="trm-service-title">Dịch vụ khác</div>
-        <div class="trm-service-title-sub">Other services</div>
-        <div class="trm-service-desc">
+      <!-- 16 Dịch vụ khác -->
+      <article class="trm-service-card">
+        <h3 class="trm-service-title">Dịch vụ khác</h3>
+        <p class="trm-service-title-sub">Other services</p>
+        <p class="trm-service-desc">
           Dành cho các dịch vụ đặc biệt chưa xếp vào nhóm phía trên.
-        </div>
+        </p>
         <span class="trm-service-badge">Others</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
-
+        <button class="trm-service-btn">Xem hồ sơ dịch vụ (sắp mở)</button>
+      </article>
     </div>
   </section>
 
-  <section class="trm-section trm-section-register">
-    <h3 class="trm-section-title">Bạn cung cấp dịch vụ cho cộng đồng Việt?</h3>
+  <!-- REGISTER SECTION -->
+  <section class="trm-section-register">
     <p class="trm-section-desc">
-      Nếu bạn muốn dịch vụ của mình xuất hiện trên Tranmarket, hãy liên hệ để đăng ký hồ sơ dịch vụ.
+      Bạn cung cấp dịch vụ cho cộng đồng Việt? Nếu bạn muốn dịch vụ của mình xuất hiện trên Tranmarket,
+      hãy liên hệ để đăng ký hồ sơ dịch vụ.
     </p>
-    <a href="mailto:tran8888@seznam.cz?subject=Dang%20ky%20dich%20vu%20len%20Tranmarket"
-       class="trm-primary-btn">
+    <a class="trm-primary-btn" href="mailto:tran8888@seznam.cz?subject=Đăng%20ký%20dịch%20vụ%20Tranmarket">
       Đăng ký dịch vụ với Tranmarket
     </a>
   </section>
 
+  <!-- FOOTER -->
   <footer class="trm-footer">
     Tranmarket · Nền tảng đánh giá dịch vụ người Việt · Pi Web3 Ready
   </footer>
-
 </body>
 </html>
