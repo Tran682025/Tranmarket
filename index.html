@@ -1,95 +1,198 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tranmarket</title>
-  <link rel="stylesheet" href="trm-ui.css" />
-</head>
-<body>
+/* GLOBAL */
+* { box-sizing: border-box; }
 
-  <!-- NAVBAR -->
-  <header class="trm-navbar">
-    <div class="trm-navbar-left">
-      <div class="trm-logo-dot"></div>
-      <div class="trm-navbar-title">
-        Tranmarket
-        <span class="trm-navbar-sub">Vietnamese Services · EU & VN</span>
-      </div>
-    </div>
-  </header>
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #170a3b, #050318 60%);
+  color: #ffffff;
+}
 
-  <!-- HERO -->
-  <section class="trm-hero">
-    <h1 class="trm-hero-title">
-      Tìm dịch vụ người Việt <span>uy tín</span> tại Séc, EU & Việt Nam
-    </h1>
-    <p class="trm-hero-subtitle">
-      Nền tảng độc lập giúp cộng đồng đánh giá, xếp hạng và xác minh dịch vụ — minh bạch, không trung gian giao dịch.
-    </p>
-  </section>
+/* NAVBAR */
+.trm-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  backdrop-filter: blur(14px);
+  background: rgba(6, 3, 24, 0.92);
+  border-bottom: 1px solid rgba(123, 43, 249, 0.6);
+}
+.trm-navbar-left { display: flex; align-items: center; gap: 10px; }
+.trm-logo-dot {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: radial-gradient(circle at 30% 20%, #31d7ff, #7b2bf9);
+  box-shadow: 0 0 14px rgba(123, 43, 249, 0.9);
+}
+.trm-navbar-title {
+  display: flex; flex-direction: column;
+  font-size: 0.95rem; font-weight: 700; color: #f8f3ff;
+}
+.trm-navbar-sub {
+  font-size: 0.7rem; font-weight: 400; color: #b6b0ff;
+}
 
-  <!-- SEARCH -->
-  <section class="trm-search-section">
-    <div class="trm-search-bar">
-      <input type="text" class="trm-search-input" placeholder="Tìm dịch vụ, từ khóa, thành phố…">
-      <button class="trm-search-btn">Tìm</button>
-    </div>
+/* HERO */
+.trm-hero { padding: 20px 16px 8px; }
+.trm-hero-title {
+  font-size: 1.4rem; line-height: 1.25; margin: 0 0 8px; color: #ffffff;
+}
+.trm-hero-title span { color: #31d7ff; }
+.trm-hero-subtitle { margin: 0; font-size: 0.9rem; color: #c8c1ff; }
 
-    <div class="trm-filter-row">
-      <button class="trm-filter-chip trm-filter-chip-active">Tất cả dịch vụ</button>
-      <button class="trm-filter-chip">Séc</button>
-      <button class="trm-filter-chip">EU khác</button>
-      <button class="trm-filter-chip">Việt Nam</button>
-      <button class="trm-filter-chip">Gần tôi</button>
-    </div>
-  </section>
+/* SEARCH */
+.trm-search-section { padding: 8px 16px 4px; }
+.trm-search-bar {
+  display: flex; gap: 8px; align-items: center;
+  background: rgba(9, 6, 36, 0.95);
+  border-radius: 999px;
+  padding: 6px 8px;
+  border: 1px solid rgba(123, 43, 249, 0.8);
+}
+.trm-search-input {
+  flex: 1; background: transparent; border: none; outline: none;
+  color: #f5f5ff; font-size: 0.85rem;
+}
+.trm-search-input::placeholder { color: #8c85d5; }
+.trm-search-btn {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(49, 215, 255, 0.9);
+  background: radial-gradient(circle at 0% 0%, rgba(49, 215, 255, 0.3), transparent 60%);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #f5fbff;
+  cursor: pointer;
+}
 
-  <!-- DANH MỤC 16 DỊCH VỤ -->
-  <section class="trm-section">
-    <h2 class="trm-section-title">
-      Danh mục dịch vụ Tranmarket
-      <span class="trm-section-sub">(Services of Tranmarket)</span>
-    </h2>
+/* FILTER */
+.trm-filter-row {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.trm-filter-row::-webkit-scrollbar { height: 0; }
+.trm-filter-chip {
+  flex: 0 0 auto;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  border: 1px solid rgba(123, 43, 249, 0.8);
+  background: rgba(12, 8, 40, 0.98);
+  color: #d7d1ff;
+}
+.trm-filter-chip-active {
+  border-color: rgba(49, 215, 255, 0.95);
+  background: rgba(49, 215, 255, 0.16);
+  color: #f5fbff;
+}
 
-    <p class="trm-section-desc">
-      Đánh giá & xếp hạng dịch vụ người Việt — minh bạch, trách nhiệm, không trung gian giao dịch.
-    </p>
+/* SECTION */
+.trm-section { padding: 18px 16px 10px; }
+.trm-section-title {
+  font-size: 1.05rem; margin: 0 0 6px; color: #ffffff;
+}
+.trm-section-sub {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #9adfff;
+  margin-left: 4px;
+}
+.trm-section-desc {
+  font-size: 0.86rem;
+  color: #c7c1ff;
+  margin: 0 0 10px;
+}
 
-    <div class="trm-services-grid">
+/* GRID DỊCH VỤ */
+.trm-services-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.trm-service-card {
+  background: rgba(8, 2, 30, 0.95);
+  border-radius: 16px;
+  padding: 14px 14px 12px;
+  border: 1px solid rgba(123, 43, 249, 0.7);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+.trm-service-title {
+  font-size: 1.0rem;
+  font-weight: 650;
+  margin-bottom: 4px;
+}
+.trm-service-title-sub {
+  font-size: 0.8rem;
+  color: #b6d7ff;
+  margin-bottom: 6px;
+}
+.trm-service-desc {
+  font-size: 0.82rem;
+  color: #e0dcff;
+  margin-bottom: 8px;
+}
+.trm-service-badge {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.75rem;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(49, 215, 255, 0.14);
+  color: #25c4ff;
+  border: 1px solid rgba(49, 215, 255, 0.7);
+}
 
-      <!-- CHỈ SHOW CARD MẪU — 15 CARD CÒN LẠI TRAN ĐANG GIỮ -->
-      <!-- Trẫm copy 15 card còn lại vào ngay đây giống Day 1 -->
-      <!-- Card 1 -->
-      <div class="trm-service-card">
-        <div class="trm-service-title">Gửi hàng EU ↔ Việt Nam</div>
-        <div class="trm-service-title-sub">EU–Vietnam shipping</div>
-        <div class="trm-service-desc">
-          Đánh giá các dịch vụ gửi hàng từ EU về Việt Nam và ngược lại — uy tín & minh bạch chi phí.
-        </div>
-        <span class="trm-service-badge">Logistics</span>
-        <button class="trm-card-cta" disabled>Xem hồ sơ dịch vụ (sắp mở)</button>
-      </div>
+/* CTA TRONG CARD */
+.trm-card-cta {
+  margin-top: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px dashed rgba(123, 43, 249, 0.7);
+  background: rgba(7, 4, 30, 0.9);
+  color: #aaa4ff;
+  font-size: 0.8rem;
+}
 
-      <!-- (Trẫm dán thêm 15 card còn lại giống cấu trúc này vào ngay dưới → y chang Day 1) -->
+/* ĐĂNG KÝ DỊCH VỤ */
+.trm-section-register { margin-top: 4px; }
+.trm-primary-btn {
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(49, 215, 255, 0.95);
+  background: radial-gradient(circle at 0% 0%, rgba(49, 215, 255, 0.28), transparent 60%);
+  color: #f4fbff;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+}
 
-    </div>
-  </section>
+/* FOOTER */
+.trm-footer {
+  padding: 16px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #948dce;
+}
 
-  <!-- ĐĂNG KÝ DỊCH VỤ -->
-  <section class="trm-section trm-section-register">
-    <h3 class="trm-section-title">Bạn cung cấp dịch vụ cho cộng đồng Việt?</h3>
-    <p class="trm-section-desc">
-      Nếu bạn muốn dịch vụ của mình xuất hiện trên Tranmarket, hãy liên hệ để đăng ký hồ sơ dịch vụ.
-    </p>
-    <a href="mailto:tran8888@seznam.cz?subject=Dang%20ky%20dich%20vu%20len%20Tranmarket"
-       class="trm-primary-btn">Đăng ký dịch vụ với Tranmarket</a>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="trm-footer">
-    Tranmarket · Nền tảng đánh giá dịch vụ người Việt · Pi Web3 Ready
-  </footer>
-
-</body>
-</html>
+/* DESKTOP */
+@media (min-width: 768px) {
+  .trm-hero { padding: 26px 7vw 12px; }
+  .trm-search-section,
+  .trm-section,
+  .trm-footer { padding-inline: 7vw; }
+  .trm-services-grid {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .trm-hero-title { font-size: 1.8rem; }
+}
