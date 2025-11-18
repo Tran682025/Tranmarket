@@ -239,3 +239,43 @@ body {
   height: auto;
   filter: drop-shadow(0 0 34px rgba(131, 47, 255, 0.9));
 }
+/* NAVBAR LOGO */
+.trm-logo-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: contain;
+  box-shadow: 0 0 14px rgba(123, 43, 249, 0.9);
+}
+
+/* HERO LOGO */
+.trm-hero-logo-wrap {
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.trm-hero-logo {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: contain;
+  box-shadow: 0 0 26px rgba(247, 208, 96, 0.85);
+}
+
+/* Vietnamese subtitle under EN hero title */
+.trm-hero-sub-vn {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: #cfd4ff;
+  opacity: 0.9;
+}
+
+/* Micro note under CTA */
+.trm-micro-note {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.78rem;
+  opacity: 0.7;
+}
