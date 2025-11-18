@@ -46,3 +46,10 @@ body {
   color: #b9b2c8;
   margin: 4px 0 12px 0;
 }
+.trm-tagline-en {
+  font-size: 0.95rem;
+  color: #d2c9ff; /* tím nhạt tinh tế */
+  margin-top: 2px;
+  opacity: 0.9;
+  font-weight: 500;
+}
