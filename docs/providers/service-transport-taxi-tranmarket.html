@@ -471,33 +471,63 @@
           Điền nhanh thông tin, hệ thống sẽ chuyển trực tiếp tới nhà cung cấp.
           Bạn sẽ nhận phản hồi qua email hoặc số điện thoại.
         </p>
-        <form class="contact-form">
-          <div class="field">
-            <label>Họ tên của bạn</label>
-            <input type="text" placeholder="Nguyễn Văn A" />
-          </div>
-          <div class="field">
-            <label>Email hoặc số điện thoại</label>
-            <input type="text" placeholder="(+420) xxx xxx xxx" />
-          </div>
-          <div class="field">
-            <label>Ngày – giờ mong muốn</label>
-            <input type="text" placeholder="VD: 24.11, 08:30 – sân bay Praha" />
-          </div>
-          <div class="field">
-            <label>Số người &amp; hành lý</label>
-            <select>
-              <option>1–2 người, ít hành lý</option>
-              <option>3–4 người, nhiều hành lý</option>
-              <option>Gia đình / nhóm lớn</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Ghi chú cho tài xế (CZ / VI / EN đều được)</label>
-            <textarea placeholder="VD: Có người già, cần dừng dọc đường; cần hỗ trợ mang đồ..."></textarea>
-          </div>
-          <button type="submit" class="primary-button">Gửi yêu cầu đặt chuyến</button>
-        </form>
+       <!-- 1) THAY KHỐI BUTTON Ở PHẦN BÊN PHẢI (TRONG <aside>), ngay dưới <form class="contact-form"> -->
+
+<form class="contact-form" id="tm-taxi-form">
+  <div class="field">
+    <label>Họ tên của bạn</label>
+    <input id="tm-name" type="text" placeholder="Nguyễn Văn A" />
+  </div>
+  <div class="field">
+    <label>Email hoặc số điện thoại</label>
+    <input id="tm-phone" type="text" placeholder="(+420) xxx xxx xxx" />
+  </div>
+  <div class="field">
+    <label>Ngày – giờ mong muốn</label>
+    <input id="tm-time" type="text" placeholder="VD: 24.11, 08:30 – sân bay Praha" />
+  </div>
+  <div class="field">
+    <label>Điểm đón</label>
+    <input id="tm-pickup" type="text" placeholder="VD: Liberec – náměstí / adresa cụ thể" />
+  </div>
+  <div class="field">
+    <label>Điểm đến</label>
+    <input id="tm-dropoff" type="text" placeholder="VD: Letiště Praha / Dresden / …" />
+  </div>
+  <div class="field">
+    <label>Số người &amp; hành lý</label>
+    <select id="tm-people">
+      <option>1–2 người, ít hành lý</option>
+      <option>3–4 người, nhiều hành lý</option>
+      <option>Gia đình / nhóm lớn</option>
+    </select>
+  </div>
+  <div class="field">
+    <label>Ghi chú cho tài xế (CZ / VI / EN đều được)</label>
+    <textarea id="tm-note" placeholder="VD: Có người già, cần dừng dọc đường; cần hỗ trợ mang đồ..."></textarea>
+  </div>
+
+  <!-- Nút chính: gửi qua WhatsApp (phương án B) -->
+  <button type="button" class="primary-button" onclick="tmSendWhatsApp()">
+    Gửi yêu cầu qua WhatsApp
+  </button>
+
+  <!-- Nhóm nút phụ: Gọi điện + SMS -->
+  <div class="cta-row" style="margin-top:10px;">
+    <button type="button" class="secondary-button" onclick="tmCallTaxi()">
+      Gọi Taxi ngay
+    </button>
+    <button type="button" class="secondary-button" onclick="tmSendSMS()">
+      Gửi yêu cầu bằng SMS
+    </button>
+  </div>
+</form>
+
+<div class="trust-row">
+  <span class="trust-pill">Thanh toán trực tiếp với nhà cung cấp</span>
+  <span class="trust-pill">Số điện thoại chỉ dùng để chốt chuyến, không dùng cho quảng cáo</span>
+</div>
+
         <div class="trust-row">
           <span class="trust-pill">Giai đoạn beta: Tranmarket không thu phí khách lẻ</span>
           <span class="trust-pill">Thanh toán trực tiếp với nhà cung cấp</span>
@@ -506,9 +536,55 @@
       </aside>
     </main>
 
-    <footer class="page-footer">
-      Tranmarket.cz – Nền tảng kết nối dịch vụ cho cộng đồng người Việt tại Séc &amp; EU.
-    </footer>
-  </div>
+ <!-- 2) THÊM SCRIPT NÀY TRƯỚC THẺ </body> Ở CUỐI FILE Taxi -->
+
+<script>
+  // TODO: ĐỔI LẠI THÀNH SỐ THẬT CỦA TAXI
+  const TM_TAXI_PHONE = '+420739513276';      // số đầy đủ, có +420
+  const TM_TAXI_WHATSAPP = '420739513276';    // số cho WhatsApp, không có dấu +
+
+  function tmBuildMessage() {
+    const name   = document.getElementById('tm-name').value.trim()   || '(chưa nhập tên)';
+    const phone  = document.getElementById('tm-phone').value.trim()  || '(chưa nhập liên hệ)';
+    const time   = document.getElementById('tm-time').value.trim()   || '(chưa nhập thời gian)';
+    const pickup = document.getElementById('tm-pickup').value.trim() || '(chưa nhập điểm đón)';
+    const drop   = document.getElementById('tm-dropoff').value.trim()|| '(chưa nhập điểm đến)';
+    const people = document.getElementById('tm-people').value;
+    const note   = document.getElementById('tm-note').value.trim();
+
+    let msg  = 'ĐẶT TAXI TRANMARKET - LIBEREC%0A';
+    msg += 'Tên khách: ' + name + '%0A';
+    msg += 'Liên hệ: ' + phone + '%0A';
+    msg += 'Thời gian: ' + time + '%0A';
+    msg += 'Điểm đón: ' + pickup + '%0A';
+    msg += 'Điểm đến: ' + drop + '%0A';
+    msg += 'Số người & hành lý: ' + people + '%0A';
+    if (note) {
+      msg += 'Ghi chú: ' + note + '%0A';
+    }
+    msg += '%0A(Gửi từ Tranmarket.cz)';
+    return msg;
+  }
+
+  // Gửi qua WhatsApp (phương án B)
+  function tmSendWhatsApp() {
+    const text = tmBuildMessage();
+    const url = 'https://wa.me/' + TM_TAXI_WHATSAPP + '?text=' + text;
+    window.open(url, '_blank');
+  }
+
+  // Gửi qua SMS (điện thoại mở app SMS sẵn nội dung)
+  function tmSendSMS() {
+    const text = tmBuildMessage();
+    const url = 'sms:' + TM_TAXI_PHONE + '?&body=' + text;
+    window.location.href = url;
+  }
+
+  // Gọi điện trực tiếp
+  function tmCallTaxi() {
+    window.location.href = 'tel:' + TM_TAXI_PHONE;
+  }
+</script>
+   
 </body>
 </html>
