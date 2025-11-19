@@ -119,6 +119,33 @@
       margin-bottom: 22px;
       box-shadow: 0 12px 40px rgba(15, 23, 42, 0.85);
     }
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("trm-logo-hero.png");
+  background-size: 85%;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.09;
+  filter: blur(1px);
+  z-index: 0;
+}
+
+.hero > * {
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes hero-logo-pulse {
+  0% { transform: scale(1); opacity: 0.07; }
+  50% { transform: scale(1.04); opacity: 0.12; }
+  100% { transform: scale(1); opacity: 0.07; }
+}
+
+.hero::before {
+  animation: hero-logo-pulse 9s ease-in-out infinite;
+}
 
     .hero-logo-wrap {
       display: flex;
