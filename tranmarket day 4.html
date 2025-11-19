@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tranmarket CZ / VN – Day 4 UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- FONT CƠ BẢN -->
+  <style>
+    :root {
+      --tm-bg: #0b0712;
+      --tm-card: #1b102b;
+      --tm-accent: #8b5cf6;
+      --tm-accent-soft: rgba(139, 92, 246, 0.15);
+      --tm-text-main: #f9fafb;
+      --tm-text-sub: #d1d5db;
+      --tm-border: #3b2358;
+      --tm-danger: #fb7185;
+      --tm-success: #22c55e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top left, #1f1035 0, #05030a 45%, #02000a 100%);
+      color: var(--tm-text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page-shell {
+      width: 100%;
+      max-width: 1080px;
+      padding: 24px 16px 40px;
+    }
+
+    /* TOPBAR */
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid var(--tm-border);
+      background: radial-gradient(circle at 30% 20%, #f9fafb 0, #8b5cf6 35%, #020617 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-text-main {
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-text-sub {
+      font-size: 11px;
+      color: var(--tm-text-sub);
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid var(--tm-border);
+      background: rgba(15, 23, 42, 0.85);
+      padding: 4px;
+      gap: 4px;
+      font-size: 11px;
+    }
+
+    .lang-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .lang-pill--active {
+      background: var(--tm-accent-soft);
+      border-color: var(--tm-accent);
+      color: #f9fafb;
+      font-weight: 600;
+    }
+
+    .lang-pill--ghost {
+      color: var(--tm-text-sub);
+    }
+
+    /* HERO */
+
+    .hero {
+      border-radius: 24px;
+      border: 1px solid var(--tm-border);
+      background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.32) 0, rgba(15, 23, 42, 0.95) 45%, #020617 100%);
+      padding: 24px 20px 22px;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.3fr);
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 20px 16px;
+      }
+    }
+
+    .hero-left {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-kicker {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--tm-accent);
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 28px;
+      }
+    }
+
+    .hero-subtitle {
+      font-size: 12px;
+      color: var(--tm-text-sub);
+      margin-bottom: 16px;
+    }
+
+    .hero-subtitle small {
+      font-size: 11px;
+      opacity: 0.9;
+    }
+
+    .hero-list {
+      font-size: 12px;
+      color: var(--tm-text-sub);
+      margin-bottom: 16px;
+    }
+
+    .hero-list strong {
+      color: #e5e7eb;
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .btn-primary {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: linear-gradient(90deg, #8b5cf6, #a855f7);
+      color: #f9fafb;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-secondary {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--tm-border);
+      background: rgba(15, 23, 42, 0.75);
+      color: var(--tm-text-sub);
+      font-size: 11px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .hero-note {
+      font-size: 11px;
+      color: var(--tm-text-sub);
+    }
+
+    .hero-note strong {
+      color: var(--tm-success);
+      font-weight: 600;
+    }
+
+    .hero-right {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* LOGO BACKGROUND CARD */
+
+    .logo-card {
+      position: relative;
+      width: 100%;
+      max-width: 260px;
+      aspect-ratio: 4 / 3;
+      border-radius: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: radial-gradient(circle at 30% 0, rgba(248, 250, 252, 0.85) 0, rgba(148, 163, 184, 0.08) 60%, rgba(15, 23, 42, 0.96) 100%);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-orb {
+      width: 180px;
+      height: 180px;
+      border-radius: 999px;
+      border: 6px solid rgba(15, 23, 42, 0.85);
+      background: conic-gradient(
+        from 220deg,
+        #4c1d95,
+        #8b5cf6,
+        #f5f3ff,
+        #8b5cf6,
+        #4c1d95
+      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 24px 42px rgba(15, 23, 42, 0.9));
+    }
+
+    .logo-orb-inner {
+      width: 132px;
+      height: 132px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #f9fafb 0, #f97316 34%, #3b0764 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 28px;
+      letter-spacing: 0.16em;
+      color: #111827;
+      text-transform: uppercase;
+    }
+
+    .logo-tag {
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 10px;
+      color: #e5e7eb;
+    }
+
+    @media (max-width: 768px) {
+      .logo-card {
+        margin-top: 4px;
+      }
+    }
+
+    /* FOOTER MINI */
+
+    .footer-small {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 10px;
+      color: var(--tm-text-sub);
+      opacity: 0.9;
+    }
+
+    .footer-left span {
+      opacity: 0.85;
+    }
+
+    .footer-right {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.6);
+      padding: 4px 8px;
+      background: rgba(2, 6, 23, 0.75);
+      font-size: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page-shell">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="brand-logo">TM</div>
+        <div>
+          <div class="brand-text-main">Tranmarket</div>
+          <div class="brand-text-sub">CZ / EU – Viet Services Hub</div>
+        </div>
+      </div>
+
+      <div class="lang-switch" aria-label="Language switch">
+        <button class="lang-pill lang-pill--active" type="button">
+          EN
+        </button>
+        <button class="lang-pill lang-pill--ghost" type="button">
+          CZ
+        </button>
+        <button class="lang-pill lang-pill--ghost" type="button">
+          VN
+        </button>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="hero-kicker">PI FIRST · SERVICE MARKETPLACE</div>
+
+        <h1 class="hero-title">
+          Find trusted CZ / EU – Viet services in one place.
+        </h1>
+
+        <p class="hero-subtitle">
+          For Vietnamese living in Czechia and the EU who need reliable local partners
+          for shipping, translation, business setup and daily life support.
+          <br />
+          <small>(Nền tảng kết nối người Việt tại Séc / EU với dịch vụ uy tín, minh bạch.)</small>
+        </p>
+
+        <div class="hero-list">
+          <strong>Examples:</strong> DHL shipping to Viet Nam, tax and customs support,
+          business translation, accounting, car repair, home services and more.
+        </div>
+
+        <div class="hero-actions">
+          <button class="btn-primary" type="button">
+            Register your service (KYB)
+          </button>
+
+          <button class="btn-secondary" type="button">
+            I am a customer – find services near me
+          </button>
+        </div>
+
+        <p class="hero-note">
+          <strong>Phase 1:</strong> Simple listing &amp; contact. Pi payments and advanced
+          booking will be added when Pi regulation in CZ / EU is clear.
+        </p>
+      </div>
+
+      <div class="hero-right">
+        <div class="logo-card">
+          <div class="logo-orb">
+            <div class="logo-orb-inner">
+              TM
+            </div>
+          </div>
+          <div class="logo-tag">
+            Tranmarket · Pi-ready identity
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MINI FOOTER -->
+    <footer class="footer-small">
+      <div class="footer-left">
+        <span>Tranmarket · Pilot UX Day 4 · Non-custodial directory (no funds held).</span>
+      </div>
+      <div class="footer-right">
+        <span class="chip">CZ / EU compliant mindset</span>
+        <span class="chip">Pi-ready (future integration)</span>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
