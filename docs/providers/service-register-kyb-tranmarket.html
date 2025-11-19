@@ -773,39 +773,59 @@
       });
     });
 
-    document.getElementById("btn-copy").addEventListener("click", async () => {
-      const t = KYB_TEXT[currentLang];
-      const text = buildPreview();
-      try {
-        await navigator.clipboard.writeText(text);
-        alert(t.copyOk);
-      } catch (err) {
-        console.warn(err);
-        alert(t.copyErr);
-      }
-    });
+    // Nút copy nội dung
+const btnCopy = document.getElementById('btn-copy');
+if (btnCopy) {
+  btnCopy.addEventListener('click', async () => {
+    const t = KYB_TEXT[currentLang];
+    const text = buildPreview();
+    try {
+      await navigator.clipboard.writeText(text);
+      alert(t.copyOk);
+    } catch (err) {
+      console.warn(err);
+      alert(t.copyErr);
+    }
+  });
+}
 
-    document.getElementById("btn-mail").addEventListener("click", () => {
-      const t = KYB_TEXT[currentLang];
-      const subject = encodeURIComponent(t.mailSubject);
-      const body =
-        encodeURIComponent(t.mailBodyIntro) +
-        encodeURIComponent(buildPreview());
-      const mailto =
-        "mailto:" + encodeURIComponent(KYB_EMAIL) + "?subject=" + subject + "&body=" + body;
-      window.location.href = mailto;
-    });
+// Nút tạo email đăng ký (chỉ chạy nếu có nút trong HTML)
+const btnMail = document.getElementById('btn-mail');
+if (btnMail) {
+  btnMail.addEventListener('click', () => {
+    const t = KYB_TEXT[currentLang];
+    const subject = encodeURIComponent(t.mailSubject);
+    const body = encodeURIComponent(buildPreview());
+    const mailto =
+      'mailto:' +
+      encodeURIComponent(KYB_EMAIL) +
+      '?subject=' +
+      subject +
+      '&body=' +
+      body;
+    window.location.href = mailto;
+  });
+}
 
-    document.getElementById("btn-print").addEventListener("click", () => {
-      window.print(); // dùng Print to PDF trên trình duyệt
-    });
+// Nút in / lưu PDF
+const btnPrint = document.getElementById('btn-print');
+if (btnPrint) {
+  btnPrint.addEventListener('click', () => {
+    window.print();
+  });
+}
 
-    document.getElementById("btn-reset").addEventListener("click", () => {
-      const t = KYB_TEXT[currentLang];
-      if (!confirm(t.confirmReset)) return;
-      els.form.reset();
-      updatePreview();
-    });
+// Nút xóa & làm lại
+const btnReset = document.getElementById('btn-reset');
+if (btnReset) {
+  btnReset.addEventListener('click', () => {
+    const t = KYB_TEXT[currentLang];
+    if (!confirm(t.confirmReset)) return;
+    document.querySelector('form').reset();
+    updatePreview();
+  });
+}
+
 
     applyLanguage("vi");
   </script>
