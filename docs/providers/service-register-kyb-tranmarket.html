@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tranmarket – Đăng ký dịch vụ (KYB)</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="tm-nav">
+  <a href="../index.html" class="tm-logo">TRANMARKET</a>
+  <div class="tm-lang">
+    <button onclick="setLang('vi')" class="tm-lang-btn">VI</button>
+    <button onclick="setLang('cz')" class="tm-lang-btn">CZ</button>
+    <button onclick="setLang('en')" class="tm-lang-btn">EN</button>
+  </div>
+</header>
+
+<main class="tm-container">
+  <h1 id="title">Đăng ký dịch vụ cùng Tranmarket (KYB)</h1>
+  <p id="subtitle" class="tm-sub">
+    Kết nối doanh nghiệp / cá nhân cung cấp dịch vụ với cộng đồng người Việt tại Séc & EU
+  </p>
+
+  <form id="kybForm" class="tm-form">
+    
+    <label id="lab-company">Tên doanh nghiệp / dịch vụ</label>
+    <input type="text" id="company">
+
+    <label id="lab-person">Người phụ trách</label>
+    <input type="text" id="person">
+
+    <label id="lab-phone">Điện thoại / WhatsApp</label>
+    <input type="text" id="phone">
+
+    <label id="lab-email">Email</label>
+    <input type="text" id="email">
+
+    <label id="lab-web">Website / Facebook (tùy chọn)</label>
+    <input type="text" id="web">
+
+    <label id="lab-category">Danh mục dịch vụ</label>
+    <select id="category">
+      <option value="Logistics">Logistics</option>
+      <option value="Payment">Thanh toán – pháp lý – bảo hiểm</option>
+      <option value="Documents">Giấy tờ – thông dịch – hồ sơ</option>
+      <option value="Repair">Sửa chữa – nhà ở – xây dựng</option>
+      <option value="Auto">Xe & Garage</option>
+      <option value="Transport">Taxi – vận chuyển</option>
+      <option value="Travel">Du lịch – tour</option>
+      <option value="Beauty">Làm đẹp – spa – tóc</option>
+      <option value="Education">Giáo dục – luyện thi – ngoại ngữ</option>
+      <option value="Health">Sức khỏe – hỗ trợ y tế</option>
+      <option value="Food">Nhà hàng – thực phẩm – siêu thị</option>
+      <option value="Legal">Luật – doanh nghiệp</option>
+      <option value="Lifestyle">Trải nghiệm – đời sống</option>
+      <option value="Others">Khác</option>
+    </select>
+
+    <label id="lab-region">Khu vực hoạt động</label>
+    <input type="text" id="region">
+
+    <label id="lab-desc">Mô tả dịch vụ (ngắn gọn)</label>
+    <textarea id="desc"></textarea>
+
+    <div class="tm-btn-group">
+      <button type="button" id="btnPreview" class="tm-btn-main">Xem trước nội dung</button>
+      <button type="button" id="btnSend" class="tm-btn-main">Gửi email đăng ký</button>
+      <button type="button" id="btnCopy" class="tm-btn-alt">Copy nội dung</button>
+      <button type="button" id="btnReset" class="tm-btn-light">Xóa & làm lại</button>
+    </div>
+  </form>
+
+  <div id="deviceHint" class="tm-hint"></div>
+
+  <div id="previewBox" class="tm-preview"></div>
+
+</main>
+
+<script>
+const KYB_EMAIL = "tranmarket.cz.eu@gmail.com";
+let currentLang = "vi";
+
+const i18n = {
+  vi: {
+    title: "Đăng ký dịch vụ cùng Tranmarket (KYB)",
+    subtitle: "Kết nối doanh nghiệp / cá nhân cung cấp dịch vụ với cộng đồng người Việt tại Séc & EU",
+    previewTitle: "Nội dung xem trước",
+    successCopy: "Đã copy nội dung vào bộ nhớ tạm!",
+    failCopy: "Không copy được, hãy copy thủ công!",
+    confirmReset: "Xóa toàn bộ nội dung đã nhập?",
+    sent: "Đã mở email – vui lòng nhấn gửi trong ứng dụng email."
+  },
+  en: {
+    title: "Register your service with Tranmarket (KYB)",
+    subtitle: "Connect Vietnamese service providers with the community across Czechia & the EU",
+    previewTitle: "Preview",
+    successCopy: "Copied to clipboard!",
+    failCopy: "Copy failed!",
+    confirmReset: "Clear the form?",
+    sent: "Email opened — please press Send in your email app."
+  },
+  cz: {
+    title: "Registrace služby na Tranmarket (KYB)",
+    subtitle: "Spojení poskytovatelů služeb s vietnamskou komunitou v ČR a EU",
+    previewTitle: "Náhled",
+    successCopy: "Zkopírováno!",
+    failCopy: "Nelze kopírovat!",
+    confirmReset: "Smazat formulář?",
+    sent: "Email byl otevřen — odešlete jej v emailové aplikaci."
+  }
+};
+
+function setLang(l) {
+  currentLang = l;
+  document.getElementById("title").textContent = i18n[l].title;
+  document.getElementById("subtitle").textContent = i18n[l].subtitle;
+  updatePreview();
+}
+
+function buildPreview() {
+  const p = (id) => document.getElementById(id).value.trim() || "–";
+  return `📌 Tranmarket – yêu cầu mở dịch vụ\n\n` +
+    `🔹 Dịch vụ: ${p("company")}\n` +
+    `🔹 Người phụ trách: ${p("person")}\n` +
+    `🔹 Phone / WhatsApp: ${p("phone")}\n` +
+    `🔹 Email: ${p("email")}\n` +
+    `🔹 Website / FB: ${p("web")}\n` +
+    `🔹 Danh mục: ${p("category")}\n` +
+    `🔹 Khu vực hoạt động: ${p("region")}\n` +
+    `🔹 Mô tả ngắn: ${p("desc")}\n`;
+}
+
+function updatePreview() {
+  const box = document.getElementById("previewBox");
+  box.textContent = buildPreview();
+}
+
+document.getElementById("btnPreview").addEventListener("click", updatePreview);
+
+document.getElementById("btnSend").addEventListener("click", () => {
+  updatePreview();
+  const sub = encodeURIComponent("KYB Registration – " + (document.getElementById("company").value || "New service"));
+  const body = encodeURIComponent(buildPreview());
+  window.location.href = `mailto:${KYB_EMAIL}?subject=${sub}&body=${body}`;
+  alert(i18n[currentLang].sent);
+});
+
+document.getElementById("btnCopy").addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(buildPreview());
+    alert(i18n[currentLang].successCopy);
+  } catch {
+    alert(i18n[currentLang].failCopy);
+  }
+});
+
+document.getElementById("btnReset").addEventListener("click", () => {
+  if (!confirm(i18n[currentLang].confirmReset)) return;
+  document.getElementById("kybForm").reset();
+  updatePreview();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const isMobile = /Android|iPhone|iPad/.test(navigator.userAgent);
+  const hint = document.getElementById("deviceHint");
+  hint.textContent = isMobile
+    ? "Bạn dùng điện thoại — bấm Gửi email để gửi trực tiếp."
+    : "Bạn đang dùng máy tính — bấm Copy nội dung rồi dán vào email.";
+});
+</script>
+
+</body>
+</html>
