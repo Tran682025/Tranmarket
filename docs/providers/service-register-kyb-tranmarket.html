@@ -1,175 +1,760 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tranmarket – Đăng ký dịch vụ (KYB)</title>
-<link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8" />
+  <title>Đăng ký dịch vụ cùng Tranmarket (KYB)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --bg-page: #050018;
+      --bg-card: #0b0730;
+      --border-soft: #262449;
+      --text-main: #f5f5ff;
+      --text-sub: #a7a7d9;
+      --accent: #7c3aed;
+      --accent-soft: #a855f7;
+      --danger: #f97373;
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: var(--bg-page);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      max-width: 800px;          /* gần khổ A4 dọc */
+      margin: 0 auto;
+      background: var(--bg-card);
+      border-radius: 18px;
+      padding: 24px 28px 32px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+      border: 1px solid var(--border-soft);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 12px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(248, 250, 252, 0.2);
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      font-size: 16px;
+    }
+
+    .brand-sub {
+      font-size: 10px;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-top: 2px;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      gap: 6px;
+    }
+
+    .lang-btn {
+      border: 1px solid var(--border-soft);
+      background: transparent;
+      color: var(--text-sub);
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent-soft);
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 6px 0 4px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin: 0 0 18px;
+    }
+
+    .note-top {
+      font-size: 11px;
+      color: var(--text-sub);
+      margin-bottom: 18px;
+    }
+
+    form {
+      border-radius: 14px;
+      border: 1px solid var(--border-soft);
+      padding: 16px 18px 18px;
+      background: radial-gradient(circle at top, #151256 0, #050018 55%);
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+
+    .field-inline {
+      display: flex;
+      gap: 12px;
+    }
+
+    .field-inline .field {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    label {
+      font-size: 12px;
+      margin-bottom: 3px;
+      color: var(--text-sub);
+    }
+
+    input,
+    select,
+    textarea {
+      border-radius: 8px;
+      border: 1px solid var(--border-soft);
+      background: #050018;
+      color: var(--text-main);
+      padding: 7px 9px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--accent-soft);
+      box-shadow: 0 0 0 1px rgba(124, 58, 237, 0.35);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+      max-height: 200px;
+    }
+
+    .actions-main {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      padding: 7px 14px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+      color: #ffffff;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border-soft);
+      color: var(--text-sub);
+    }
+
+    .btn-danger {
+      background: transparent;
+      border: 1px solid rgba(239, 68, 68, 0.6);
+      color: var(--danger);
+    }
+
+    .preview-box {
+      margin-top: 6px;
+      border-radius: 10px;
+      border: 1px dashed var(--border-soft);
+      background: rgba(5, 0, 40, 0.7);
+      padding: 10px 12px;
+      font-family: "Menlo", "Consolas", "Courier New", monospace;
+      font-size: 11px;
+      white-space: pre-wrap;
+      max-height: 260px;
+      overflow: auto;
+    }
+
+    .hint {
+      font-size: 10px;
+      color: var(--text-sub);
+      margin-top: 4px;
+    }
+
+    .footer-note {
+      margin-top: 14px;
+      font-size: 11px;
+      color: var(--text-sub);
+      text-align: justify;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 12px;
+      }
+      .page {
+        padding: 16px;
+        border-radius: 12px;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .field-inline {
+        flex-direction: column;
+      }
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .page {
+        max-width: 21cm;
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+      }
+      .no-print {
+        display: none !important;
+      }
+      form {
+        background: #ffffff;
+        border-color: #cccccc;
+      }
+      input,
+      select,
+      textarea {
+        background: #ffffff;
+        color: #000000;
+      }
+      .preview-box {
+        background: #ffffff;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="page">
+    <header class="no-print">
+      <div class="brand-wrap">
+        <!-- LOGO Pi Tranmarket: đường dẫn từ /docs/providers/ -->
+        <img
+          src="../trm-logo-hero.png"
+          alt="Tranmarket Pi logo"
+          class="brand-logo"
+        />
+        <div>
+          <div class="brand">TRANMARKET</div>
+          <div class="brand-sub" id="brandSub">
+            Pi-ready service marketplace
+          </div>
+        </div>
+      </div>
 
-<header class="tm-nav">
-  <a href="../index.html" class="tm-logo">TRANMARKET</a>
-  <div class="tm-lang">
-    <button onclick="setLang('vi')" class="tm-lang-btn">VI</button>
-    <button onclick="setLang('cz')" class="tm-lang-btn">CZ</button>
-    <button onclick="setLang('en')" class="tm-lang-btn">EN</button>
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="vi">VI</button>
+        <button class="lang-btn" data-lang="cz">CZ</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+    </header>
+
+    <h1 id="title-main">Đăng ký dịch vụ cùng Tranmarket (KYB)</h1>
+    <p class="subtitle" id="subtitle-main">
+      Kết nối doanh nghiệp / cá nhân cung cấp dịch vụ với cộng đồng người Việt tại Séc &amp; EU.
+    </p>
+    <p class="note-top" id="note-top">
+      Điền đầy đủ thông tin dưới đây. Bạn có thể in trang này, hoặc bấm “Tạo email đăng ký” để
+      mở sẵn nội dung email gửi cho Tranmarket.
+    </p>
+
+    <form id="kyb-form">
+      <div class="field">
+        <label for="f-category" id="lbl-category">Danh mục dịch vụ</label>
+        <select id="f-category" name="category"></select>
+      </div>
+
+      <div class="field">
+        <label for="f-company" id="lbl-company">Tên doanh nghiệp / dịch vụ</label>
+        <input id="f-company" name="company" type="text" />
+      </div>
+
+      <div class="field-inline">
+        <div class="field">
+          <label for="f-person" id="lbl-person">Người phụ trách</label>
+          <input id="f-person" name="person" type="text" />
+        </div>
+        <div class="field">
+          <label for="f-area" id="lbl-area">Khu vực hoạt động</label>
+          <input id="f-area" name="area" type="text" placeholder="Ví dụ: Liberec, Praha, toàn Séc…" />
+        </div>
+      </div>
+
+      <div class="field-inline">
+        <div class="field">
+          <label for="f-phone" id="lbl-phone">Điện thoại / WhatsApp</label>
+          <input id="f-phone" name="phone" type="text" />
+        </div>
+        <div class="field">
+          <label for="f-email" id="lbl-email">Email</label>
+          <input id="f-email" name="email" type="email" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="f-web" id="lbl-web">Website / Facebook (nếu có)</label>
+        <input id="f-web" name="web" type="text" placeholder="https://…" />
+      </div>
+
+      <div class="field">
+        <label for="f-desc" id="lbl-desc">Mô tả dịch vụ (ngắn gọn, 3–5 dòng)</label>
+        <textarea id="f-desc" name="desc"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="f-notes" id="lbl-notes">Ghi chú nội bộ cho Tranmarket (chỉ dùng nội bộ)</label>
+        <textarea id="f-notes" name="notes"></textarea>
+      </div>
+
+      <div class="actions-main no-print">
+        <button type="button" class="btn btn-primary" id="btn-mail">
+          Tạo email đăng ký
+        </button>
+        <button type="button" class="btn btn-secondary" id="btn-copy">
+          Copy nội dung đăng ký
+        </button>
+        <button type="button" class="btn btn-secondary" id="btn-print">
+          In / Lưu PDF
+        </button>
+        <button type="button" class="btn btn-danger" id="btn-reset">
+          Xóa &amp; làm lại
+        </button>
+      </div>
+
+      <div class="field no-print">
+        <label id="lbl-preview">Xem trước nội dung đăng ký</label>
+        <pre class="preview-box" id="previewBox"></pre>
+        <div class="hint" id="hint-bottom">
+          Nội dung xem trước sẽ được dùng cho email gửi đến Tranmarket và lưu trữ KYB.  
+          Bạn có thể in trang này để ký xác nhận nếu cần.
+        </div>
+      </div>
+    </form>
+
+    <p class="footer-note">
+      Tranmarket là nền tảng kết nối dịch vụ cộng đồng, không trực tiếp đứng ra bảo lãnh về pháp lý cho các bên.
+      Các thông tin KYB giúp đội ngũ Tranmarket đánh giá mức độ minh bạch và ưu tiên hiển thị dịch vụ phù hợp
+      với cộng đồng người Việt tại Séc &amp; EU.
+    </p>
   </div>
-</header>
 
-<main class="tm-container">
-  <h1 id="title">Đăng ký dịch vụ cùng Tranmarket (KYB)</h1>
-  <p id="subtitle" class="tm-sub">
-    Kết nối doanh nghiệp / cá nhân cung cấp dịch vụ với cộng đồng người Việt tại Séc & EU
-  </p>
+  <script>
+    const KYB_EMAIL = "contact@tranmarket.cz"; // thay bằng email thật khi có
 
-  <form id="kybForm" class="tm-form">
-    
-    <label id="lab-company">Tên doanh nghiệp / dịch vụ</label>
-    <input type="text" id="company">
+    const KYB_TEXT = {
+      vi: {
+        brandSub: "Nền tảng dịch vụ Pi-ready",
+        title: "Đăng ký dịch vụ cùng Tranmarket (KYB)",
+        subtitle:
+          "Kết nối doanh nghiệp / cá nhân cung cấp dịch vụ với cộng đồng người Việt tại Séc & EU.",
+        noteTop:
+          "Điền đầy đủ thông tin dưới đây. Bạn có thể in trang này, hoặc bấm “Tạo email đăng ký” để mở sẵn nội dung email gửi cho Tranmarket.",
+        labels: {
+          category: "Danh mục dịch vụ",
+          company: "Tên doanh nghiệp / dịch vụ",
+          person: "Người phụ trách",
+          area: "Khu vực hoạt động",
+          phone: "Điện thoại / WhatsApp",
+          email: "Email",
+          web: "Website / Facebook (nếu có)",
+          desc: "Mô tả dịch vụ (ngắn gọn, 3–5 dòng)",
+          notes: "Ghi chú nội bộ cho Tranmarket (chỉ dùng nội bộ)",
+          preview: "Xem trước nội dung đăng ký",
+          hintBottom:
+            "Nội dung xem trước sẽ được dùng cho email gửi đến Tranmarket và lưu trữ KYB. Bạn có thể in trang này để ký xác nhận nếu cần."
+        },
+        buttons: {
+          mail: "Tạo email đăng ký",
+          copy: "Copy nội dung đăng ký",
+          print: "In / Lưu PDF",
+          reset: "Xóa & làm lại"
+        },
+        categories: [
+          "Logistics – Gửi hàng / vận chuyển",
+          "Thanh toán – Pháp lý – Bảo hiểm",
+          "Giấy tờ – Thông dịch – Hồ sơ",
+          "Sửa chữa – Nhà ở – Xây dựng",
+          "Xe & Garage",
+          "Taxi – Vận chuyển",
+          "Du lịch – Tour",
+          "Làm đẹp – Spa – Tóc",
+          "Giáo dục – Dạy kèm – Ngoại ngữ",
+          "Sức khỏe – Hỗ trợ y tế",
+          "Nhà hàng – Thực phẩm – Siêu thị",
+          "Luật – Doanh nghiệp",
+          "Trải nghiệm – Đời sống",
+          "Khác"
+        ],
+        previewTitle: "ĐĂNG KÝ DỊCH VỤ MỚI – KYB TRANMARKET",
+        previewFields: {
+          category: "Danh mục",
+          company: "Tên dịch vụ / doanh nghiệp",
+          person: "Người phụ trách",
+          area: "Khu vực hoạt động",
+          phone: "Phone / WhatsApp",
+          email: "Email",
+          web: "Website / Facebook",
+          desc: "Mô tả dịch vụ",
+          notes: "Ghi chú nội bộ"
+        },
+        confirmReset: "Bạn có chắc muốn xóa sạch nội dung form không?",
+        copyOk: "Đã copy nội dung đăng ký vào clipboard.",
+        copyErr: "Không copy tự động được. Vui lòng chọn và copy thủ công.",
+        mailSubject: "Đăng ký dịch vụ mới – KYB Tranmarket",
+        mailBodyIntro: "Chào Tranmarket,\n\nTôi gửi đăng ký dịch vụ mới với thông tin như sau:\n\n"
+      },
 
-    <label id="lab-person">Người phụ trách</label>
-    <input type="text" id="person">
+      cz: {
+        brandSub: "Pi-ready marketplace pro služby",
+        title: "Registrace služby u Tranmarket (KYB)",
+        subtitle:
+          "Propojení vietnamských poskytovatelů služeb s komunitou v Česku a EU.",
+        noteTop:
+          "Vyplňte prosím všechny údaje. Formulář můžete vytisknout, nebo kliknout na „Vytvořit e-mail“, čímž se otevře předvyplněný e-mail pro Tranmarket.",
+        labels: {
+          category: "Kategorie služby",
+          company: "Název firmy / služby",
+          person: "Kontaktní osoba",
+          area: "Oblast působení",
+          phone: "Telefon / WhatsApp",
+          email: "E-mail",
+          web: "Web / Facebook (pokud máte)",
+          desc: "Stručný popis služby (3–5 řádků)",
+          notes: "Interní poznámky pro Tranmarket (nejde na web)",
+          preview: "Náhled registračního obsahu",
+          hintBottom:
+            "Tento náhled bude použit pro e-mail na Tranmarket a pro KYB archiv. Stránku můžete vytisknout a podepsat, pokud je to potřeba."
+        },
+        buttons: {
+          mail: "Vytvořit e-mail",
+          copy: "Zkopírovat obsah registrace",
+          print: "Tisk / Uložit PDF",
+          reset: "Vymazat a začít znovu"
+        },
+        categories: [
+          "Logistika – zásilky / přeprava",
+          "Platby – Právo – Pojištění",
+          "Doklady – Tlumočení – Dokumenty",
+          "Opravy – Bydlení – Stavebnictví",
+          "Auto & Garage",
+          "Taxi – Přeprava",
+          "Cestování – Zájezdy",
+          "Krása – Spa – Vlasy",
+          "Vzdělávání – Doučování – Jazyky",
+          "Zdraví – Podpora",
+          "Restaurace – Potraviny – Obchody",
+          "Právo – Firma",
+          "Zážitky – Životní styl",
+          "Jiné"
+        ],
+        previewTitle: "REGISTRACE NOVÉ SLUŽBY – KYB TRANMARKET",
+        previewFields: {
+          category: "Kategorie",
+          company: "Firma / Služba",
+          person: "Kontaktní osoba",
+          area: "Oblast",
+          phone: "Telefon / WhatsApp",
+          email: "E-mail",
+          web: "Web / Facebook",
+          desc: "Popis služby",
+          notes: "Interní poznámky"
+        },
+        confirmReset: "Opravdu chcete vymazat celý formulář?",
+        copyOk: "Obsah registrace byl zkopírován do schránky.",
+        copyErr:
+          "Automatické kopírování selhalo. Prosím označte text ručně a zkopírujte jej.",
+        mailSubject: "Registrace nové služby – KYB Tranmarket",
+        mailBodyIntro:
+          "Dobrý den,\n\nzasílám registraci nové služby s následujícími údaji:\n\n"
+      },
 
-    <label id="lab-phone">Điện thoại / WhatsApp</label>
-    <input type="text" id="phone">
+      en: {
+        brandSub: "Pi-ready service marketplace",
+        title: "Register your service with Tranmarket (KYB)",
+        subtitle:
+          "Connect Vietnamese service providers with the community across Czechia & the EU.",
+        noteTop:
+          "Please fill in all fields below. You can print this page, or click “Create registration email” to open a pre-filled email to Tranmarket.",
+        labels: {
+          category: "Service category",
+          company: "Business / Service name",
+          person: "Contact person",
+          area: "Service area",
+          phone: "Phone / WhatsApp",
+          email: "Email",
+          web: "Website / Facebook (optional)",
+          desc: "Service description (short, 3–5 lines)",
+          notes: "Internal notes for Tranmarket (not public)",
+          preview: "Registration preview",
+          hintBottom:
+            "This preview will be used for the email to Tranmarket and for KYB records. You may print this page for signature if needed."
+        },
+        buttons: {
+          mail: "Create registration email",
+          copy: "Copy registration text",
+          print: "Print / Save PDF",
+          reset: "Clear form"
+        },
+        categories: [
+          "Logistics – Shipping / Transport",
+          "Payments – Legal – Insurance",
+          "Documents – Translation – Papers",
+          "Repairs – Housing – Construction",
+          "Car & Garage",
+          "Taxi – Transport",
+          "Travel – Tours",
+          "Beauty – Spa – Hair",
+          "Education – Tutoring – Language",
+          "Health – Support",
+          "Food – Restaurant – Groceries",
+          "Law – Business",
+          "Experience – Lifestyle",
+          "Other"
+        ],
+        previewTitle: "NEW SERVICE REGISTRATION – KYB TRANMARKET",
+        previewFields: {
+          category: "Category",
+          company: "Business / Service",
+          person: "Contact person",
+          area: "Service area",
+          phone: "Phone / WhatsApp",
+          email: "Email",
+          web: "Website / Facebook",
+          desc: "Service description",
+          notes: "Internal notes"
+        },
+        confirmReset: "Are you sure you want to clear the form?",
+        copyOk: "Registration content has been copied to clipboard.",
+        copyErr:
+          "Could not copy automatically. Please select the text manually and copy.",
+        mailSubject: "New service registration – KYB Tranmarket",
+        mailBodyIntro:
+          "Hello Tranmarket,\n\nI am submitting a new service registration with the following details:\n\n"
+      }
+    };
 
-    <label id="lab-email">Email</label>
-    <input type="text" id="email">
+    let currentLang = "vi";
 
-    <label id="lab-web">Website / Facebook (tùy chọn)</label>
-    <input type="text" id="web">
+    const els = {
+      brandSub: document.getElementById("brandSub"),
+      title: document.getElementById("title-main"),
+      subtitle: document.getElementById("subtitle-main"),
+      noteTop: document.getElementById("note-top"),
+      lblCategory: document.getElementById("lbl-category"),
+      lblCompany: document.getElementById("lbl-company"),
+      lblPerson: document.getElementById("lbl-person"),
+      lblArea: document.getElementById("lbl-area"),
+      lblPhone: document.getElementById("lbl-phone"),
+      lblEmail: document.getElementById("lbl-email"),
+      lblWeb: document.getElementById("lbl-web"),
+      lblDesc: document.getElementById("lbl-desc"),
+      lblNotes: document.getElementById("lbl-notes"),
+      lblPreview: document.getElementById("lbl-preview"),
+      hintBottom: document.getElementById("hint-bottom"),
+      btnMail: document.getElementById("btn-mail"),
+      btnCopy: document.getElementById("btn-copy"),
+      btnPrint: document.getElementById("btn-print"),
+      btnReset: document.getElementById("btn-reset"),
+      categorySelect: document.getElementById("f-category"),
+      previewBox: document.getElementById("previewBox"),
+      form: document.getElementById("kyb-form")
+    };
 
-    <label id="lab-category">Danh mục dịch vụ</label>
-    <select id="category">
-      <option value="Logistics">Logistics</option>
-      <option value="Payment">Thanh toán – pháp lý – bảo hiểm</option>
-      <option value="Documents">Giấy tờ – thông dịch – hồ sơ</option>
-      <option value="Repair">Sửa chữa – nhà ở – xây dựng</option>
-      <option value="Auto">Xe & Garage</option>
-      <option value="Transport">Taxi – vận chuyển</option>
-      <option value="Travel">Du lịch – tour</option>
-      <option value="Beauty">Làm đẹp – spa – tóc</option>
-      <option value="Education">Giáo dục – luyện thi – ngoại ngữ</option>
-      <option value="Health">Sức khỏe – hỗ trợ y tế</option>
-      <option value="Food">Nhà hàng – thực phẩm – siêu thị</option>
-      <option value="Legal">Luật – doanh nghiệp</option>
-      <option value="Lifestyle">Trải nghiệm – đời sống</option>
-      <option value="Others">Khác</option>
-    </select>
+    function applyLanguage(lang) {
+      currentLang = lang;
+      const t = KYB_TEXT[lang];
 
-    <label id="lab-region">Khu vực hoạt động</label>
-    <input type="text" id="region">
+      document.documentElement.lang = lang;
 
-    <label id="lab-desc">Mô tả dịch vụ (ngắn gọn)</label>
-    <textarea id="desc"></textarea>
+      els.brandSub.textContent = t.brandSub;
+      els.title.textContent = t.title;
+      els.subtitle.textContent = t.subtitle;
+      els.noteTop.textContent = t.noteTop;
 
-    <div class="tm-btn-group">
-      <button type="button" id="btnPreview" class="tm-btn-main">Xem trước nội dung</button>
-      <button type="button" id="btnSend" class="tm-btn-main">Gửi email đăng ký</button>
-      <button type="button" id="btnCopy" class="tm-btn-alt">Copy nội dung</button>
-      <button type="button" id="btnReset" class="tm-btn-light">Xóa & làm lại</button>
-    </div>
-  </form>
+      els.lblCategory.textContent = t.labels.category;
+      els.lblCompany.textContent = t.labels.company;
+      els.lblPerson.textContent = t.labels.person;
+      els.lblArea.textContent = t.labels.area;
+      els.lblPhone.textContent = t.labels.phone;
+      els.lblEmail.textContent = t.labels.email;
+      els.lblWeb.textContent = t.labels.web;
+      els.lblDesc.textContent = t.labels.desc;
+      els.lblNotes.textContent = t.labels.notes;
+      els.lblPreview.textContent = t.labels.preview;
+      els.hintBottom.textContent = t.labels.hintBottom;
 
-  <div id="deviceHint" class="tm-hint"></div>
+      els.btnMail.textContent = t.buttons.mail;
+      els.btnCopy.textContent = t.buttons.copy;
+      els.btnPrint.textContent = t.buttons.print;
+      els.btnReset.textContent = t.buttons.reset;
 
-  <div id="previewBox" class="tm-preview"></div>
+      els.categorySelect.innerHTML = "";
+      const emptyOption = document.createElement("option");
+      emptyOption.value = "";
+      emptyOption.textContent = "—";
+      els.categorySelect.appendChild(emptyOption);
 
-</main>
+      t.categories.forEach((cat) => {
+        const opt = document.createElement("option");
+        opt.value = cat;
+        opt.textContent = cat;
+        els.categorySelect.appendChild(opt);
+      });
 
-<script>
-const KYB_EMAIL = "tranmarket.cz.eu@gmail.com";
-let currentLang = "vi";
+      updatePreview();
+    }
 
-const i18n = {
-  vi: {
-    title: "Đăng ký dịch vụ cùng Tranmarket (KYB)",
-    subtitle: "Kết nối doanh nghiệp / cá nhân cung cấp dịch vụ với cộng đồng người Việt tại Séc & EU",
-    previewTitle: "Nội dung xem trước",
-    successCopy: "Đã copy nội dung vào bộ nhớ tạm!",
-    failCopy: "Không copy được, hãy copy thủ công!",
-    confirmReset: "Xóa toàn bộ nội dung đã nhập?",
-    sent: "Đã mở email – vui lòng nhấn gửi trong ứng dụng email."
-  },
-  en: {
-    title: "Register your service with Tranmarket (KYB)",
-    subtitle: "Connect Vietnamese service providers with the community across Czechia & the EU",
-    previewTitle: "Preview",
-    successCopy: "Copied to clipboard!",
-    failCopy: "Copy failed!",
-    confirmReset: "Clear the form?",
-    sent: "Email opened — please press Send in your email app."
-  },
-  cz: {
-    title: "Registrace služby na Tranmarket (KYB)",
-    subtitle: "Spojení poskytovatelů služeb s vietnamskou komunitou v ČR a EU",
-    previewTitle: "Náhled",
-    successCopy: "Zkopírováno!",
-    failCopy: "Nelze kopírovat!",
-    confirmReset: "Smazat formulář?",
-    sent: "Email byl otevřen — odešlete jej v emailové aplikaci."
-  }
-};
+    function getFormData() {
+      const formData = new FormData(els.form);
+      return {
+        category: formData.get("category") || "",
+        company: formData.get("company") || "",
+        person: formData.get("person") || "",
+        area: formData.get("area") || "",
+        phone: formData.get("phone") || "",
+        email: formData.get("email") || "",
+        web: formData.get("web") || "",
+        desc: formData.get("desc") || "",
+        notes: formData.get("notes") || ""
+      };
+    }
 
-function setLang(l) {
-  currentLang = l;
-  document.getElementById("title").textContent = i18n[l].title;
-  document.getElementById("subtitle").textContent = i18n[l].subtitle;
-  updatePreview();
-}
+    function buildPreview() {
+      const t = KYB_TEXT[currentLang];
+      const f = t.previewFields;
+      const data = getFormData();
 
-function buildPreview() {
-  const p = (id) => document.getElementById(id).value.trim() || "–";
-  return `📌 Tranmarket – yêu cầu mở dịch vụ\n\n` +
-    `🔹 Dịch vụ: ${p("company")}\n` +
-    `🔹 Người phụ trách: ${p("person")}\n` +
-    `🔹 Phone / WhatsApp: ${p("phone")}\n` +
-    `🔹 Email: ${p("email")}\n` +
-    `🔹 Website / FB: ${p("web")}\n` +
-    `🔹 Danh mục: ${p("category")}\n` +
-    `🔹 Khu vực hoạt động: ${p("region")}\n` +
-    `🔹 Mô tả ngắn: ${p("desc")}\n`;
-}
+      let out = t.previewTitle + "\n\n";
 
-function updatePreview() {
-  const box = document.getElementById("previewBox");
-  box.textContent = buildPreview();
-}
+      out += f.category + ": " + (data.category || "-") + "\n";
+      out += f.company + ": " + (data.company || "-") + "\n";
+      out += f.person + ": " + (data.person || "-") + "\n";
+      out += f.area + ": " + (data.area || "-") + "\n";
+      out += f.phone + ": " + (data.phone || "-") + "\n";
+      out += f.email + ": " + (data.email || "-") + "\n";
+      out += f.web + ": " + (data.web || "-") + "\n\n";
 
-document.getElementById("btnPreview").addEventListener("click", updatePreview);
+      out += f.desc + ":\n" + (data.desc || "-") + "\n\n";
+      out += f.notes + ":\n" + (data.notes || "-") + "\n";
 
-document.getElementById("btnSend").addEventListener("click", () => {
-  updatePreview();
-  const sub = encodeURIComponent("KYB Registration – " + (document.getElementById("company").value || "New service"));
-  const body = encodeURIComponent(buildPreview());
-  window.location.href = `mailto:${KYB_EMAIL}?subject=${sub}&body=${body}`;
-  alert(i18n[currentLang].sent);
-});
+      return out;
+    }
 
-document.getElementById("btnCopy").addEventListener("click", async () => {
-  try {
-    await navigator.clipboard.writeText(buildPreview());
-    alert(i18n[currentLang].successCopy);
-  } catch {
-    alert(i18n[currentLang].failCopy);
-  }
-});
+    function updatePreview() {
+      els.previewBox.textContent = buildPreview();
+    }
 
-document.getElementById("btnReset").addEventListener("click", () => {
-  if (!confirm(i18n[currentLang].confirmReset)) return;
-  document.getElementById("kybForm").reset();
-  updatePreview();
-});
+    els.form.addEventListener("input", updatePreview);
 
-document.addEventListener("DOMContentLoaded", () => {
-  const isMobile = /Android|iPhone|iPad/.test(navigator.userAgent);
-  const hint = document.getElementById("deviceHint");
-  hint.textContent = isMobile
-    ? "Bạn dùng điện thoại — bấm Gửi email để gửi trực tiếp."
-    : "Bạn đang dùng máy tính — bấm Copy nội dung rồi dán vào email.";
-});
-</script>
+    document.querySelectorAll(".lang-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document
+          .querySelectorAll(".lang-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        applyLanguage(btn.dataset.lang);
+      });
+    });
 
+    document.getElementById("btn-copy").addEventListener("click", async () => {
+      const t = KYB_TEXT[currentLang];
+      const text = buildPreview();
+      try {
+        await navigator.clipboard.writeText(text);
+        alert(t.copyOk);
+      } catch (err) {
+        console.warn(err);
+        alert(t.copyErr);
+      }
+    });
+
+    document.getElementById("btn-mail").addEventListener("click", () => {
+      const t = KYB_TEXT[currentLang];
+      const subject = encodeURIComponent(t.mailSubject);
+      const body =
+        encodeURIComponent(t.mailBodyIntro) +
+        encodeURIComponent(buildPreview());
+      const mailto =
+        "mailto:" + encodeURIComponent(KYB_EMAIL) + "?subject=" + subject + "&body=" + body;
+      window.location.href = mailto;
+    });
+
+    document.getElementById("btn-print").addEventListener("click", () => {
+      window.print(); // dùng Print to PDF trên trình duyệt
+    });
+
+    document.getElementById("btn-reset").addEventListener("click", () => {
+      const t = KYB_TEXT[currentLang];
+      if (!confirm(t.confirmReset)) return;
+      els.form.reset();
+      updatePreview();
+    });
+
+    applyLanguage("vi");
+  </script>
 </body>
 </html>
