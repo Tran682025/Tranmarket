@@ -403,40 +403,31 @@
   </div>
 
   <script>
-    const KYB_EMAIL = "contact@tranmarket.cz"; // thay bằng email thật khi có
+  <script>
+const KYB_EMAIL = "tranmarket.kyb@gmail.com";
 
-    const KYB_TEXT = {
-      vi: {
-        brandSub: "Nền tảng dịch vụ Pi-ready",
-        title: "Đăng ký dịch vụ cùng Tranmarket (KYB)",
-        subtitle:
-          "Kết nối doanh nghiệp / cá nhân cung cấp dịch vụ với cộng đồng người Việt tại Séc & EU.",
-        noteTop:
-          "Điền đầy đủ thông tin dưới đây. Bạn có thể in trang này, hoặc bấm “Tạo email đăng ký” để mở sẵn nội dung email gửi cho Tranmarket.",
-        labels: {
-          category: "Danh mục dịch vụ",
-          company: "Tên doanh nghiệp / dịch vụ",
-          person: "Người phụ trách",
-          area: "Khu vực hoạt động",
-          phone: "Điện thoại / WhatsApp",
-          email: "Email",
-          web: "Website / Facebook (nếu có)",
-          desc: "Mô tả dịch vụ (ngắn gọn, 3–5 dòng)",
-          notes: "Ghi chú nội bộ cho Tranmarket (chỉ dùng nội bộ)",
-          preview: "Xem trước nội dung đăng ký",
-          hintBottom:
-            "Nội dung xem trước sẽ được dùng cho email gửi đến Tranmarket và lưu trữ KYB. Bạn có thể in trang này để ký xác nhận nếu cần."
-        },
-        buttons: {
-          mail: "Tạo email đăng ký",
-          copy: "Copy nội dung đăng ký",
-          print: "In / Lưu PDF",
-          reset: "Xóa & làm lại"
-        },
-        categories: [
-        const KYB_TEXT = {
+const KYB_TEXT = {
   vi: {
-    // ...
+    title: "Đăng ký dịch vụ cùng Tranmarket (KYB)",
+    subtitle: "Kết nối doanh nghiệp / cá nhân cung cấp dịch vụ với cộng đồng người Việt tại Séc & EU.",
+    formIntro: "Điền đầy đủ thông tin dưới đây. Bạn có thể in trang này, hoặc bấm \"Tạo email đăng ký\" để mở sẵn nội dung email gửi cho Tranmarket.",
+    labels: {
+      category: "Danh mục dịch vụ",
+      company: "Tên doanh nghiệp / dịch vụ",
+      person: "Người phụ trách",
+      area: "Khu vực hoạt động",
+      phone: "Điện thoại / WhatsApp",
+      email: "Email",
+      website: "Website / Facebook (nếu có)",
+      desc: "Mô tả dịch vụ (ngắn gọn, 3–5 dòng)",
+      notes: "Ghi chú nội bộ cho Tranmarket (chỉ dùng nội bộ)"
+    },
+    buttons: {
+      mail: "Tạo email đăng ký",
+      copy: "Copy nội dung đăng ký",
+      print: "In / Lưu PDF",
+      reset: "Xóa & làm lại"
+    },
     categories: [
       "Logistics – Gửi hàng / vận chuyển",
       "Thanh toán – Pháp lý – Bảo hiểm",
@@ -458,11 +449,47 @@
       "Dịch vụ cưới hỏi – tiệc – lễ hội",
       "Khác"
     ],
-    // ...
+    previewTitle: "ĐĂNG KÝ DỊCH VỤ MỚI – KYB TRANMARKET",
+    previewFields: {
+      category: "Danh mục:",
+      company: "Tên dịch vụ / doanh nghiệp:",
+      person: "Người phụ trách:",
+      area: "Khu vực hoạt động:",
+      phone: "Phone / WhatsApp:",
+      email: "Email:",
+      website: "Website / Facebook:",
+      desc: "Mô tả dịch vụ:",
+      notes: "Ghi chú nội bộ:"
+    },
+    confirmReset: "Bạn có chắc muốn xóa sạch nội dung form không?",
+    copyOk: "Đã copy nội dung đăng ký vào clipboard.",
+    copyErr: "Không copy được nội dung. Vui lòng copy thủ công.",
+    mailSubject: "Đăng ký dịch vụ mới – KYB Tranmarket",
+    mailBodyIntro: "Chào Tranmarket,\n\nTôi muốn đăng ký dịch vụ mới với thông tin như sau:\n\n",
+    hintBottom: "Nội dung xem trước sẽ được dùng cho email gửi đến Tranmarket và lưu trữ KYB. Bạn có thể in trang này để ký xác nhận nếu cần."
   },
 
   cz: {
-    // ...
+    title: "Registrace služby u Tranmarket (KYB)",
+    subtitle: "Propojení vietnamských poskytovatelů služeb s komunitou v Česku & EU.",
+    formIntro: "Vyplňte prosím všechny údaje. Formulář můžete vytisknout, nebo kliknout na „Vytvořit e-mail“, čímž se otevře předvyplněný e-mail pro Tranmarket.",
+    labels: {
+      category: "Kategorie služby",
+      company: "Název firmy / služby",
+      person: "Kontaktní osoba",
+      area: "Oblast působení",
+      phone: "Telefon / WhatsApp",
+      email: "E-mail",
+      website: "Web / Facebook (volitelné)",
+      desc: "Popis služby (stručně, 3–5 řádků)",
+      notes: "Interní poznámky pro Tranmarket (jen pro vnitřní potřebu)"
+    },
+    buttons: {
+      mail: "Vytvořit e-mail registrace",
+      copy: "Zkopírovat obsah registrace",
+      print: "Tisk / Uložit PDF",
+      reset: "Vymazat a začít znovu"
+    },
     categories: [
       "Logistika – zásilky / přeprava",
       "Platby – Právo – Pojištění",
@@ -484,11 +511,47 @@
       "Svatby – Oslavy – Obřady",
       "Jiné"
     ],
-    // ...
+    previewTitle: "REGISTRACE NOVÉ SLUŽBY – KYB TRANMARKET",
+    previewFields: {
+      category: "Kategorie:",
+      company: "Firma / Služba:",
+      person: "Kontaktní osoba:",
+      area: "Oblast působení:",
+      phone: "Telefon / WhatsApp:",
+      email: "E-mail:",
+      website: "Web / Facebook:",
+      desc: "Popis služby:",
+      notes: "Interní poznámky:"
+    },
+    confirmReset: "Opravdu chcete vymazat celý formulář?",
+    copyOk: "Obsah registrace byl zkopírován do schránky.",
+    copyErr: "Nepodařilo se zkopírovat. Zkuste prosím zkopírovat ručně.",
+    mailSubject: "Registrace nové služby – KYB Tranmarket",
+    mailBodyIntro: "Dobrý den,\n\nrádi bychom zaregistrovali novou službu s následujícími údaji:\n\n",
+    hintBottom: "Náhled registrace slouží jako podklad pro e-mail a pro interní KYB archiv. Formulář si můžete vytisknout pro podpis, pokud je potřeba."
   },
 
   en: {
-    // ...
+    title: "Register your service with Tranmarket (KYB)",
+    subtitle: "Connect Vietnamese service providers with the community across Czechia & the EU.",
+    formIntro: "Please fill in all fields below. You can print this page, or click \"Create registration email\" to open a pre-filled email to Tranmarket.",
+    labels: {
+      category: "Service category",
+      company: "Business / Service name",
+      person: "Contact person",
+      area: "Service area",
+      phone: "Phone / WhatsApp",
+      email: "Email",
+      website: "Website / Facebook (optional)",
+      desc: "Service description (short, 3–5 lines)",
+      notes: "Internal notes for Tranmarket (not public)"
+    },
+    buttons: {
+      mail: "Create registration email",
+      copy: "Copy registration text",
+      print: "Print / Save PDF",
+      reset: "Clear form"
+    },
     categories: [
       "Logistics – Shipping / Transport",
       "Payments – Legal – Insurance",
@@ -510,9 +573,30 @@
       "Wedding – Events – Ceremony services",
       "Other"
     ],
-    // ...
+    previewTitle: "NEW SERVICE REGISTRATION – KYB TRANMARKET",
+    previewFields: {
+      category: "Category:",
+      company: "Business / Service:",
+      person: "Contact person:",
+      area: "Service area:",
+      phone: "Phone / WhatsApp:",
+      email: "Email:",
+      website: "Website / Facebook:",
+      desc: "Service description:",
+      notes: "Internal notes:"
+    },
+    confirmReset: "Are you sure you want to clear the form?",
+    copyOk: "Registration content has been copied to clipboard.",
+    copyErr: "Could not copy to clipboard. Please copy manually.",
+    mailSubject: "New service registration – KYB Tranmarket",
+    mailBodyIntro: "Hello Tranmarket,\n\nI would like to register a new service with the following details:\n\n",
+    hintBottom: "This preview will be used for the email to Tranmarket and for KYB records. You may print this page for signatures if needed."
   }
 };
+
+// (các hàm JS bên dưới giữ nguyên)
+</script>
+
 
 
         previewTitle: "ĐĂNG KÝ DỊCH VỤ MỚI – KYB TRANMARKET",
