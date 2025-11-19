@@ -1,596 +1,668 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>Taxi Tranmarket – Liberec | Tranmarket.cz</title>
+  <title>Taxi Tranmarket – Liberec</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <style>
     :root {
-      --tm-bg: #0b0b14;
-      --tm-card: #181827;
-      --tm-border: #6f3cff;
-      --tm-border-soft: #3d355c;
-      --tm-text: #f5f5ff;
-      --tm-muted: #b3b3cc;
-      --tm-accent: #a855ff;
-      --tm-accent-soft: rgba(168, 85, 255, 0.12);
-      --tm-success: #22c55e;
+      --bg: #050018;
+      --bg-soft: #130932;
+      --card: #1c1040;
+      --card-soft: #281659;
+      --accent: #c084fc;
+      --accent-soft: rgba(192, 132, 252, 0.14);
+      --accent-strong: #f97316;
+      --text-main: #f9fafb;
+      --text-soft: #e5e7eb;
+      --muted: #9ca3af;
+      --danger: #f97373;
+      --border: rgba(148, 163, 184, 0.3);
+      --pill-bg: rgba(15, 23, 42, 0.8);
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.55);
     }
+
     * {
       box-sizing: border-box;
     }
+
     body {
       margin: 0;
+      padding: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #211b3b, #050509);
-      color: var(--tm-text);
+      background: radial-gradient(circle at top, #1f073f, #050018 52%);
+      color: var(--text-main);
+      min-height: 100vh;
     }
-    .page {
-      max-width: 1200px;
+
+    .page-shell {
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 24px 16px 40px;
+      padding: 18px 16px 40px;
     }
-    header.top-bar {
+
+    header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
+
     .brand {
       display: flex;
       align-items: center;
       gap: 10px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      font-size: 14px;
     }
+
     .brand-logo {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       border-radius: 999px;
-      border: 1px solid var(--tm-border);
+      background: radial-gradient(circle at 30% 10%, #facc15, #f97316 38%, #7c2dba);
+      box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.5);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at 30% 0, #f97316, #581c87);
+      color: #111827;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      font-size: 14px;
+    }
+
+    .brand-title {
       font-size: 18px;
+      font-weight: 650;
+      letter-spacing: 0.08em;
     }
-    .lang-switch {
-      display: flex;
-      gap: 8px;
+
+    .lang-toggle {
+      display: inline-flex;
       align-items: center;
-      font-size: 12px;
-    }
-    .lang-pill {
-      padding: 4px 10px;
+      justify-content: center;
+      gap: 6px;
+      padding: 4px;
       border-radius: 999px;
-      border: 1px solid var(--tm-border-soft);
-      background: rgba(8, 8, 16, 0.85);
-      cursor: default;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.4);
     }
-    .lang-pill.active {
-      border-color: var(--tm-border);
-      background: var(--tm-accent-soft);
+
+    .lang-pill {
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 11px;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: var(--muted);
     }
-    .breadcrumb {
-      font-size: 12px;
-      color: var(--tm-muted);
-      margin-bottom: 12px;
+
+    .lang-pill.is-active {
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+      color: #f9fafb;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.8);
     }
-    .breadcrumb a {
-      color: var(--tm-muted);
+
+    .crumbs {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .crumbs a {
+      color: var(--muted);
       text-decoration: none;
     }
-    .breadcrumb a:hover {
-      text-decoration: underline;
-    }
+
     .layout {
       display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(260px, 0.9fr);
-      gap: 24px;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+      gap: 18px;
     }
-    @media (max-width: 840px) {
+
+    @media (max-width: 860px) {
       .layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
     }
+
     .card {
-      background: rgba(10, 10, 20, 0.95);
-      border-radius: 18px;
-      border: 1px solid var(--tm-border-soft);
-      padding: 18px 20px;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+      background: radial-gradient(circle at top left, var(--card-soft), var(--card));
+      border-radius: 24px;
+      padding: 18px 18px 20px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(148, 163, 184, 0.35);
     }
-    .card.highlight {
-      border-color: var(--tm-border);
-      box-shadow: 0 0 0 1px rgba(111, 60, 255, 0.3), 0 18px 50px rgba(0, 0, 0, 0.7);
-    }
-    .provider-header {
+
+    .card-header {
       display: flex;
       align-items: flex-start;
-      gap: 18px;
-      margin-bottom: 14px;
+      gap: 14px;
+      margin-bottom: 10px;
     }
-    .provider-logo {
-      width: 60px;
-      height: 60px;
-      border-radius: 20px;
-      background: radial-gradient(circle at 20% 0, #fde68a, #7c2d12);
-      border: 1px solid rgba(255, 255, 255, 0.18);
+
+    .service-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 18px;
+      background: radial-gradient(circle at 30% 0%, #fef3c7, #f97316 32%, #7c2dba);
       display: flex;
       align-items: center;
       justify-content: center;
+      color: #0f172a;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .service-heading-main {
+      font-size: 20px;
       font-weight: 700;
-      font-size: 22px;
+      margin: 0 0 4px;
     }
-    .provider-main h1 {
-      font-size: 22px;
-      margin: 0 0 6px;
-    }
-    .provider-main p.subtitle {
+
+    .service-subtitle {
       margin: 0;
       font-size: 13px;
-      color: var(--tm-muted);
+      color: var(--text-soft);
     }
-    .meta-row {
+
+    .pill-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 8px;
-      font-size: 12px;
-      color: var(--tm-muted);
+      gap: 8px;
+      margin-top: 10px;
     }
-    .meta-pill {
+
+    .pill-row .pill {
       padding: 4px 10px;
       border-radius: 999px;
-      border: 1px solid var(--tm-border-soft);
-      background: rgba(12, 12, 24, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      font-size: 11px;
+      color: var(--text-soft);
+      background: rgba(15, 23, 42, 0.7);
     }
-    .meta-pill.verified {
-      border-color: var(--tm-success);
-      color: var(--tm-success);
+
+    .pill.verified {
+      border-color: #22c55e;
+      color: #bbf7d0;
+      background: rgba(22, 163, 74, 0.16);
     }
-    .provider-body {
+
+    .pill.rating {
+      border-color: #facc15;
+      color: #fef9c3;
+      background: rgba(234, 179, 8, 0.16);
+    }
+
+    .details-columns {
       display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-      gap: 16px;
-      margin-top: 8px;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: 14px;
+      margin-top: 12px;
     }
-    @media (max-width: 720px) {
-      .provider-body {
-        grid-template-columns: 1fr;
+
+    @media (max-width: 640px) {
+      .details-columns {
+        grid-template-columns: minmax(0, 1fr);
       }
     }
-    .section-title {
-      font-size: 14px;
+
+    .subcard-title {
+      font-size: 13px;
       font-weight: 600;
       margin-bottom: 6px;
     }
-    .section-text {
+
+    .service-text {
       font-size: 13px;
-      color: var(--tm-muted);
+      color: var(--text-soft);
       line-height: 1.5;
-    }
-    .bullet-list {
-      list-style: none;
-      padding: 0;
-      margin: 8px 0 0;
-      font-size: 13px;
-      color: var(--tm-muted);
-    }
-    .bullet-list li {
-      margin-bottom: 4px;
-      display: flex;
-      gap: 6px;
-      align-items: flex-start;
-    }
-    .bullet-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--tm-accent);
-      margin-top: 5px;
-      flex-shrink: 0;
-    }
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 6px;
-    }
-    .tag {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid var(--tm-border-soft);
-      color: var(--tm-muted);
-    }
-    .tag.hot {
-      border-color: var(--tm-border);
-      background: var(--tm-accent-soft);
-      color: var(--tm-text);
-    }
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
-    }
-    .primary-button,
-    .secondary-button {
-      padding: 8px 16px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-size: 13px;
-      cursor: pointer;
-      background: transparent;
-      color: var(--tm-text);
-    }
-    .primary-button {
-      background: linear-gradient(135deg, #a855ff, #ec4899);
-      border-color: rgba(255, 255, 255, 0.1);
-    }
-    .secondary-button {
-      border-color: var(--tm-border);
-      background: rgba(12, 12, 24, 0.9);
-    }
-    .price-card {
-      border-radius: 16px;
-      border: 1px dashed var(--tm-border-soft);
-      background: radial-gradient(circle at top, rgba(111, 60, 255, 0.2), rgba(8, 8, 16, 0.95));
-      padding: 12px 14px;
       margin-bottom: 8px;
     }
-    .price-main {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
+
+    .price-box {
+      padding: 10px 12px;
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px dashed rgba(148, 163, 184, 0.5);
+      font-size: 13px;
+      color: var(--text-soft);
+    }
+
+    .price-line-main {
+      font-weight: 600;
+      color: #e5e7eb;
       margin-bottom: 4px;
     }
-    .price-main span.label {
-      font-size: 12px;
-      color: var(--tm-muted);
-    }
-    .price-main span.value {
-      font-size: 16px;
-      font-weight: 600;
-    }
-    .price-note {
+
+    .small-note {
       font-size: 11px;
-      color: var(--tm-muted);
+      color: var(--muted);
     }
-    .steps {
+
+    .step-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 8px;
       margin-top: 10px;
-      font-size: 11px;
     }
+
     @media (max-width: 640px) {
-      .steps {
-        grid-template-columns: 1fr;
+      .step-grid {
+        grid-template-columns: minmax(0, 1fr);
       }
     }
+
     .step-pill {
-      border-radius: 999px;
-      border: 1px solid var(--tm-border-soft);
-      padding: 6px 10px;
-      color: var(--tm-muted);
-      background: rgba(10, 10, 20, 0.8);
+      padding: 8px 9px;
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      font-size: 12px;
+      color: var(--text-soft);
     }
-    .sidebar-title {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 8px;
+
+    aside .card-title {
+      font-size: 15px;
+      font-weight: 650;
+      margin-bottom: 4px;
     }
-    .highlight-badge {
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: var(--tm-accent-soft);
-      border: 1px solid var(--tm-border);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+
+    aside .card-subtitle {
+      font-size: 12px;
+      color: var(--text-soft);
       margin-bottom: 10px;
     }
-    .highlight-badge span.dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--tm-accent);
-    }
+
     .contact-form {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       margin-top: 4px;
     }
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
+
     .field label {
-      font-size: 11px;
-      color: var(--tm-muted);
-    }
-    .field input,
-    .field textarea,
-    .field select {
-      border-radius: 10px;
-      border: 1px solid var(--tm-border-soft);
-      background: rgba(7, 7, 14, 0.9);
-      padding: 7px 9px;
+      display: block;
       font-size: 12px;
-      color: var(--tm-text);
-      outline: none;
+      color: var(--text-soft);
+      margin-bottom: 4px;
     }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.85);
+      padding: 6px 9px;
+      font-size: 13px;
+      color: var(--text-main);
+    }
+
     .field textarea {
       min-height: 70px;
       resize: vertical;
     }
+
+    .primary-button,
+    .secondary-button {
+      width: 100%;
+      border-radius: var(--radius-pill);
+      border: none;
+      padding: 9px 12px;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .primary-button {
+      background: linear-gradient(135deg, #4f46e5, #a855f7);
+      color: #f9fafb;
+      box-shadow: 0 12px 30px rgba(88, 28, 135, 0.65);
+      margin-top: 6px;
+    }
+
+    .primary-button:hover {
+      filter: brightness(1.05);
+    }
+
+    .secondary-button {
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-soft);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+    }
+
+    .secondary-button:hover {
+      background: rgba(30, 64, 175, 0.6);
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cta-row .secondary-button {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
     .trust-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 10px;
-      font-size: 10px;
-      color: var(--tm-muted);
+      gap: 8px;
+      margin-top: 14px;
     }
+
     .trust-pill {
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid var(--tm-border-soft);
-      background: rgba(5, 5, 12, 0.9);
-    }
-    footer.page-footer {
-      margin-top: 24px;
       font-size: 11px;
-      color: var(--tm-muted);
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--pill-bg);
+      color: var(--muted);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+    }
+
+    .device-hint {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    footer.page-footer {
+      margin-top: 22px;
+      font-size: 11px;
       text-align: center;
-      opacity: 0.8;
+      color: var(--muted);
     }
   </style>
 </head>
+
 <body>
-  <div class="page">
-    <header class="top-bar">
+  <div class="page-shell">
+    <header>
       <div class="brand">
-        <div class="brand-logo">T</div>
-        <div>TRANMARKET</div>
+        <div class="brand-logo">TM</div>
+        <div class="brand-title">TRANMARKET</div>
       </div>
-      <div class="lang-switch">
-        <span>Language:</span>
-        <button class="lang-pill active">CZ</button>
+
+      <div class="lang-toggle" aria-label="Language">
+        <button class="lang-pill is-active">VI</button>
+        <button class="lang-pill">CZ</button>
         <button class="lang-pill">EN</button>
-        <button class="lang-pill">VI</button>
       </div>
     </header>
 
-    <div class="breadcrumb">
-      <a href="../index.html">Home</a> ›
-      <a href="../day5-category-b.html">Category B</a> ›
-      <span>Taxi Tranmarket – Liberec</span>
+    <div class="crumbs">
+      <a href="/Tranmarket/">Tranmarket</a> ·
+      <a href="/Tranmarket/day5-category-b.html">Category B</a> ·
+      Taxi Tranmarket – Liberec
     </div>
 
-    <main class="layout">
-      <section class="card highlight">
-        <div class="provider-header">
-          <div class="provider-logo">TX</div>
-          <div class="provider-main">
-            <h1>Taxi Tranmarket – Liberec</h1>
-            <p class="subtitle">
-              Taxi – chở khách sân bay – tuyến dài CZ / DE / PL – hỗ trợ tiếng Việt.
-            </p>
-            <div class="meta-row">
-              <span class="meta-pill verified">✅ KYB VERIFIED</span>
-              <span class="meta-pill">Owner: Người Việt – CZ / EN / VI</span>
-              <span class="meta-pill">Base: Liberec, CZ</span>
-              <span class="meta-pill">Rating: 4.9 / 5 (128 chuyến)</span>
+    <div class="layout">
+      <main>
+        <section class="card">
+          <div class="card-header">
+            <div class="service-badge">TX</div>
+            <div>
+              <h1 class="service-heading-main">Taxi Tranmarket – Liberec</h1>
+              <p class="service-subtitle">
+                Taxi – chở khách sân bay · tuyến dài CZ / DE / PL · hỗ trợ tiếng Việt
+              </p>
+
+              <div class="pill-row">
+                <span class="pill verified">KYB VERIFIED</span>
+                <span class="pill">Owner: Người Việt – nội CZ / EU</span>
+                <span class="pill">Base: Liberec, CZ</span>
+                <span class="pill rating">Rating 4.9 / 5 (128 chuyến)</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="provider-body">
-          <div>
-            <div class="section-title">Dịch vụ dành cho người Việt tại Séc – EU</div>
-            <p class="section-text">
-              Taxi Tranmarket – Liberec chuyên chở khách người Việt trong khu vực Liberec, Praha
-              và các tuyến dài sang Đức / Ba Lan. Hỗ trợ giao tiếp tiếng Việt, tư vấn lộ trình,
-              lưu ảnh hóa đơn, chi phí nếu bạn cần cho công ty.
-            </p>
-            <ul class="bullet-list">
-              <li>
-                <div class="bullet-dot"></div>
-                <div>Đón – tiễn sân bay (Praha – Dresden – Berlin).</div>
-              </li>
-              <li>
-                <div class="bullet-dot"></div>
-                <div>Chở đi khám bệnh, công chứng, tòa án, làm giấy tờ.</div>
-              </li>
-              <li>
-                <div class="bullet-dot"></div>
-                <div>Tuyến dài đi Đức, Ba Lan, mua hàng, lấy hàng – chở hàng nhẹ.</div>
-              </li>
-              <li>
-                <div class="bullet-dot"></div>
-                <div>Có thể hỗ trợ phiên dịch cơ bản (CZ / EN / VI).</div>
-              </li>
-            </ul>
-            <div class="tag-row">
-              <span class="tag hot">Người Việt vận hành</span>
-              <span class="tag">Thanh toán: Cash / Bank CZK / EUR</span>
-              <span class="tag">Hóa đơn công ty (dle dohody)</span>
+          <div class="details-columns">
+            <div>
+              <div class="subcard-title">Dịch vụ chính</div>
+              <p class="service-text">
+                Taxi Tranmarket – Liberec chuyên phục vụ người Việt trong khu vực Liberec,
+                Praha và các tuyến dài đi sân bay / biên giới / thành phố lớn trong và ngoài
+                CH Séc. Có thể đón khách tại nhà, nhà ga, bến xe, sân bay hoặc theo điểm hẹn.
+              </p>
+              <p class="service-text">
+                Ưu tiên các chuyến đặt trước, có thể hỗ trợ tiếng Việt – Séc – Anh cơ bản.
+                Phù hợp gia đình, khách đi công tác, đưa đón người thân, đi khám bệnh hoặc
+                mua sắm tại các thành phố lớn trong khu vực CZ / EU.
+              </p>
+
+              <div class="step-grid">
+                <div class="step-pill">
+                  1. Điền thông tin chuyến đi (ngày giờ, điểm đón, điểm đến, loại xe…)
+                </div>
+                <div class="step-pill">
+                  2. Bấm gửi qua WhatsApp / SMS để kết nối trực tiếp với tài xế
+                </div>
+                <div class="step-pill">
+                  3. Tài xế xác nhận giá và thời gian đón, chụp biển số xe nếu cần
+                </div>
+                <div class="step-pill">
+                  4. Thanh toán trực tiếp bằng tiền mặt, chuyển khoản, hoặc theo thỏa thuận
+                </div>
+              </div>
             </div>
+
+            <div>
+              <div class="subcard-title">Giá tham khảo (1–4 người)</div>
+              <div class="price-box">
+                <div class="price-line-main">Liberec → Praha (1 chiều): từ 2 000 Kč</div>
+                <div class="small-note">
+                  Giá có thể thay đổi theo thời điểm, điều kiện đường xá, thời gian đón
+                  (đêm / sáng sớm) và loại xe.
+                </div>
+                <hr style="border:none;border-top:1px dashed rgba(148,163,184,0.45);margin:8px 0;">
+                <div class="price-line-main">Pick-up sân bay Praha → Liberec: từ 2 200 Kč</div>
+                <div class="small-note">
+                  Giá chính xác sẽ được tài xế báo trước khi chốt chuyến. Với nhóm đông
+                  hoặc nhiều hành lý có thể cần xe 7–9–16 chỗ, phụ thu sẽ được thông báo rõ ràng.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <aside>
+        <section class="card">
+          <div class="card-title">Đặt qua Tranmarket – an toàn hơn giao dịch tự phát</div>
+          <div class="card-subtitle">
+            Điền nhanh thông tin, hệ thống sẽ chuyển trực tiếp tới nhà cung cấp. Bạn chỉ
+            nhận phản hồi qua email / số điện thoại đã nhập, không dùng cho quảng cáo.
+          </div>
+
+          <form class="contact-form" id="tm-taxi-form">
+            <div class="field">
+              <label>Họ tên của bạn</label>
+              <input id="tm-name" type="text" placeholder="Nguyễn Văn A" />
+            </div>
+
+            <div class="field">
+              <label>Email hoặc số điện thoại</label>
+              <input id="tm-phone" type="text" placeholder="(+420) xxx xxx xxx" />
+            </div>
+
+            <div class="field">
+              <label>Ngày – giờ mong muốn</label>
+              <input id="tm-time" type="text" placeholder="VD: 22.11.2025, 08:30 – sân bay Praha" />
+            </div>
+
+            <div class="field">
+              <label>Điểm đón</label>
+              <input id="tm-pickup" type="text" placeholder="VD: Liberec – náměstí / địa chỉ cụ thể" />
+            </div>
+
+            <div class="field">
+              <label>Điểm đến</label>
+              <input id="tm-dropoff" type="text" placeholder="VD: Letiště Praha / Dresden / Rumburk…" />
+            </div>
+
+            <div class="field">
+              <label>Số người &amp; hành lý</label>
+              <select id="tm-people">
+                <option>1–2 người, ít hành lý</option>
+                <option>3–4 người, nhiều hành lý</option>
+                <option>Gia đình / nhóm lớn</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Loại xe mong muốn</label>
+              <select id="tm-car">
+                <option>Xe 4–5 chỗ (sedan)</option>
+                <option>Xe 7 chỗ (gia đình / nhóm nhỏ)</option>
+                <option>Xe 9–16 chỗ (minibus)</option>
+                <option>Xe 29–45 chỗ (coach, đặt trước)</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Ghi chú cho tài xế (CZ / VI / EN đều được)</label>
+              <textarea id="tm-note" placeholder="VD: Có người già, cần dừng dọc đường; cần hỗ trợ mang đồ…"></textarea>
+            </div>
+
+            <button type="button" class="primary-button" id="tm-wa-btn" onclick="tmSendWhatsApp()">
+              Gửi yêu cầu qua WhatsApp
+            </button>
+
             <div class="cta-row">
-              <button class="primary-button">Yêu cầu báo giá / đặt chuyến</button>
-              <button class="secondary-button">Gửi tin nhắn qua Tranmarket</button>
+              <button type="button" class="secondary-button sms-button" onclick="tmSendSMS()">
+                Gửi yêu cầu bằng SMS
+              </button>
+              <button type="button" class="secondary-button call-button" onclick="tmCallTaxi()">
+                Gọi Taxi ngay
+              </button>
             </div>
+
+            <div class="cta-row" style="margin-top:6px;">
+              <button type="button" class="secondary-button" onclick="tmCopyPhone()">
+                Copy số Taxi
+              </button>
+            </div>
+
+            <div class="device-hint" id="tm-device-hint">
+              Tip: Trên điện thoại, các nút WhatsApp / SMS / Gọi sẽ mở trực tiếp ứng dụng tương ứng.
+            </div>
+          </form>
+
+          <div class="trust-row">
+            <span class="trust-pill">Giai đoạn beta: Tranmarket không thu phí khách lẻ</span>
+            <span class="trust-pill">Thanh toán trực tiếp với nhà cung cấp</span>
+            <span class="trust-pill">Số điện thoại chỉ dùng để chốt chuyến, không dùng cho quảng cáo</span>
           </div>
-
-          <div>
-            <div class="section-title">Giá tham khảo</div>
-            <div class="price-card">
-              <div class="price-main">
-                <span class="label">Liberec → Praha (1–4 người)</span>
-                <span class="value">od 2 000 Kč</span>
-              </div>
-              <div class="price-note">
-                Giá tùy thời gian, lượng hành lý và điểm đón / trả khách cụ thể.
-                Báo giá chính xác sẽ gửi sau khi bạn gửi yêu cầu.
-              </div>
-            </div>
-            <div class="price-card">
-              <div class="price-main">
-                <span class="label">Pick-up sân bay Praha</span>
-                <span class="value">od 2 200 Kč</span>
-              </div>
-              <div class="price-note">
-                Bao gồm 60 phút chờ. Phụ thu nếu chờ thêm giờ.
-              </div>
-            </div>
-            <div class="section-title" style="margin-top:12px;">Cách đặt xe qua Tranmarket</div>
-            <div class="steps">
-              <div class="step-pill">1. Điền thông tin chuyến đi</div>
-              <div class="step-pill">2. Nhận báo giá &amp; thời gian xác nhận</div>
-              <div class="step-pill">3. Chốt chuyến – nhận thông tin tài xế</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <aside class="card">
-        <div class="highlight-badge">
-          <span class="dot"></span>
-          <span>Book qua Tranmarket – an toàn hơn giao dịch tự phát</span>
-        </div>
-        <div class="sidebar-title">Gửi yêu cầu cho Taxi Tranmarket</div>
-        <p class="section-text" style="font-size:12px;">
-          Điền nhanh thông tin, hệ thống sẽ chuyển trực tiếp tới nhà cung cấp.
-          Bạn sẽ nhận phản hồi qua email hoặc số điện thoại.
-        </p>
-       <!-- 1) THAY KHỐI BUTTON Ở PHẦN BÊN PHẢI (TRONG <aside>), ngay dưới <form class="contact-form"> -->
-
-<form class="contact-form" id="tm-taxi-form">
-  <div class="field">
-    <label>Họ tên của bạn</label>
-    <input id="tm-name" type="text" placeholder="Nguyễn Văn A" />
-  </div>
-  <div class="field">
-    <label>Email hoặc số điện thoại</label>
-    <input id="tm-phone" type="text" placeholder="(+420) xxx xxx xxx" />
-  </div>
-  <div class="field">
-    <label>Ngày – giờ mong muốn</label>
-    <input id="tm-time" type="text" placeholder="VD: 24.11, 08:30 – sân bay Praha" />
-  </div>
-  <div class="field">
-    <label>Điểm đón</label>
-    <input id="tm-pickup" type="text" placeholder="VD: Liberec – náměstí / adresa cụ thể" />
-  </div>
-  <div class="field">
-    <label>Điểm đến</label>
-    <input id="tm-dropoff" type="text" placeholder="VD: Letiště Praha / Dresden / …" />
-  </div>
-  <div class="field">
-    <label>Số người &amp; hành lý</label>
-    <select id="tm-people">
-      <option>1–2 người, ít hành lý</option>
-      <option>3–4 người, nhiều hành lý</option>
-      <option>Gia đình / nhóm lớn</option>
-    </select>
-  </div>
-  <div class="field">
-    <label>Ghi chú cho tài xế (CZ / VI / EN đều được)</label>
-    <textarea id="tm-note" placeholder="VD: Có người già, cần dừng dọc đường; cần hỗ trợ mang đồ..."></textarea>
-  </div>
-
-  <!-- Nút chính: gửi qua WhatsApp (phương án B) -->
-  <button type="button" class="primary-button" onclick="tmSendWhatsApp()">
-    Gửi yêu cầu qua WhatsApp
-  </button>
-
-  <!-- Nhóm nút phụ: Gọi điện + SMS -->
-  <div class="cta-row" style="margin-top:10px;">
-    <button type="button" class="secondary-button" onclick="tmCallTaxi()">
-      Gọi Taxi ngay
-    </button>
-    <button type="button" class="secondary-button" onclick="tmSendSMS()">
-      Gửi yêu cầu bằng SMS
-    </button>
-  </div>
-</form>
-
-<div class="trust-row">
-  <span class="trust-pill">Thanh toán trực tiếp với nhà cung cấp</span>
-  <span class="trust-pill">Số điện thoại chỉ dùng để chốt chuyến, không dùng cho quảng cáo</span>
-</div>
-
-        <div class="trust-row">
-          <span class="trust-pill">Giai đoạn beta: Tranmarket không thu phí khách lẻ</span>
-          <span class="trust-pill">Thanh toán trực tiếp với nhà cung cấp</span>
-          <span class="trust-pill">Bạn được đánh giá dịch vụ sau chuyến đi</span>
-        </div>
+        </section>
       </aside>
-    </main>
+    </div>
 
- <!-- 2) THÊM SCRIPT NÀY TRƯỚC THẺ </body> Ở CUỐI FILE Taxi -->
+    <footer class="page-footer">
+      Tranmarket.cz – Nền tảng kết nối dịch vụ cho cộng đồng người Việt tại Séc &amp; EU.
+    </footer>
+  </div>
 
-<script>
-// SỐ TAXI DUY NHẤT
-const TM_TAXI_NUMBER = '420739913276'; // không dấu +
+  <script>
+    // SỐ TAXI DUY NHẤT (KHÔNG DẤU +)
+    const TM_TAXI_NUMBER = '420739913276';
 
-// WhatsApp
-const TM_TAXI_WHATSAPP = TM_TAXI_NUMBER;
+    // WhatsApp dùng số không có dấu +
+    const TM_TAXI_WHATSAPP = TM_TAXI_NUMBER;
 
-// Gọi & SMS
-const TM_TAXI_PHONE = '+' + TM_TAXI_NUMBER;
+    // Gọi điện / SMS cần thêm dấu +
+    const TM_TAXI_PHONE = '+' + TM_TAXI_NUMBER;
 
+    function tmBuildMessage() {
+      const name = (document.getElementById('tm-name').value || '').trim() || '(chưa nhập tên)';
+      const phone = (document.getElementById('tm-phone').value || '').trim() || '(chưa nhập liên hệ)';
+      const time = (document.getElementById('tm-time').value || '').trim() || '(chưa nhập thời gian)';
+      const pickup = (document.getElementById('tm-pickup').value || '').trim() || '(chưa nhập điểm đón)';
+      const drop = (document.getElementById('tm-dropoff').value || '').trim() || '(chưa nhập điểm đến)';
+      const people = (document.getElementById('tm-people').value || '').trim();
+      const car = (document.getElementById('tm-car').value || '').trim();
+      const note = (document.getElementById('tm-note').value || '').trim();
 
-  function tmBuildMessage() {
-    const name   = document.getElementById('tm-name').value.trim()   || '(chưa nhập tên)';
-    const phone  = document.getElementById('tm-phone').value.trim()  || '(chưa nhập liên hệ)';
-    const time   = document.getElementById('tm-time').value.trim()   || '(chưa nhập thời gian)';
-    const pickup = document.getElementById('tm-pickup').value.trim() || '(chưa nhập điểm đón)';
-    const drop   = document.getElementById('tm-dropoff').value.trim()|| '(chưa nhập điểm đến)';
-    const people = document.getElementById('tm-people').value;
-    const note   = document.getElementById('tm-note').value.trim();
-
-    let msg  = 'ĐẶT TAXI TRANMARKET - LIBEREC%0A';
-    msg += 'Tên khách: ' + name + '%0A';
-    msg += 'Liên hệ: ' + phone + '%0A';
-    msg += 'Thời gian: ' + time + '%0A';
-    msg += 'Điểm đón: ' + pickup + '%0A';
-    msg += 'Điểm đến: ' + drop + '%0A';
-    msg += 'Số người & hành lý: ' + people + '%0A';
-    if (note) {
-      msg += 'Ghi chú: ' + note + '%0A';
+      let msg = '';
+      msg += 'ĐẶT TAXI TRANMARKET - LIBEREC\n';
+      msg += 'Tên khách: ' + name + '\n';
+      msg += 'Liên hệ: ' + phone + '\n';
+      msg += 'Thời gian: ' + time + '\n';
+      msg += 'Điểm đón: ' + pickup + '\n';
+      msg += 'Điểm đến: ' + drop + '\n';
+      msg += 'Số người & hành lý: ' + people + '\n';
+      msg += 'Loại xe: ' + car + '\n';
+      if (note) {
+        msg += 'Ghi chú: ' + note + '\n';
+      }
+      msg += '\n(Gửi từ Tranmarket.cz)';
+      return msg;
     }
-    msg += '%0A(Gửi từ Tranmarket.cz)';
-    return msg;
-  }
 
-  // Gửi qua WhatsApp (phương án B)
-  function tmSendWhatsApp() {
-    const text = tmBuildMessage();
-    const url = 'https://wa.me/' + TM_TAXI_WHATSAPP + '?text=' + text;
-    window.open(url, '_blank');
-  }
+    function tmSendWhatsApp() {
+      const text = encodeURIComponent(tmBuildMessage());
+      const url = 'https://wa.me/' + TM_TAXI_WHATSAPP + '?text=' + text;
+      window.open(url, '_blank');
+    }
 
-  // Gửi qua SMS (điện thoại mở app SMS sẵn nội dung)
-  function tmSendSMS() {
-    const text = tmBuildMessage();
-    const url = 'sms:' + TM_TAXI_PHONE + '?&body=' + text;
-    window.location.href = url;
-  }
+    function tmSendSMS() {
+      const text = encodeURIComponent(tmBuildMessage());
+      const url = 'sms:' + TM_TAXI_PHONE + '?&body=' + text;
+      window.location.href = url;
+    }
 
-  // Gọi điện trực tiếp
-  function tmCallTaxi() {
-    window.location.href = 'tel:' + TM_TAXI_PHONE;
-  }
-</script>
-   
+    function tmCallTaxi() {
+      window.location.href = 'tel:' + TM_TAXI_PHONE;
+    }
+
+    function tmCopyPhone() {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(TM_TAXI_PHONE)
+          .then(function () {
+            alert('Đã copy số Taxi: ' + TM_TAXI_PHONE);
+          })
+          .catch(function () {
+            alert('Số Taxi: ' + TM_TAXI_PHONE);
+          });
+      } else {
+        alert('Số Taxi: ' + TM_TAXI_PHONE);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+        .test(navigator.userAgent || '');
+
+      const smsBtn = document.querySelector('.sms-button');
+      const callBtn = document.querySelector('.call-button');
+      const deviceHint = document.getElementById('tm-device-hint');
+
+      if (!isMobile) {
+        if (smsBtn) smsBtn.style.display = 'none';
+        if (callBtn) callBtn.style.display = 'none';
+        if (deviceHint) {
+          deviceHint.textContent =
+            'Bạn đang dùng máy tính. Để gọi hoặc gửi SMS trực tiếp, hãy mở trang Taxi Tranmarket trên điện thoại. ' +
+            'Số Taxi: ' + TM_TAXI_PHONE + ' (đã có thể copy ở nút phía trên).';
+        }
+      } else {
+        if (deviceHint) {
+          deviceHint.textContent =
+            'Trên điện thoại, bấm WhatsApp / SMS / Gọi để kết nối trực tiếp với Taxi Tranmarket.';
+        }
+      }
+    });
+  </script>
 </body>
 </html>
