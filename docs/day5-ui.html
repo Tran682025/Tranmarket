@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tranmarket CZ / EU – Day 5 UI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    :root {
+      --tm-bg: #0b0712;
+      --tm-card: #1b102b;
+      --tm-accent: #8b5cf6;
+      --tm-accent-soft: rgba(139, 92, 246, 0.15);
+      --tm-text-main: #f9fafb;
+      --tm-text-sub: #d1d5db;
+      --tm-border: #3b2358;
+      --tm-danger: #fb7185;
+      --tm-success: #22c55e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top left, #1f1035 0, #05030a 45%, #02000a 100%);
+      color: var(--tm-text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page-shell {
+      width: 100%;
+      max-width: 1080px;
+      padding: 24px 16px 40px;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeInUp 450ms ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* TOPBAR */
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid var(--tm-border);
+      background: radial-gradient(circle at 30% 20%, #f9fafb 0, #8b5cf6 35%, #020617 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-text-main {
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-text-sub {
+      font-size: 11px;
+      color: var(--tm-text-sub);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid var(--tm-border);
+      background: rgba(15, 23, 42, 0.85);
+      padding: 4px;
+      gap: 4px;
+      font-size: 11px;
+    }
+
+    .lang-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+    }
+
+    .lang-pill--active {
+      background: var(--tm-accent-soft);
+      border-color: var(--tm-accent);
+      color: #f9fafb;
+      font-weight: 600;
+    }
+
+    .lang-pill--ghost {
+      color: var(--tm-text-sub);
+    }
+
+    .logo-nav {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      object-fit: cover;
+      box-shadow: 0 0 16px rgba(168, 85, 247, 0.7);
+      transition: transform 220ms ease, box-shadow 220ms ease;
+    }
+
+    .logo-nav:hover {
+      transform: scale(1.05) rotate(2deg);
+      box-shadow:
+        0 0 22px rgba(168, 85, 247, 0.9),
+        0 0 40px rgba(251, 191, 36, 0.7);
+    }
+
+    /* HERO */
+
+    .hero {
+      border-radius: 24px;
+      border: 1px solid var(--tm-border);
+      background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.32) 0, rgba(15, 23, 42, 0.95) 45%, #020617 100%);
+      padding: 24px 20px 22px;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.3fr);
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 20px 16px;
+      }
+    }
+
+    .hero-left {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-kicker {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--tm-accent);
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 28px;
+      }
+    }
+
+    .hero-subtitle {
+      font-size: 12px;
+      color: var(--tm-text-sub);
+      margin-bottom: 16px;
+    }
+
+    .hero-subtitle small {
+      font-size: 11px;
+      opacity: 0.9;
+    }
+
+    .hero-list {
+      font-size: 12px;
+      color: var(--tm-text-sub);
+      margin-bottom: 16px;
+    }
+
+    .hero-list strong {
+      color: #e5e7eb;
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      border-radius: 999px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition:
+        transform 140ms ease,
+        box-shadow 140ms ease,
+        background 160ms ease,
+        color 160ms ease,
+        border-color 160ms ease;
+    }
+
+    .btn-primary {
+      padding: 8px 16px;
+      border: 1px solid transparent;
+      background: linear-gradient(90deg, #8b5cf6, #a855f7);
+      color: #f9fafb;
+      font-size: 12px;
+      font-weight: 600;
+      box-shadow: 0 0 0 rgba(168, 85, 247, 0);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow:
+        0 10px 20px rgba(15, 23, 42, 0.8),
+        0 0 20px rgba(168, 85, 247, 0.6);
+    }
+
+    .btn-secondary {
+      padding: 8px 14px;
+      border: 1px solid var(--tm-border);
+      background: rgba(15, 23, 42, 0.75);
+      color: var(--tm-text-sub);
+      font-size: 11px;
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+      border-color: rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.95);
+      color: #e5e7eb;
+    }
+
+    .hero-note {
+      font-size: 11px;
+      color: var(--tm-text-sub);
+    }
+
+    .hero-note strong {
+      color: var(--tm-success);
+      font-weight: 600;
+    }
+
+    .hero-right {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* LOGO HERO CARD */
+
+    .logo-card {
+      position: relative;
+      width: 100%;
+      max-width: 260px;
+      border-radius: 24px;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: radial-gradient(circle at 30% 0, rgba(248, 250, 252, 0.12) 0, rgba(15, 23, 42, 0.96) 60%, #020617 100%);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      animation: heroFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes heroFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-4px);
+      }
+    }
+
+    .logo-hero-img {
+      width: 100%;
+      max-width: 240px;
+      border-radius: 50%;
+      display: block;
+      box-shadow:
+        0 20px 40px rgba(15, 23, 42, 0.9),
+        0 0 30px rgba(248, 250, 252, 0.15);
+    }
+
+    .logo-tag {
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 10px;
+      color: #e5e7eb;
+    }
+
+    @media (max-width: 768px) {
+      .logo-card {
+        margin-top: 4px;
+      }
+    }
+
+    /* FOOTER MINI */
+
+    .footer-small {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 10px;
+      color: var(--tm-text-sub);
+      opacity: 0.9;
+    }
+
+    .footer-right {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.6);
+      padding: 4px 8px;
+      background: rgba(2, 6, 23, 0.75);
+      font-size: 10px;
+    }
+
+    /* Simple “toast” for demo actions */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: #e5e7eb;
+      font-size: 11px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease;
+      z-index: 40;
+    }
+
+    .toast--visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page-shell">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="brand-logo">TM</div>
+        <div>
+          <div class="brand-text-main">Tranmarket</div>
+          <div class="brand-text-sub" id="brandSub">
+            CZ / EU – Viet Services Hub
+          </div>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="lang-switch" aria-label="Language switch">
+          <button class="lang-pill lang-pill--active" type="button" data-lang="en">
+            EN
+          </button>
+          <button class="lang-pill lang-pill--ghost" type="button" data-lang="cz">
+            CZ
+          </button>
+          <button class="lang-pill lang-pill--ghost" type="button" data-lang="vn">
+            VN
+          </button>
+        </div>
+        <img
+          src="assets/trm-logo-nav.png"
+          alt="Tranmarket Pi logo"
+          class="logo-nav"
+        />
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="hero-kicker" id="heroKicker">
+          PI FIRST · SERVICE MARKETPLACE
+        </div>
+
+        <h1 class="hero-title" id="heroTitle">
+          Find trusted CZ / EU – Viet services in one place.
+        </h1>
+
+        <p class="hero-subtitle" id="heroSubtitle">
+          For Vietnamese living in Czechia and the EU who need reliable local partners
+          for shipping, translation, business setup and daily life support.
+          <br />
+          <small>(Nền tảng kết nối người Việt tại Séc / EU với dịch vụ uy tín, minh bạch.)</small>
+        </p>
+
+        <div class="hero-list" id="heroExamples">
+          <strong>Examples:</strong> DHL shipping to Viet Nam, tax and customs support,
+          business translation, accounting, car repair, home services and more.
+        </div>
+
+        <div class="hero-actions">
+          <button class="btn-primary" type="button" id="btnKyb">
+            Register your service (KYB)
+          </button>
+
+          <button class="btn-secondary" type="button" id="btnCustomer">
+            I am a customer – find services near me
+          </button>
+        </div>
+
+        <p class="hero-note" id="heroPhase">
+          <strong>Phase 1:</strong> Simple listing &amp; contact. Pi payments and advanced
+          booking will be added when Pi regulation in CZ / EU is clear.
+        </p>
+      </div>
+
+      <div class="hero-right">
+        <div class="logo-card">
+          <img
+            src="assets/trm-logo-hero.png"
+            alt="Tranmarket TRM Pi logo"
+            class="logo-hero-img"
+          />
+          <div class="logo-tag">
+            Tranmarket · Pi-ready identity
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MINI FOOTER -->
+    <footer class="footer-small">
+      <div>
+        Tranmarket · Pilot UX Day 5 · Non-custodial directory (no funds held).
+      </div>
+      <div class="footer-right">
+        <span class="chip">CZ / EU compliant mindset</span>
+        <span class="chip">Pi-ready (future integration)</span>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // Simple language packs
+    const copy = {
+      en: {
+        brandSub: "CZ / EU – Viet Services Hub",
+        kicker: "PI FIRST · SERVICE MARKETPLACE",
+        title: "Find trusted CZ / EU – Viet services in one place.",
+        subtitle:
+          "For Vietnamese living in Czechia and the EU who need reliable local partners for shipping, translation, business setup and daily life support.",
+        subtitleSmall:
+          "(Platform connecting Vietnamese in CZ / EU with transparent, trustworthy services.)",
+        examples:
+          "<strong>Examples:</strong> DHL shipping to Viet Nam, tax and customs support, business translation, accounting, car repair, home services and more.",
+        phase:
+          "<strong>Phase 1:</strong> Simple listing & contact. Pi payments and advanced booking will be added when Pi regulation in CZ / EU is clear.",
+        kybBtn: "Register your service (KYB)",
+        customerBtn: "I am a customer – find services near me"
+      },
+      cz: {
+        brandSub: "Služby pro Vietnamce v ČR / EU",
+        kicker: "PI FIRST · SLUŽBY A PODPORA",
+        title: "Najděte ověřené služby pro Vietnamce v ČR a EU na jednom místě.",
+        subtitle:
+          "Pro Vietnamce žijící v České republice a EU, kteří potřebují spolehlivé partnery pro přepravu, překlady, podnikání a každodenní život.",
+        subtitleSmall:
+          "(Platforma propojující vietnamskou komunitu s prověřenými službami v ČR / EU.)",
+        examples:
+          "<strong>Příklady:</strong> DHL přeprava do Vietnamu, celní a daňové poradenství, překlady smluv, účetnictví, autoservis, domácí služby a další.",
+        phase:
+          "<strong>Fáze 1:</strong> Jednoduchý přehled a přímý kontakt. Platby v Pi a online rezervace přidáme, jakmile budou jasná pravidla pro Pi v ČR / EU.",
+        kybBtn: "Zaregistrovat službu (KYB)",
+        customerBtn: "Jsem zákazník – chci najít služby"
+      },
+      vn: {
+        brandSub: "Nền tảng dịch vụ cho người Việt tại Séc & EU",
+        kicker: "PI FIRST · CHỢ DỊCH VỤ",
+        title: "Tìm dịch vụ cho người Việt uy tín tại Séc & EU ở một nơi.",
+        subtitle:
+          "Dành cho người Việt đang sống tại Séc và châu Âu cần đối tác tin cậy về chuyển hàng, phiên dịch, làm giấy tờ, mở công ty và hỗ trợ đời sống.",
+        subtitleSmall:
+          "(Kết nối cộng đồng người Việt với các đơn vị cung cấp dịch vụ minh bạch, rõ ràng.)",
+        examples:
+          "<strong>Ví dụ:</strong> Gửi hàng DHL về Việt Nam, hỗ trợ thuế & hải quan, dịch thuật hồ sơ, kế toán, sửa xe, dịch vụ tại nhà và nhiều hơn nữa.",
+        phase:
+          "<strong>Giai đoạn 1:</strong> Chỉ liệt kê và kết nối trực tiếp. Thanh toán bằng Pi và đặt lịch nâng cao sẽ mở khi khung pháp lý Pi tại Séc / EU rõ ràng.",
+        kybBtn: "Đăng ký dịch vụ (KYB)",
+        customerBtn: "Tôi là khách – tìm dịch vụ gần tôi"
+      }
+    };
+
+    const brandSub = document.getElementById("brandSub");
+    const heroKicker = document.getElementById("heroKicker");
+    const heroTitle = document.getElementById("heroTitle");
+    const heroSubtitle = document.getElementById("heroSubtitle");
+    const heroExamples = document.getElementById("heroExamples");
+    const heroPhase = document.getElementById("heroPhase");
+    const btnKyb = document.getElementById("btnKyb");
+    const btnCustomer = document.getElementById("btnCustomer");
+    const toast = document.getElementById("toast");
+
+    function setLanguage(lang) {
+      const c = copy[lang] || copy.en;
+
+      brandSub.textContent = c.brandSub;
+      heroKicker.textContent = c.kicker;
+      heroTitle.textContent = c.title;
+
+      heroSubtitle.innerHTML =
+        c.subtitle + "<br /><small>" + c.subtitleSmall + "</small>";
+
+      heroExamples.innerHTML = c.examples;
+      heroPhase.innerHTML = c.phase;
+      btnKyb.textContent = c.kybBtn;
+      btnCustomer.textContent = c.customerBtn;
+
+      document
+        .querySelectorAll(".lang-pill")
+        .forEach((el) => {
+          const isActive = el.getAttribute("data-lang") === lang;
+          el.classList.toggle("lang-pill--active", isActive);
+          el.classList.toggle("lang-pill--ghost", !isActive);
+        });
+    }
+
+    function showToast(message) {
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.add("toast--visible");
+      setTimeout(() => toast.classList.remove("toast--visible"), 2200);
+    }
+
+    // Init language switch
+    document.querySelectorAll(".lang-pill").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const lang = btn.getAttribute("data-lang");
+        setLanguage(lang);
+      });
+    });
+
+    // Demo actions for buttons
+    btnKyb.addEventListener("click", () => {
+      showToast("In production: open KYB / business registration flow.");
+    });
+
+    btnCustomer.addEventListener("click", () => {
+      showToast("In production: open service listing for your area.");
+    });
+
+    // Default language = EN on load
+    setLanguage("en");
+  </script>
+</body>
+</html>
