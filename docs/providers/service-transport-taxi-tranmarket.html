@@ -539,9 +539,15 @@
  <!-- 2) THÊM SCRIPT NÀY TRƯỚC THẺ </body> Ở CUỐI FILE Taxi -->
 
 <script>
-  // TODO: ĐỔI LẠI THÀNH SỐ THẬT CỦA TAXI
-  const TM_TAXI_PHONE = '+420739513276';      // số đầy đủ, có +420
-  const TM_TAXI_WHATSAPP = '420739513276';    // số cho WhatsApp, không có dấu +
+// SỐ TAXI DUY NHẤT
+const TM_TAXI_NUMBER = '420739913276'; // không dấu +
+
+// WhatsApp
+const TM_TAXI_WHATSAPP = TM_TAXI_NUMBER;
+
+// Gọi & SMS
+const TM_TAXI_PHONE = '+' + TM_TAXI_NUMBER;
+
 
   function tmBuildMessage() {
     const name   = document.getElementById('tm-name').value.trim()   || '(chưa nhập tên)';
