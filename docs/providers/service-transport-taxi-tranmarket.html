@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <title>Taxi Tranmarket – Liberec | Tranmarket.cz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --tm-bg: #0b0b14;
+      --tm-card: #181827;
+      --tm-border: #6f3cff;
+      --tm-border-soft: #3d355c;
+      --tm-text: #f5f5ff;
+      --tm-muted: #b3b3cc;
+      --tm-accent: #a855ff;
+      --tm-accent-soft: rgba(168, 85, 255, 0.12);
+      --tm-success: #22c55e;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #211b3b, #050509);
+      color: var(--tm-text);
+    }
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+    header.top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid var(--tm-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 30% 0, #f97316, #581c87);
+      font-size: 18px;
+    }
+    .lang-switch {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-size: 12px;
+    }
+    .lang-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--tm-border-soft);
+      background: rgba(8, 8, 16, 0.85);
+      cursor: default;
+    }
+    .lang-pill.active {
+      border-color: var(--tm-border);
+      background: var(--tm-accent-soft);
+    }
+    .breadcrumb {
+      font-size: 12px;
+      color: var(--tm-muted);
+      margin-bottom: 12px;
+    }
+    .breadcrumb a {
+      color: var(--tm-muted);
+      text-decoration: none;
+    }
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(260px, 0.9fr);
+      gap: 24px;
+    }
+    @media (max-width: 840px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    .card {
+      background: rgba(10, 10, 20, 0.95);
+      border-radius: 18px;
+      border: 1px solid var(--tm-border-soft);
+      padding: 18px 20px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+    }
+    .card.highlight {
+      border-color: var(--tm-border);
+      box-shadow: 0 0 0 1px rgba(111, 60, 255, 0.3), 0 18px 50px rgba(0, 0, 0, 0.7);
+    }
+    .provider-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+    .provider-logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 20px;
+      background: radial-gradient(circle at 20% 0, #fde68a, #7c2d12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 22px;
+    }
+    .provider-main h1 {
+      font-size: 22px;
+      margin: 0 0 6px;
+    }
+    .provider-main p.subtitle {
+      margin: 0;
+      font-size: 13px;
+      color: var(--tm-muted);
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--tm-muted);
+    }
+    .meta-pill {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--tm-border-soft);
+      background: rgba(12, 12, 24, 0.9);
+    }
+    .meta-pill.verified {
+      border-color: var(--tm-success);
+      color: var(--tm-success);
+    }
+    .provider-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 16px;
+      margin-top: 8px;
+    }
+    @media (max-width: 720px) {
+      .provider-body {
+        grid-template-columns: 1fr;
+      }
+    }
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .section-text {
+      font-size: 13px;
+      color: var(--tm-muted);
+      line-height: 1.5;
+    }
+    .bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0;
+      font-size: 13px;
+      color: var(--tm-muted);
+    }
+    .bullet-list li {
+      margin-bottom: 4px;
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+    .bullet-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--tm-accent);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--tm-border-soft);
+      color: var(--tm-muted);
+    }
+    .tag.hot {
+      border-color: var(--tm-border);
+      background: var(--tm-accent-soft);
+      color: var(--tm-text);
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .primary-button,
+    .secondary-button {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 13px;
+      cursor: pointer;
+      background: transparent;
+      color: var(--tm-text);
+    }
+    .primary-button {
+      background: linear-gradient(135deg, #a855ff, #ec4899);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    .secondary-button {
+      border-color: var(--tm-border);
+      background: rgba(12, 12, 24, 0.9);
+    }
+    .price-card {
+      border-radius: 16px;
+      border: 1px dashed var(--tm-border-soft);
+      background: radial-gradient(circle at top, rgba(111, 60, 255, 0.2), rgba(8, 8, 16, 0.95));
+      padding: 12px 14px;
+      margin-bottom: 8px;
+    }
+    .price-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+    .price-main span.label {
+      font-size: 12px;
+      color: var(--tm-muted);
+    }
+    .price-main span.value {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .price-note {
+      font-size: 11px;
+      color: var(--tm-muted);
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 11px;
+    }
+    @media (max-width: 640px) {
+      .steps {
+        grid-template-columns: 1fr;
+      }
+    }
+    .step-pill {
+      border-radius: 999px;
+      border: 1px solid var(--tm-border-soft);
+      padding: 6px 10px;
+      color: var(--tm-muted);
+      background: rgba(10, 10, 20, 0.8);
+    }
+    .sidebar-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .highlight-badge {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--tm-accent-soft);
+      border: 1px solid var(--tm-border);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .highlight-badge span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--tm-accent);
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .field label {
+      font-size: 11px;
+      color: var(--tm-muted);
+    }
+    .field input,
+    .field textarea,
+    .field select {
+      border-radius: 10px;
+      border: 1px solid var(--tm-border-soft);
+      background: rgba(7, 7, 14, 0.9);
+      padding: 7px 9px;
+      font-size: 12px;
+      color: var(--tm-text);
+      outline: none;
+    }
+    .field textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+      font-size: 10px;
+      color: var(--tm-muted);
+    }
+    .trust-pill {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--tm-border-soft);
+      background: rgba(5, 5, 12, 0.9);
+    }
+    footer.page-footer {
+      margin-top: 24px;
+      font-size: 11px;
+      color: var(--tm-muted);
+      text-align: center;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="top-bar">
+      <div class="brand">
+        <div class="brand-logo">T</div>
+        <div>TRANMARKET</div>
+      </div>
+      <div class="lang-switch">
+        <span>Language:</span>
+        <button class="lang-pill active">CZ</button>
+        <button class="lang-pill">EN</button>
+        <button class="lang-pill">VI</button>
+      </div>
+    </header>
+
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a> ›
+      <a href="../day5-category-b.html">Category B</a> ›
+      <span>Taxi Tranmarket – Liberec</span>
+    </div>
+
+    <main class="layout">
+      <section class="card highlight">
+        <div class="provider-header">
+          <div class="provider-logo">TX</div>
+          <div class="provider-main">
+            <h1>Taxi Tranmarket – Liberec</h1>
+            <p class="subtitle">
+              Taxi – chở khách sân bay – tuyến dài CZ / DE / PL – hỗ trợ tiếng Việt.
+            </p>
+            <div class="meta-row">
+              <span class="meta-pill verified">✅ KYB VERIFIED</span>
+              <span class="meta-pill">Owner: Người Việt – CZ / EN / VI</span>
+              <span class="meta-pill">Base: Liberec, CZ</span>
+              <span class="meta-pill">Rating: 4.9 / 5 (128 chuyến)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="provider-body">
+          <div>
+            <div class="section-title">Dịch vụ dành cho người Việt tại Séc – EU</div>
+            <p class="section-text">
+              Taxi Tranmarket – Liberec chuyên chở khách người Việt trong khu vực Liberec, Praha
+              và các tuyến dài sang Đức / Ba Lan. Hỗ trợ giao tiếp tiếng Việt, tư vấn lộ trình,
+              lưu ảnh hóa đơn, chi phí nếu bạn cần cho công ty.
+            </p>
+            <ul class="bullet-list">
+              <li>
+                <div class="bullet-dot"></div>
+                <div>Đón – tiễn sân bay (Praha – Dresden – Berlin).</div>
+              </li>
+              <li>
+                <div class="bullet-dot"></div>
+                <div>Chở đi khám bệnh, công chứng, tòa án, làm giấy tờ.</div>
+              </li>
+              <li>
+                <div class="bullet-dot"></div>
+                <div>Tuyến dài đi Đức, Ba Lan, mua hàng, lấy hàng – chở hàng nhẹ.</div>
+              </li>
+              <li>
+                <div class="bullet-dot"></div>
+                <div>Có thể hỗ trợ phiên dịch cơ bản (CZ / EN / VI).</div>
+              </li>
+            </ul>
+            <div class="tag-row">
+              <span class="tag hot">Người Việt vận hành</span>
+              <span class="tag">Thanh toán: Cash / Bank CZK / EUR</span>
+              <span class="tag">Hóa đơn công ty (dle dohody)</span>
+            </div>
+            <div class="cta-row">
+              <button class="primary-button">Yêu cầu báo giá / đặt chuyến</button>
+              <button class="secondary-button">Gửi tin nhắn qua Tranmarket</button>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-title">Giá tham khảo</div>
+            <div class="price-card">
+              <div class="price-main">
+                <span class="label">Liberec → Praha (1–4 người)</span>
+                <span class="value">od 2 000 Kč</span>
+              </div>
+              <div class="price-note">
+                Giá tùy thời gian, lượng hành lý và điểm đón / trả khách cụ thể.
+                Báo giá chính xác sẽ gửi sau khi bạn gửi yêu cầu.
+              </div>
+            </div>
+            <div class="price-card">
+              <div class="price-main">
+                <span class="label">Pick-up sân bay Praha</span>
+                <span class="value">od 2 200 Kč</span>
+              </div>
+              <div class="price-note">
+                Bao gồm 60 phút chờ. Phụ thu nếu chờ thêm giờ.
+              </div>
+            </div>
+            <div class="section-title" style="margin-top:12px;">Cách đặt xe qua Tranmarket</div>
+            <div class="steps">
+              <div class="step-pill">1. Điền thông tin chuyến đi</div>
+              <div class="step-pill">2. Nhận báo giá &amp; thời gian xác nhận</div>
+              <div class="step-pill">3. Chốt chuyến – nhận thông tin tài xế</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="card">
+        <div class="highlight-badge">
+          <span class="dot"></span>
+          <span>Book qua Tranmarket – an toàn hơn giao dịch tự phát</span>
+        </div>
+        <div class="sidebar-title">Gửi yêu cầu cho Taxi Tranmarket</div>
+        <p class="section-text" style="font-size:12px;">
+          Điền nhanh thông tin, hệ thống sẽ chuyển trực tiếp tới nhà cung cấp.
+          Bạn sẽ nhận phản hồi qua email hoặc số điện thoại.
+        </p>
+        <form class="contact-form">
+          <div class="field">
+            <label>Họ tên của bạn</label>
+            <input type="text" placeholder="Nguyễn Văn A" />
+          </div>
+          <div class="field">
+            <label>Email hoặc số điện thoại</label>
+            <input type="text" placeholder="(+420) xxx xxx xxx" />
+          </div>
+          <div class="field">
+            <label>Ngày – giờ mong muốn</label>
+            <input type="text" placeholder="VD: 24.11, 08:30 – sân bay Praha" />
+          </div>
+          <div class="field">
+            <label>Số người &amp; hành lý</label>
+            <select>
+              <option>1–2 người, ít hành lý</option>
+              <option>3–4 người, nhiều hành lý</option>
+              <option>Gia đình / nhóm lớn</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Ghi chú cho tài xế (CZ / VI / EN đều được)</label>
+            <textarea placeholder="VD: Có người già, cần dừng dọc đường; cần hỗ trợ mang đồ..."></textarea>
+          </div>
+          <button type="submit" class="primary-button">Gửi yêu cầu đặt chuyến</button>
+        </form>
+        <div class="trust-row">
+          <span class="trust-pill">Giai đoạn beta: Tranmarket không thu phí khách lẻ</span>
+          <span class="trust-pill">Thanh toán trực tiếp với nhà cung cấp</span>
+          <span class="trust-pill">Bạn được đánh giá dịch vụ sau chuyến đi</span>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="page-footer">
+      Tranmarket.cz – Nền tảng kết nối dịch vụ cho cộng đồng người Việt tại Séc &amp; EU.
+    </footer>
+  </div>
+</body>
+</html>
