@@ -325,14 +325,16 @@
 }
 
 /* Logo Pi vàng siêu to, nằm mờ phía sau nội dung */
+/* Logo Pi vàng phủ toàn màn hình nền — bản premium */
 .kyb-card::before {
   content: "";
   position: absolute;
-  inset: -80px -80px auto -80px;
-  background: url("../assets/trm-logo-hero.png") center top / cover no-repeat;
-  opacity: 0.18;           /* muốn đậm hơn thì tăng lên 0.22–0.25 */
+  inset: 0; /* phủ toàn diện */
+  background: url("../assets/trm-logo-hero.png") center center / cover no-repeat;
+  opacity: 0.10; /* độ nhạt vừa đủ để sang trọng */
+  filter: blur(0.8px); /* làm mượt nhẹ để chữ nổi hơn */
   pointer-events: none;
-  mix-blend-mode: screen;
+  mix-blend-mode: screen; /* giữ màu vàng sang trọng */
 }
 
 /* Đảm bảo toàn bộ nội dung nằm trên lớp logo */
