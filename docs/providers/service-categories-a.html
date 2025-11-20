@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>Tranmarket – Danh mục dịch vụ (Category A / Day 6)</title>
+  <title>Tranmarket – Danh mục dịch vụ (Category A)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
@@ -10,17 +10,17 @@
       --bg-panel: #130b33;
       --bg-card: #1b123f;
       --accent: #b580ff;
-      --accent-strong: #e18bff;
+      --accent-strong: #e1b8ff;
       --mint: #3cd3c4;
-      --mint-soft: #7be9dc;
       --text-main: #ffffff;
-      --text-muted: #c5c2f3;
       --text-soft: #9792d6;
+      --text-muted: #c5c2f3;
       --border-soft: #332a70;
       --shadow-soft: 0 24px 48px rgba(0, 0, 0, 0.65);
       --radius-card: 18px;
-      --radius-icon: 10px; /* bo nhẹ kiểu C */
-      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --radius-icon: 10px;
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
     }
 
     * {
@@ -31,8 +31,12 @@
       margin: 0;
       min-height: 100vh;
       font-family: var(--font-main);
-      background:
-        radial-gradient(circle at top left, #2f1e6a 0, #05001a 52%, #000000 100%);
+      background: radial-gradient(
+        circle at top left,
+        #2f1e6a 0,
+        #05001a 55%,
+        #000000 100%
+      );
       color: var(--text-main);
       display: flex;
       align-items: flex-start;
@@ -42,94 +46,94 @@
 
     .page-wrapper {
       width: 100%;
-      max-width: 1120px;
+      max-width: 1180px;
+      margin: 0 auto;
     }
 
     .tm-shell {
-      background: radial-gradient(circle at top, #281759 0, #120927 55%, #050015 100%);
-      border-radius: 26px;
+      background: linear-gradient(145deg, #1b123f 0, #0c0825 55%, #06041a 100%);
+      border-radius: 28px;
       box-shadow: var(--shadow-soft);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 20px 18px 22px;
-    }
-
-    @media (min-width: 768px) {
-      .tm-shell {
-        padding: 24px 26px 28px;
-      }
+      padding: 20px 20px 26px;
+      border: 1px solid rgba(181, 128, 255, 0.32);
     }
 
     .tm-header {
       display: flex;
       align-items: center;
-      gap: 14px;
-      margin-bottom: 16px;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
     }
 
     .tm-logo-wrap {
-      width: 60px;
-      height: 60px;
-      border-radius: 22px;
-      background: radial-gradient(circle at 30% 10%, #fffdf5 0, #ffe7b0 28%, #723715 100%);
       display: flex;
       align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      flex-shrink: 0;
+      gap: 12px;
     }
 
-    .tm-logo-wrap img {
-      width: 54px;
-      height: 54px;
+    .tm-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffe8b5, #c77c38 55%, #5a2a0b);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .tm-logo img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border-radius: 18px;
+      display: block;
     }
 
     .tm-brand-text {
-      flex: 1;
-      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
     .tm-brand-name {
-      font-size: 1.12rem;
+      font-size: 1.05rem;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #fdf0ff;
-      margin-bottom: 2px;
     }
 
     .tm-brand-sub {
-      font-size: 0.86rem;
-      color: var(--mint-soft);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 0.8rem;
+      color: var(--text-soft);
     }
 
     .tm-lang-toggle {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 6px;
-      margin-left: auto;
+      gap: 10px;
+      background: rgba(13, 9, 40, 0.95);
+      border-radius: 999px;
+      padding: 4px 6px 4px 10px;
+      border: 1px solid rgba(151, 146, 214, 0.5);
     }
 
     .tm-lang-label {
-      font-size: 0.78rem;
-      color: var(--text-soft);
+      font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.16em;
+      color: var(--text-soft);
+      opacity: 0.9;
     }
 
     .tm-lang-btn {
-      border-radius: 999px;
-      border: 1px solid var(--border-soft);
-      background: transparent;
-      color: var(--text-soft);
+      border: 0;
       padding: 4px 10px;
-      font-size: 0.8rem;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.78rem;
       cursor: pointer;
       min-width: 38px;
       transition: all 0.16s ease-out;
@@ -137,15 +141,26 @@
 
     .tm-lang-btn.active {
       background: var(--mint);
-      border-color: var(--mint-soft);
+      border-color: var(--mint);
       color: #021517;
       font-weight: 600;
     }
 
+    .tm-hero-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+
+    .tm-hero-text {
+      flex: 1;
+    }
+
     .tm-hero-title {
-      font-size: 1.42rem;
+      font-size: 1.36rem;
       font-weight: 800;
-      margin: 3px 0 4px;
+      margin: 2px 0 4px;
     }
 
     .tm-hero-sub {
@@ -157,182 +172,144 @@
     .tm-hero-note {
       font-size: 0.8rem;
       color: var(--text-soft);
-      margin-bottom: 16px;
+      margin-bottom: 6px;
     }
 
-    .tm-hero-note strong {
-      color: var(--accent-strong);
+    .tm-footer-note {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      margin-top: 8px;
     }
 
-    .tm-hero-note span {
-      color: var(--mint-soft);
-      font-weight: 500;
+    .tm-categories {
+      margin-top: 4px;
     }
 
     .category-grid {
       display: grid;
-      grid-template-columns: repeat(1, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    @media (min-width: 640px) {
-      .category-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (min-width: 980px) {
-      .category-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
     }
 
     .cat-card {
-      position: relative;
       display: flex;
-      align-items: flex-start;
       gap: 10px;
-      padding: 11px 11px 12px;
+      padding: 12px 11px;
       border-radius: var(--radius-card);
-      background: radial-gradient(circle at top left, #241245 0, #170b32 58%, #0a041a 100%);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      cursor: pointer;
+      background: radial-gradient(circle at top left, #24165a 0, #140a3b 48%, #0a0629 100%);
+      border: 1px solid rgba(181, 128, 255, 0.45);
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      overflow: hidden;
       transition: transform 0.14s ease-out, box-shadow 0.14s ease-out,
         border-color 0.14s ease-out, background 0.14s ease-out;
-      min-height: 76px;
+    }
+
+    .cat-card.other {
+      border-style: dashed;
+      border-color: rgba(60, 211, 196, 0.75);
     }
 
     .cat-card::before {
       content: "";
       position: absolute;
-      inset: 0;
-      border-radius: var(--radius-card);
-      border: 1px solid transparent;
-      background: linear-gradient(120deg, rgba(60, 211, 196, 0.22), rgba(181, 128, 255, 0.0));
+      inset: -40%;
+      background: radial-gradient(
+        circle at top right,
+        rgba(181, 128, 255, 0.22),
+        transparent 55%
+      );
       opacity: 0;
-      transition: opacity 0.16s ease-out;
+      transition: opacity 0.18s ease-out;
       pointer-events: none;
     }
 
     .cat-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.7);
-      border-color: rgba(123, 233, 220, 0.45);
-      background: radial-gradient(circle at top left, #2d175a 0, #1a0e39 55%, #080317 100%);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.9);
+      border-color: rgba(181, 128, 255, 0.85);
+      background: radial-gradient(circle at top left, #2a1f70 0, #150b40 48%, #070323 100%);
     }
 
     .cat-card:hover::before {
       opacity: 1;
     }
 
-    .cat-card:active {
-      transform: translateY(0);
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.6);
-    }
-
     .cat-icon {
-      width: 44px;
-      height: 44px;
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
       border-radius: var(--radius-icon);
-      background: radial-gradient(circle at 30% 20%, #f6fffd 0, #cffff8 30%, #2c7370 100%);
-      flex-shrink: 0;
+      background: radial-gradient(circle at 30% 20%, #fef3d7, #f3b16a 55%, #8a4e1d);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.6);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cat-icon span {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
     }
 
     .cat-content {
       flex: 1;
       min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
     }
 
     .cat-title-main {
-      font-size: 0.96rem;
-      font-weight: 600;
-      margin-bottom: 2px;
-      color: #ffffff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 0.9rem;
+      font-weight: 700;
     }
 
     .cat-title-sub {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .cat-title-extra {
-      font-size: 0.78rem;
-      color: var(--text-soft);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-top: 4px;
+      color: var(--mint);
+      font-weight: 600;
     }
 
     .cat-tag {
       font-size: 0.7rem;
-      color: var(--mint-soft);
-      margin-top: 3px;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .cat-card.other {
-      border-style: dashed;
-      border-color: rgba(123, 233, 220, 0.5);
-      background: radial-gradient(circle at top left, #26164d 0, #100723 60%, #050013 100%);
-    }
-
-    .cat-card.other .cat-icon {
-      background: radial-gradient(circle at 30% 20%, #fdf9ff 0, #ffe2ff 26%, #5d2a73 96%);
-    }
-
-    .tm-footer-note {
-      margin-top: 16px;
-      font-size: 0.78rem;
-      color: var(--text-soft);
-    }
-
-    .tm-footer-note strong {
-      color: var(--mint-soft);
-    }
-
-    .tm-footer-note span {
+      letter-spacing: 0.14em;
+      margin-top: 5px;
       color: var(--accent-strong);
     }
 
-    @media (max-width: 480px) {
-      .tm-header {
-        flex-wrap: wrap;
-        row-gap: 8px;
+    @media (max-width: 960px) {
+      .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
-      .tm-lang-toggle {
-        width: 100%;
-        justify-content: flex-end;
-      }
-      .tm-hero-title {
-        font-size: 1.28rem;
+
+      .tm-hero-row {
+        flex-direction: column;
       }
     }
 
-    @media (min-width: 880px) {
-      .tm-hero-row {
-        display: flex;
-        align-items: flex-end;
-        gap: 16px;
+    @media (max-width: 640px) {
+      body {
+        padding: 12px 6px 24px;
       }
-      .tm-hero-text {
-        flex: 1;
+
+      .tm-shell {
+        padding: 14px 12px 20px;
+        border-radius: 18px;
+      }
+
+      .category-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .tm-hero-title {
+        font-size: 1.18rem;
       }
     }
   </style>
@@ -342,18 +319,26 @@
     <main class="tm-shell">
       <header class="tm-header">
         <div class="tm-logo-wrap">
-          <!-- thay đường dẫn logo nếu cần -->
-          <img src="../assets/trm-logo-hero.png" alt="Tranmarket logo" />
+          <div class="tm-logo">
+            <img src="../assets/trm-logo-hero.png" alt="Tranmarket logo" />
+          </div>
+          <div class="tm-brand-text">
+            <div class="tm-brand-name">TRANMARKET</div>
+            <div class="tm-brand-sub" id="brand-sub"></div>
+          </div>
         </div>
-        <div class="tm-brand-text">
-          <div class="tm-brand-name">TRANMARKET</div>
-          <div id="brand-sub" class="tm-brand-sub"></div>
-        </div>
+
         <div class="tm-lang-toggle">
-          <span class="tm-lang-label">Lang</span>
-          <button class="tm-lang-btn active" data-lang="vi" id="btn-lang-vi">VI</button>
-          <button class="tm-lang-btn" data-lang="en" id="btn-lang-en">EN</button>
-          <button class="tm-lang-btn" data-lang="cs" id="btn-lang-cs">CZ</button>
+          <span class="tm-lang-label">LANG</span>
+          <button class="tm-lang-btn active" data-lang="vi" id="btn-lang-vi">
+            VI
+          </button>
+          <button class="tm-lang-btn" data-lang="en" id="btn-lang-en">
+            EN
+          </button>
+          <button class="tm-lang-btn" data-lang="cs" id="btn-lang-cs">
+            CZ
+          </button>
         </div>
       </header>
 
@@ -379,11 +364,11 @@
         brandSub: "Sân chơi dịch vụ Pi-ready cho cộng đồng Việt & quốc tế",
         heroTitle: "Chọn lĩnh vực dịch vụ bạn đang cần",
         heroSub:
-          subtitle: "Chọn lĩnh vực dịch vụ bạn đang cần để tìm chính xác dịch vụ phù hợp.",
+          "Chọn lĩnh vực dịch vụ phù hợp, Tranmarket sẽ đưa bạn tới sân chơi dịch vụ tương ứng.",
         heroNote:
-          "Tranmarket chỉ đóng vai trò <strong>sân chơi kết nối</strong> – <span>không giữ tiền, không bảo lãnh giao dịch, không thay thế tư vấn pháp lý</span>. Mọi thỏa thuận đều diễn ra trực tiếp giữa bạn và đơn vị cung cấp dịch vụ.",
+          "Tranmarket chỉ đóng vai trò sân chơi kết nối trung lập – không giữ tiền, không bảo lãnh giao dịch, không thay thế tư vấn pháp lý. Mọi thỏa thuận là trực tiếp giữa bạn và đơn vị cung cấp dịch vụ.",
         footer:
-          "Mỗi lĩnh vực dịch vụ tương ứng với một Category B chi tiết (Day 5, Day 7…). Khi hệ sinh thái Pi Network mở rộng, Tranmarket có thể kết nối thêm thanh toán Pi, đánh giá cộng đồng và các công cụ hỗ trợ khác – mà vẫn giữ nguyên vai trò một sân chơi trung lập, minh bạch.",
+          "Mỗi lĩnh vực dịch vụ tương ứng với một Category B chi tiết (Day 5, Day 7…). Khi hệ sinh thái Pi Network mở rộng, Tranmarket có thể kết nối thêm thanh toán Pi, đánh giá cộng đồng và các công cụ tra cứu – nhưng vẫn giữ nguyên vai trò một sân chơi minh bạch, trung lập.",
         tagMain: "Dành cho khách hàng",
         tagOther: "Mở rộng & đặc biệt",
       },
@@ -391,23 +376,23 @@
         brandSub: "Pi-ready service playground for Vietnamese & global users",
         heroTitle: "Choose the service area you are looking for",
         heroSub:
-        heroSubbs: "Choose the service area you are looking for. Click a tile to jump to the matching service category.",  
+          "Pick a service category that fits your need. Tranmarket will send you to the matching service playground.",
         heroNote:
-          "Tranmarket acts only as a <strong>neutral connector</strong> – <span>it does not hold funds, guarantee deals or replace legal advice</span>. All agreements happen directly between you and the service provider.",
+          "Tranmarket acts only as a neutral connection playground – it does not hold funds, guarantee deals, or replace professional legal or tax advice. All agreements are made directly between you and the service provider.",
         footer:
-          "Each service area links to a more detailed Category B (Day 5, Day 7…). As the Pi Network ecosystem grows, Tranmarket may connect Pi payments, community rating and extra tools – while staying a neutral and transparent playground.",
+          "Each service area links to a more detailed Category B (Day 5, Day 7…). As the Pi Network ecosystem grows, Tranmarket may plug in Pi payments, community reviews and search tools – while remaining a transparent, neutral playground.",
         tagMain: "For customers",
         tagOther: "Extension & special",
       },
       cs: {
-        brandSub: "Pi-ready platforma služeb pro Vietnamce i mezinárodní komunitu",
+        brandSub: "Pi-ready platforma služeb pro vietnamskou i mezinárodní komunitu",
         heroTitle: "Vyberte oblast služeb, kterou zrovna hledáte",
         heroSub:
-        heroSubs: "Vyberte oblast služby, kterou hledáte. Kliknutím na dlaždici přejdete do odpovídající kategorie služby.",
+          "Kliknutím na dlaždici přejdete do odpovídajícího servisního prostředí.",
         heroNote:
-          "Tranmarket je pouze <strong>neutrálním prostředníkem</strong> – <span>nedrží peníze, negarantuje obchody a nenahrazuje právní poradenství</span>. Všechny dohody probíhají přímo mezi vámi a poskytovatelem služby.",
+          "Tranmarket je pouze neutrálním „hřištěm“ pro propojení – nedrží peníze, negarantuje obchody a nenahrazuje odborné právní či daňové poradenství. Veškeré dohody probíhají přímo mezi vámi a poskytovatelem.",
         footer:
-          "Každá oblast služeb odpovídá podrobnější kategorii B (Day 5, Day 7…). S růstem ekosystému Pi Network může Tranmarket propojit i platby v Pi, komunitní hodnocení a další nástroje – stále jako neutrální a transparentní „hřiště“ služeb.",
+          "Každá oblast služeb odpovídá podrobnější kategorii B (Day 5, Day 7…). S růstem ekosystému Pi Network může Tranmarket přidat platby v Pi, hodnocení komunity a další nástroje – stále však zůstává transparentním a neutrálním hřištěm.",
         tagMain: "Pro zákazníky",
         tagOther: "Rozšíření & speciální",
       },
@@ -416,148 +401,310 @@
     const CATEGORIES = [
       {
         key: "logistics",
+        href: "service-register-kyb-tranmarket.html",
         icon: "📦",
-        href: "providers/service-logistics.html",
-        vi: { main: "Logistics – Gửi hàng – Vận chuyển", sub: "Quốc tế, EU, nội địa, container, kho bãi" },
-        en: { main: "Logistics & Shipping", sub: "International, EU, domestic, cargo, storage" },
-        cs: { main: "Logistika & přeprava", sub: "Mezinárodní, EU, vnitrostátní, cargo, sklad" },
+        vi: {
+          main: "Logistics – Gửi hàng – Vận chuyển",
+          sub: "Quốc tế, EU nội địa, container, kho bãi…",
+        },
+        en: {
+          main: "Logistics – Shipping – Transport",
+          sub: "International & EU shipping, storage, containers…",
+        },
+        cs: {
+          main: "Logistika – Zásilky / přeprava",
+          sub: "Mezinárodní i vnitro-EU přeprava, sklady, kontejnery…",
+        },
       },
       {
         key: "documents",
-        icon: "📑",
-        href: "providers/service-docs-translation.html",
-        vi: { main: "Giấy tờ – Dịch thuật – Hồ sơ", sub: "Công chứng, lãnh sự, lý lịch tư pháp, GPLX…" },
-        en: { main: "Documents – Translation – Papers", sub: "Notary, legalization, police check, licences…" },
-        cs: { main: "Doklady – Překlady – Dokumenty", sub: "Notář, legalizace, výpisy, řidičák…" },
+        href: "service-register-kyb-tranmarket.html",
+        icon: "📄",
+        vi: {
+          main: "Giấy tờ – Dịch thuật – Hồ sơ",
+          sub: "Công chứng, khai tư pháp, GPLX, dịch thuật công chứng…",
+        },
+        en: {
+          main: "Documents – Translation – Papers",
+          sub: "Certified translation, notary, legal forms, licenses…",
+        },
+        cs: {
+          main: "Doklady – Tlumočení – Dokumenty",
+          sub: "Soudní překlady, notář, formuláře, povolení…",
+        },
       },
       {
         key: "repairs",
-        icon: "🧱",
-        href: "providers/service-repairs-housing.html",
-        vi: { main: "Sửa chữa – Nhà ở – Xây dựng", sub: "Điện nước, cải tạo, nội thất, vệ sinh sau sửa" },
-        en: { main: "Repairs – Housing – Construction", sub: "Renovations, utilities, interiors, cleaning" },
-        cs: { main: "Opravy – Bydlení – Stavby", sub: "Rekonstrukce, elektro, voda, úklid po opravách" },
+        href: "service-register-kyb-tranmarket.html",
+        icon: "🏠",
+        vi: {
+          main: "Sửa chữa – Nhà ở – Xây dựng",
+          sub: "Điện nước, cửa, nội thất, vệ sinh, sửa chữa nhà…",
+        },
+        en: {
+          main: "Repairs – Housing – Construction",
+          sub: "Electricity, plumbing, renovation, cleaning, handyman…",
+        },
+        cs: {
+          main: "Opravy – Bydlení – Stavebnictví",
+          sub: "Elektro, voda, rekonstrukce, úklid, hodinový manžel…",
+        },
       },
       {
-        key: "car",
+        key: "car-garage",
+        href: "service-register-kyb-tranmarket.html",
         icon: "🚗",
-        href: "providers/service-car-garage.html",
-        vi: { main: "Car & Garage – Gara xe", sub: "Sửa chữa, bảo dưỡng, đồng sơn, đăng kiểm, detailing" },
-        en: { main: "Car & Garage", sub: "Repairs, service, paint, inspections, detailing" },
-        cs: { main: "Auto & Servis", sub: "Servis, opravy, lakovna, STK, detailing" },
+        vi: {
+          main: "Car & Garage – Gara xe",
+          sub: "Sửa chữa, bảo dưỡng, đăng kiểm, dán kính, detail…",
+        },
+        en: {
+          main: "Car & Garage",
+          sub: "Service, repairs, inspection, detailing…",
+        },
+        cs: {
+          main: "Auto & Garage",
+          sub: "Servis, opravy, STK, detailing…",
+        },
       },
       {
-        key: "taxi",
+        key: "taxi-transport",
+        href: "service-register-kyb-tranmarket.html",
         icon: "🚕",
-        href: "providers/service-taxi.html",
-        vi: { main: "Taxi – Vận chuyển cá nhân", sub: "Trong thành phố, đường dài, sân bay, thuê xe có lái" },
-        en: { main: "Taxi – Personal transport", sub: "City, long-distance, airport, driver with car" },
-        cs: { main: "Taxi – Osobní doprava", sub: "Město, dálkově, letiště, auto s řidičem" },
+        vi: {
+          main: "Taxi – Vận chuyển cá nhân",
+          sub: "Taxi sân bay, đi làm, đưa đón, chuyến dài…",
+        },
+        en: {
+          main: "Taxi – Personal transport",
+          sub: "Airport runs, daily commute, long trips…",
+        },
+        cs: {
+          main: "Taxi – Osobní doprava",
+          sub: "Letiště, do práce, delší cesty…",
+        },
       },
       {
         key: "travel",
-        icon: "🗺️",
-        href: "providers/service-travel.html",
-        vi: { main: "Travel – Du lịch – Tour", sub: "Tour Séc, EU, hành hương, vé máy bay, lịch trình" },
-        en: { main: "Travel – Tours – Tourism", sub: "CZ/EU tours, pilgrimage, flights, planning" },
-        cs: { main: "Cestování – Zájezdy – Turistika", sub: "Zájezdy, poutě, letenky, plánování cest" },
+        href: "service-register-kyb-tranmarket.html",
+        icon: "🧳",
+        vi: {
+          main: "Travel – Du lịch – Tour",
+          sub: "Tour Séc, EU, hành hương, nghỉ dưỡng, lịch trình cá nhân…",
+        },
+        en: {
+          main: "Travel – Tours",
+          sub: "Tours in CZ, EU, pilgrimage, holidays, custom trips…",
+        },
+        cs: {
+          main: "Cestování – Zájezdy",
+          sub: "Zájezdy po ČR, EU, poutě, dovolené, individuální trasy…",
+        },
       },
       {
         key: "beauty",
+        href: "service-register-kyb-tranmarket.html",
         icon: "💅",
-        href: "providers/service-beauty.html",
-        vi: { main: "Beauty – Spa – Hair – Nails", sub: "Tóc, nail, spa mặt, massage, make up, phun xăm" },
-        en: { main: "Beauty – Spa – Hair – Nails", sub: "Hair, nails, facial, massage, makeup, brows" },
-        cs: { main: "Krása – Spa – Vlasy – Nehty", sub: "Vlasy, nehty, pleť, masáže, make-up, obočí" },
+        vi: {
+          main: "Beauty – Spa – Hair – Nails",
+          sub: "Tóc, nail, spa, massage, make-up, phun xăm…",
+        },
+        en: {
+          main: "Beauty – Spa – Hair – Nails",
+          sub: "Hair, nails, spa, massage, make-up, PMU…",
+        },
+        cs: {
+          main: "Beauty – Spa – Vlasy – Nehty",
+          sub: "Vlasy, nehty, spa, masáže, make-up, permanent…",
+        },
       },
       {
         key: "education",
+        href: "service-register-kyb-tranmarket.html",
         icon: "📚",
-        href: "providers/service-education.html",
-        vi: { main: "Education – Giáo dục – Học tập", sub: "Gia sư, ngoại ngữ, luyện thi, học nghề, kỹ năng" },
-        en: { main: "Education – Tutoring – Language", sub: "Tutoring, languages, exams, skills, training" },
-        cs: { main: "Vzdělávání – Doučování – Jazyky", sub: "Doučování, jazyky, zkoušky, dovednosti" },
+        vi: {
+          main: "Education – Giáo dục – Ngoại ngữ",
+          sub: "Gia sư, ngoại ngữ, luyện thi, digital skills…",
+        },
+        en: {
+          main: "Education – Tutoring – Language",
+          sub: "Private classes, language courses, exam prep, skills…",
+        },
+        cs: {
+          main: "Vzdělávání – Doučování – Jazyky",
+          sub: "Soukromé lekce, jazyky, příprava na zkoušky…",
+        },
       },
       {
         key: "health",
+        href: "service-register-kyb-tranmarket.html",
         icon: "🩺",
-        href: "providers/service-health.html",
-        vi: { main: "Health – Hỗ trợ y tế", sub: "Dẫn khám, phiên dịch, chăm sóc, dinh dưỡng, fitness" },
-        en: { main: "Health – Medical support", sub: "Escort, translation, care, nutrition, coaching" },
-        cs: { main: "Zdraví – Zdravotní podpora", sub: "Doprovod, tlumočení, péče, výživa, trenér" },
+        vi: {
+          main: "Health – Hỗ trợ y tế",
+          sub: "Đặt lịch, phiên dịch y tế, dẫn đi khám, dược phẩm…",
+        },
+        en: {
+          main: "Health – Support",
+          sub: "Booking, medical interpreting, clinic guidance…",
+        },
+        cs: {
+          main: "Zdraví – Podpora",
+          sub: "Objednání, tlumočení u lékaře, doprovod…",
+        },
       },
       {
         key: "food",
+        href: "service-register-kyb-tranmarket.html",
         icon: "🍜",
-        href: "providers/service-food.html",
-        vi: { main: "Food – Ăn uống – Nhà hàng", sub: "Quán Việt, châu Á, đặt bàn, ship đồ ăn, catering" },
-        en: { main: "Food – Restaurant – Catering", sub: "Vietnamese, Asian, booking, delivery, catering" },
-        cs: { main: "Jídlo – Restaurace – Catering", sub: "Viet/Asian, rezervace, rozvoz, catering" },
+        vi: {
+          main: "Food – Ăn uống – Nhà hàng",
+          sub: "Quán Việt, dịch vụ đặt bàn, ship đồ ăn, catering…",
+        },
+        en: {
+          main: "Food – Restaurant – Groceries",
+          sub: "Vietnamese food, booking, delivery, catering…",
+        },
+        cs: {
+          main: "Jídlo – Restaurace – Obchody",
+          sub: "Vietnamská jídla, rezervace, rozvoz, catering…",
+        },
       },
       {
-        key: "business",
+        key: "business-law",
+        href: "service-register-kyb-tranmarket.html",
         icon: "📊",
-        href: "providers/service-business.html",
-        vi: { main: "Business – Luật – Doanh nghiệp", sub: "Thành lập công ty, kế toán, pháp lý, HR" },
-        en: { main: "Business – Law – Company services", sub: "Company setup, accounting, legal, HR" },
-        cs: { main: "Firma – Právo – Podnikové služby", sub: "Založení firmy, účetnictví, právo, HR" },
+        vi: {
+          main: "Business – Luật – Doanh nghiệp",
+          sub: "Thành lập công ty, kế toán, pháp lý, HR…",
+        },
+        en: {
+          main: "Business – Law – Company",
+          sub: "Company setup, accounting, legal, HR…",
+        },
+        cs: {
+          main: "Byznys – Právo – Firma",
+          sub: "Založení firmy, účetnictví, právní služby, HR…",
+        },
       },
       {
         key: "experience",
-        icon: "🎉",
-        href: "providers/service-experience.html",
-        vi: { main: "Experience – Giải trí – Trải nghiệm", sub: "Chụp ảnh, quay phim, workshop, thể thao, party" },
-        en: { main: "Experience – Lifestyle – Leisure", sub: "Photo, video, workshops, sports, events" },
-        cs: { main: "Zážitky – Volný čas – Lifestyle", sub: "Foto, video, workshopy, sport, akce" },
+        href: "service-register-kyb-tranmarket.html",
+        icon: "🎭",
+        vi: {
+          main: "Experience – Giải trí – Trải nghiệm",
+          sub: "Chụp ảnh, quay phim, workshop, teambuilding, sự kiện…",
+        },
+        en: {
+          main: "Experience – Fun – Events",
+          sub: "Photo, video, workshops, teambuilding, events…",
+        },
+        cs: {
+          main: "Zážitky – Zábava – Akce",
+          sub: "Foto, video, workshopy, teambuilding, akce…",
+        },
       },
       {
         key: "rent",
-        icon: "🏠",
-        href: "providers/service-rent-housing.html",
-        vi: { main: "Rent – Thuê nhà – Phòng – Ký túc", sub: "Ngắn hạn, dài hạn, share phòng, housing linh hoạt" },
-        en: { main: "Rent – House / Flat / Dorm", sub: "Short-term, long-term, shared, flexible housing" },
-        cs: { main: "Pronájem – Byt / Dům / Kolej", sub: "Krátkodobě, dlouhodobě, spolubydlení" },
+        href: "service-register-kyb-tranmarket.html",
+        icon: "🏡",
+        vi: {
+          main: "Rent – Thuê nhà – Phòng – Ký túc",
+          sub: "Ngắn hạn, dài hạn, share phòng, housing linh hoạt…",
+        },
+        en: {
+          main: "Rent – House / Flat / Dorm",
+          sub: "Short & long term, shared rooms, flexible housing…",
+        },
+        cs: {
+          main: "Pronájem – Byt / dům / kolej",
+          sub: "Krátkodobě i dlouhodobě, spolubydlení…",
+        },
       },
       {
-        key: "bazaar",
-        icon: "♻️",
-        href: "providers/service-bazaar.html",
-        vi: { main: "Bazaars – Đồ cũ – Second-hand", sub: "Thanh lý, tặng lại, share đồ còn tốt" },
-        en: { main: "Bazaars – Second-hand", sub: "Resell, donate, share still-good items" },
-        cs: { main: "Bazar – Second-hand", sub: "Výprodej, darování, sdílení věcí" },
+        key: "bazaars",
+        href: "service-register-kyb-tranmarket.html",
+        icon: "🛍️",
+        vi: {
+          main: "Bazaars – Đồ cũ – Second-hand",
+          sub: "Thanh lý đồ, ký gửi, chợ đồ cũ online & offline…",
+        },
+        en: {
+          main: "Bazaars – Second-hand market",
+          sub: "Clearance, consignment, online & offline bazaars…",
+        },
+        cs: {
+          main: "Bazar – Second hand",
+          sub: "Výprodeje, komisní prodej, online i offline bazar…",
+        },
       },
       {
         key: "real-estate",
-        icon: "🏡",
-        href: "providers/service-real-estate.html",
-        vi: { main: "Real Estate – Mua bán nhà đất", sub: "Nhà, căn hộ, đất, tư vấn pháp lý & ngân hàng" },
-        en: { main: "Real Estate – Buy & Sell", sub: "Houses, flats, land, legal & bank support" },
-        cs: { main: "Nemovitosti – Prodej / Nákup", sub: "Domy, byty, pozemky, právní & bankovní servis" },
+        href: "service-register-kyb-tranmarket.html",
+        icon: "🏘️",
+        vi: {
+          main: "Real Estate – Mua bán nhà đất",
+          sub: "Nhà, căn hộ, đất, tư vấn pháp lý & ký gửi…",
+        },
+        en: {
+          main: "Real estate – Buy & Sell",
+          sub: "Flats, houses, land, legal advisory & listing…",
+        },
+        cs: {
+          main: "Reality – Prodej / nákup nemovitostí",
+          sub: "Byty, domy, pozemky, právní poradenství, inzerce…",
+        },
       },
       {
         key: "ceremony",
-        icon: "⛪",
-        href: "providers/service-ceremony.html",
-        vi: { main: "Ceremony – Cưới – Lễ – Tang", sub: "Tổ chức cưới hỏi, lễ nghi gia đình, hỗ trợ tang lễ" },
-        en: { main: "Ceremony – Wedding – Funeral", sub: "Weddings, family ceremonies, funeral support" },
-        cs: { main: "Obřady – Svatby – Pohřby", sub: "Svatby, rodinné obřady, podpora při pohřbu" },
+        href: "service-register-kyb-tranmarket.html",
+        icon: "🎐",
+        vi: {
+          main: "Ceremony – Cưới – Lễ – Tang",
+          sub: "Tổ chức cưới hỏi, lễ hội, ma chay, hỗ trợ tang lễ…",
+        },
+        en: {
+          main: "Ceremony – Wedding – Funerals",
+          sub: "Weddings, celebrations, funerals & related services…",
+        },
+        cs: {
+          main: "Ceremonie – Svatby – Pohřby",
+          sub: "Svatby, oslavy, pohřební a doprovodné služby…",
+        },
       },
       {
         key: "pets",
+        href: "service-register-kyb-tranmarket.html",
         icon: "🐾",
-        href: "providers/service-pets.html",
-        vi: { main: "Pets – Thú cưng", sub: "Chăm sóc, tắm, cắt tỉa, trông giữ, dắt đi dạo" },
-        en: { main: "Pets – Pet care", sub: "Grooming, sitting, walking, care" },
-        cs: { main: "Domácí mazlíčci – Péče", sub: "Stříhání, hlídání, venčení, péče" },
+        vi: {
+          main: "Pets – Thú cưng",
+          sub: "Chăm sóc, tắm rửa, gửi trông, giải cứu & di dời thú cưng…",
+        },
+        en: {
+          main: "Pets – Pet care",
+          sub: "Grooming, boarding, rescue & relocation…",
+        },
+        cs: {
+          main: "Mazlíčci – Péče o zvířata",
+          sub: "Stříhání, hlídání, záchrana a převoz…",
+        },
       },
       {
         key: "other",
+        href: "service-register-kyb-tranmarket.html",
         icon: "✨",
-        href: "providers/service-other.html",
-        vi: { main: "Other – Dịch vụ khác / mở rộng", sub: "Những dịch vụ đặc biệt hoặc mới chưa có danh mục riêng" },
-        en: { main: "Other – Extended / Special services", sub: "Special or new services not yet in a dedicated category" },
-        cs: { main: "Další – Rozšířené / Speciální služby", sub: "Speciální nebo nové služby mimo hlavní kategorie" },
         other: true,
+        vi: {
+          main: "Other – Dịch vụ khác / mở rộng",
+          sub: "Những dịch vụ đặc biệt hoặc mới mà hệ thống chưa có danh mục riêng.",
+        },
+        en: {
+          main: "Other – Extended services",
+          sub: "Special or new services not yet covered by other categories.",
+        },
+        cs: {
+          main: "Ostatní – Rozšířené služby",
+          sub: "Speciální či nové služby mimo existující kategorie.",
+        },
       },
     ];
 
@@ -572,22 +719,34 @@
       grid: document.getElementById("category-grid"),
     };
 
-    function renderText() {
-      const t = TEXT[currentLang];
+    const langButtons = document.querySelectorAll(".tm-lang-btn");
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      const t = TEXT[lang];
+
       els.brandSub.textContent = t.brandSub;
       els.heroTitle.textContent = t.heroTitle;
       els.heroSub.textContent = t.heroSub;
-      els.heroNote.innerHTML = t.heroNote;
-      els.footerNote.innerHTML = t.footer;
+      els.heroNote.textContent = t.heroNote;
+      els.footerNote.textContent = t.footer;
+
+      langButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+
+      renderCategories();
     }
 
     function renderCategories() {
       const t = TEXT[currentLang];
       els.grid.innerHTML = "";
+
       CATEGORIES.forEach((cat) => {
         const data = cat[currentLang];
+
         const card = document.createElement("a");
-        card.href = "service-register-kyb-tranmarket.html";
+        card.href = cat.href || "#";
         card.target = "_blank";
         card.className = "cat-card" + (cat.other ? " other" : "");
         card.setAttribute("data-key", cat.key);
@@ -635,18 +794,12 @@
       });
     }
 
-    function applyLanguage(lang) {
-      currentLang = lang;
-      document.querySelectorAll(".tm-lang-btn").forEach((btn) => {
-        btn.classList.toggle("active", btn.dataset.lang === lang);
-      });
-      renderText();
-      renderCategories();
-    }
-
-    document.querySelectorAll(".tm-lang-btn").forEach((btn) => {
+    langButtons.forEach((btn) => {
       btn.addEventListener("click", () => {
-        applyLanguage(btn.dataset.lang);
+        const lang = btn.dataset.lang;
+        if (lang && lang !== currentLang) {
+          applyLanguage(lang);
+        }
       });
     });
 
