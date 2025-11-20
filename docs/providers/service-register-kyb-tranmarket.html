@@ -74,6 +74,19 @@
   position: relative;
   z-index: 1;
 }
+@media (max-width: 640px) {
+  .card-header {
+    flex-direction: column;      /* xếp logo + TRANMARKET theo cột */
+    align-items: flex-start;     /* bắt đầu từ bên trái */
+    gap: 4px;                    /* khoảng cách các dòng */
+    padding: 16px 16px 8px 16px; /* thu padding cho hợp màn dọc */
+  }
+
+  .tm-lang-toggle {
+    align-self: flex-end;        /* nút LANG đẩy sang góc phải trên */
+    margin-top: 4px;
+  }
+}
 
    
     @media (min-width: 640px) {
