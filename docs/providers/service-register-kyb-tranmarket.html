@@ -339,81 +339,47 @@
 
         <form id="kyb-form" autocomplete="on">
           <div class="form-grid">
-            <div class="field">
-              <label for="category" id="label-category">Danh mục dịch vụ</label>
-              <select id="category" class="select">
-                <option value="" hidden>-</option>
-              </select>
-            </div>
-          </div>
+        <div class="field">
+  <label id="label-email" for="email">Email liên hệ</label>
+  <!-- KYB: START PI-PURE PHASE1 INSERT -->
+</div>
 
-          <div class="form-grid two-col">
-            <div class="field">
-              <label for="company" id="label-company">Tên doanh nghiệp / dịch vụ</label>
-              <input id="company" class="input" type="text" />
-            </div>
-
-            <div class="field">
-              <label for="person" id="label-person">Người phụ trách</label>
-              <input id="person" class="input" type="text" />
-            </div>
-
-            <div class="field">
-              <label for="area" id="label-area">Khu vực hoạt động</label>
-              <input id="area" class="input" type="text" />
-            </div>
-
-            <div class="field">
-              <label for="phone" id="label-phone">Điện thoại / WhatsApp</label>
-              <input id="phone" class="input" type="text" />
-            </div>
-
-            <div class="field">
-              <label for="email" id="label-email">Email liên hệ</label>
-              <!-- KYB: START PI-PURE PHASE1 INSERT HERE -->
 <div class="field">
   <label id="label-pi-accept" for="piAccept"></label>
-  <div style="display:flex;align-items:center;gap:0.5rem;">
-    <input type="checkbox" id="piAccept" name="piAccept" data-kyb-pi-accept />
-    <span data-kyb-pi-note style="font-size:0.85rem;opacity:0.85;"></span>
+  <div style="display:flex;align-items:center;gap:0.5rem">
+    <input
+      type="checkbox"
+      id="piAccept"
+      name="piAccept"
+      data-kyb-pi-accept
+    />
+    <span
+      data-kyb-pi-note
+      style="font-size:0.85rem;opacity:0.85;"
+    ></span>
   </div>
 </div>
 
 <div class="field">
   <label id="label-pi-level" for="piLevel"></label>
-  <select id="piLevel" name="piLevel" data-kyb-pi-level>
+  <select
+    id="piLevel"
+    name="piLevel"
+    data-kyb-pi-level
+  >
     <option value=""></option>
     <option value="Basic"></option>
     <option value="Standard"></option>
     <option value="Full"></option>
   </select>
 </div>
-
 <!-- KYB: END PI-PURE PHASE1 INSERT -->
 
-              <input id="email" class="input" type="email" />
-            </div>
+<div class="field">
+  <label for="email" id="label-email-dup" style="display:none;"></label>
+  <input id="email" class="input" type="email" />
+</div>
 
-            <div class="field">
-              <label for="website" id="label-website">Website / Facebook (nếu có)</label>
-              <input id="website" class="input" type="text" placeholder="https://..." />
-            </div>
-          </div>
-
-          <div class="form-grid">
-            <div class="field">
-              <label for="desc" id="label-desc">Mô tả dịch vụ (ngắn gọn, 3–5 dòng)</label>
-              <textarea id="desc"></textarea>
-            </div>
-
-            <div class="field">
-              <label for="notes" id="label-notes">Ghi chú nội bộ cho Tranmarket (chỉ dùng nội bộ)</label>
-              <textarea id="notes"></textarea>
-              <p class="hint" id="hint-bottom">
-                Nội dung này chỉ dùng để Tranmarket và đội KYB đánh giá, sẽ không hiển thị công khai.
-              </p>
-            </div>
-          </div>
 
           <div class="actions-row">
             <button type="button" class="btn btn-primary" id="btn-mail">
