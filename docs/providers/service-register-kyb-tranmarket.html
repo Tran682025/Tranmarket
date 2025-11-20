@@ -2,420 +2,444 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <title>Đăng ký dịch vụ cùng Tranmarket (KYB)</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tranmarket – Service KYB</title>
 
   <style>
     :root {
-      --bg-main: #080425;
-      --bg-card: #1c1040;
-      --bg-card-soft: #241252;
-      --accent: #f78da7;
-      --accent-soft: #ffb3d1;
-      --text-main: #ffffff;
-      --text-soft: #d8cfff;
-      --text-muted: #a198cf;
-      --input-bg: #120a30;
-      --input-border: rgba(255, 255, 255, 0.12);
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.65);
-      --radius-card: 26px;
+      --bg: #12002b;
+      --card: #25104a;
+      --accent: #ff79c6;
+      --accent-soft: #ffb3df;
+      --text: #ffffff;
+      --muted: #c0b3ff;
+      --input-bg: #1a0a33;
+      --border: #3a2370;
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html,
     body {
       margin: 0;
-      padding: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
-      background: radial-gradient(circle at top, #3b1c72 0, #050318 60%, #020010 100%);
-      color: var(--text-main);
+        Roboto, sans-serif;
+      background: radial-gradient(circle at top, #3b1c82, #050013);
+      color: var(--text);
     }
 
-    body {
+    .tm-page {
       min-height: 100vh;
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      padding: 24px 10px 40px;
+      padding: 32px 16px;
     }
 
-    .page-wrapper {
+    .tm-shell {
       width: 100%;
-      max-width: 960px;
-    }
-
-    .kyb-card {
-      background: radial-gradient(circle at top left, #3c1b6a 0, #170b3a 40%, #120827 100%);
-      border-radius: var(--radius-card);
-      box-shadow: var(--shadow-soft);
-      padding: 20px 18px 26px;
+      max-width: 1100px;
+      background: linear-gradient(145deg, #2b1553, #16072e);
+      border-radius: 24px;
+      padding: 24px 24px 32px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    @media (min-width: 640px) {
-      .kyb-card {
-        padding: 26px 30px 32px;
-      }
-    }
-
-    .card-header {
+    header.tm-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      margin-bottom: 18px;
+      margin-bottom: 24px;
     }
 
-    .logo-wrap {
+    .tm-brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .logo-badge {
-      width: 44px;
-      height: 44px;
-      border-radius: 18px;
-      background: radial-gradient(circle at 25% 0, #ffdf9a 0, #cca35d 40%, #7a5321 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: #2c1400;
-    }
-
-    .brand-main {
-      font-size: 1.35rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-    }
-
-    .brand-sub {
-      font-size: 0.8rem;
-      color: var(--text-soft);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-top: 2px;
-    }
-
-    .tm-lang-toggle {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 6px;
+    .tm-logo-small {
+      width: 32px;
+      height: 32px;
       border-radius: 999px;
-      border: 1px solid rgba(164, 150, 228, 0.55);
-      background: rgba(13, 9, 40, 0.96);
-      white-space: nowrap;
-      overflow-x: auto;
-      scrollbar-width: none;
-      max-width: 180px;
+      object-fit: cover;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
     }
 
-    .tm-lang-toggle::-webkit-scrollbar {
-      display: none;
+    .tm-brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
 
-    .tm-lang-label {
-      font-size: 0.72rem;
+    .tm-brand-name {
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
+    }
+
+    .tm-brand-sub {
+      font-size: 0.7rem;
+      color: var(--accent-soft);
       text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-muted);
-      opacity: 0.9;
+      letter-spacing: 0.16em;
+    }
+
+    .tm-lang-switch {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px;
+      border-radius: 999px;
+      background: rgba(10, 2, 40, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      gap: 2px;
     }
 
     .tm-lang-btn {
-      border: 0;
-      padding: 3px 10px;
-      border-radius: 999px;
+      border: none;
       background: transparent;
-      color: var(--text-muted);
-      font-size: 0.78rem;
+      color: var(--muted);
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: 999px;
       cursor: pointer;
-      min-width: 40px;
     }
 
-    .tm-lang-btn.active {
-      background: linear-gradient(135deg, #f78da7, #c471ed);
-      color: #00151f;
-      font-weight: 650;
+    .tm-lang-btn.is-active {
+      background: var(--accent);
+      color: #12001c;
+      font-weight: 600;
     }
 
-    .hero-title {
-      font-size: 1.4rem;
-      margin: 4px 0 2px;
-    }
-
-    .hero-subtitle {
-      font-size: 0.95rem;
-      color: var(--text-soft);
-      margin: 0 0 4px;
-    }
-
-    .hero-intro {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin: 0 0 16px;
-    }
-
-    .form-grid {
+    .tm-main {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-bottom: 14px;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+      gap: 24px;
     }
 
-    @media (min-width: 640px) {
+    @media (max-width: 880px) {
+      .tm-main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .tm-intro {
+      margin-bottom: 16px;
+    }
+
+    .tm-title {
+      margin: 0 0 4px;
+      font-size: 1.25rem;
+    }
+
+    .tm-subtitle {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .tm-note {
+      margin-top: 12px;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .tm-card {
+      background: radial-gradient(circle at top left, #3e1c7a, #140521);
+      border-radius: 18px;
+      padding: 18px 18px 22px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    form#kyb-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-grid.two-col {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 640px) {
       .form-grid.two-col {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: minmax(0, 1fr);
       }
     }
 
     .field {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 6px;
+      font-size: 0.82rem;
     }
 
-    .field label {
-      font-size: 0.8rem;
-      color: var(--text-soft);
+    label {
+      color: var(--muted);
     }
 
     .input,
     .select,
     textarea {
-      width: 100%;
-      border-radius: 16px;
-      border: 1px solid var(--input-border);
+      border-radius: 10px;
+      border: 1px solid var(--border);
       background: var(--input-bg);
-      color: var(--text-main);
-      padding: 9px 12px;
+      color: var(--text);
+      padding: 8px 10px;
       font-size: 0.86rem;
       outline: none;
+      width: 100%;
     }
 
     .input:focus,
     .select:focus,
     textarea:focus {
-      border-color: rgba(252, 183, 255, 0.85);
-      box-shadow: 0 0 0 1px rgba(252, 183, 255, 0.5);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(255, 121, 198, 0.5);
     }
 
     textarea {
-      min-height: 70px;
       resize: vertical;
+      min-height: 72px;
     }
 
-    .hint {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .actions-row {
+    .tm-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 4px;
-      margin-bottom: 14px;
+      margin-top: 6px;
     }
 
     .btn {
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      background: rgba(22, 9, 60, 0.95);
-      color: var(--text-main);
-      padding: 7px 14px;
-      font-size: 0.82rem;
+      border: 1px solid transparent;
+      padding: 8px 16px;
+      font-size: 0.8rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 6px;
-    }
-
-    .btn-soft {
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    .btn-danger {
-      border-color: rgba(255, 147, 165, 0.6);
-      color: #ffd3dd;
+      background: #1b0b36;
+      color: var(--text);
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #f78da7, #c471ed);
-      border-color: transparent;
-      color: #001520;
-      font-weight: 650;
+      background: var(--accent);
+      color: #160014;
+      font-weight: 600;
     }
 
-    .preview-card {
-      margin-top: 12px;
-      background: var(--bg-card-soft);
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 10px 12px 12px;
-      font-size: 0.8rem;
-      line-height: 1.5;
-      color: var(--text-main);
-      max-height: 240px;
-      overflow-y: auto;
-      white-space: pre-wrap;
+    .btn-outline {
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .tm-preview-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
     .preview-title {
-      font-weight: 650;
-      margin-bottom: 4px;
+      font-size: 0.9rem;
+      font-weight: 600;
       color: var(--accent-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
     }
 
-    .footer-note {
-      margin-top: 10px;
-      font-size: 0.75rem;
-      color: var(--text-muted);
+    pre.preview-content {
+      margin: 0;
+      padding: 12px;
+      border-radius: 12px;
+      background: #0b0319;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.78rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      max-height: 420px;
+      overflow: auto;
     }
 
-    /* PRINT */
-    @media print {
-      body {
-        background: #ffffff;
-      }
+    .preview-hint {
+      font-size: 0.76rem;
+      color: var(--muted);
+    }
 
-      .kyb-card {
-        box-shadow: none;
-        border-radius: 0;
-        border: none;
-      }
+    .pi-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
 
-      .tm-lang-toggle,
-      .actions-row {
-        display: none !important;
-      }
-
-      .footer-note {
-        color: #555555;
-      }
+    .pi-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
   </style>
 </head>
 <body>
-  <div class="page-wrapper">
-    <div class="kyb-card">
-      <header class="card-header">
-        <div class="logo-wrap">
-          <div class="logo-badge">TRM π</div>
-          <div>
-            <div class="brand-main">TRANMARKET</div>
-            <div class="brand-sub" id="brand-sub">
-              PI-READY SERVICE MARKETPLACE
-            </div>
+  <div class="tm-page">
+    <div class="tm-shell">
+      <header class="tm-header">
+        <div class="tm-brand">
+          <img
+            src="../assets/trm-logo-nav.png"
+            alt="Tranmarket logo"
+            class="tm-logo-small"
+          />
+          <div class="tm-brand-text">
+            <span class="tm-brand-name">TRANMARKET</span>
+            <span class="tm-brand-sub" id="brand-sub"></span>
           </div>
         </div>
 
-        <div class="tm-lang-toggle">
-          <span class="tm-lang-label">LANG</span>
-          <button class="tm-lang-btn active" data-lang="vi" id="btn-lang-vi">VI</button>
-          <button class="tm-lang-btn" data-lang="en" id="btn-lang-en">EN</button>
-          <button class="tm-lang-btn" data-lang="cs" id="btn-lang-cs">CZ</button>
+        <div class="tm-lang-switch">
+          <button type="button" class="tm-lang-btn is-active" data-lang="vi">
+            VI
+          </button>
+          <button type="button" class="tm-lang-btn" data-lang="en">
+            EN
+          </button>
+          <button type="button" class="tm-lang-btn" data-lang="cs">
+            CZ
+          </button>
         </div>
       </header>
 
-      <main>
-        <h1 class="hero-title" id="form-title">Đăng ký dịch vụ cùng Tranmarket (KYB)</h1>
-        <p class="hero-subtitle" id="form-subtitle">
-          Kết nối doanh nghiệp / cá nhân cung cấp dịch vụ với cộng đồng người Việt tại Séc &amp; EU.
-        </p>
-        <p class="hero-intro" id="form-intro">
-          Điền đầy đủ thông tin dưới đây. Bạn có thể in trang này, hoặc bấm “Tạo email đăng ký” để mở sẵn nội dung email gửi cho Tranmarket.
-        </p>
-
-        <form id="kyb-form" autocomplete="on">
-          <div class="form-grid">
-        <div class="field">
-  <label id="label-email" for="email">Email liên hệ</label>
-  <!-- KYB: START PI-PURE PHASE1 INSERT -->
-</div>
-
-<div class="field">
-  <label id="label-pi-accept" for="piAccept"></label>
-  <div style="display:flex;align-items:center;gap:0.5rem">
-    <input
-      type="checkbox"
-      id="piAccept"
-      name="piAccept"
-      data-kyb-pi-accept
-    />
-    <span
-      data-kyb-pi-note
-      style="font-size:0.85rem;opacity:0.85;"
-    ></span>
-  </div>
-</div>
-
-<div class="field">
-  <label id="label-pi-level" for="piLevel"></label>
-  <select
-    id="piLevel"
-    name="piLevel"
-    data-kyb-pi-level
-  >
-    <option value=""></option>
-    <option value="Basic"></option>
-    <option value="Standard"></option>
-    <option value="Full"></option>
-  </select>
-</div>
-<!-- KYB: END PI-PURE PHASE1 INSERT -->
-
-<div class="field">
-  <label for="email" id="label-email-dup" style="display:none;"></label>
-  <input id="email" class="input" type="email" />
-</div>
-
-
-          <div class="actions-row">
-            <button type="button" class="btn btn-primary" id="btn-mail">
-              <span id="btn-mail-label">Tạo email đăng ký</span>
-            </button>
-            <button type="button" class="btn btn-soft" id="btn-copy">
-              <span id="btn-copy-label">Copy nội dung đăng ký</span>
-            </button>
-            <button type="button" class="btn btn-soft" id="btn-print">
-              <span id="btn-print-label">In / Lưu PDF</span>
-            </button>
-            <button type="button" class="btn btn-danger" id="btn-reset">
-              <span id="btn-reset-label">Xóa &amp; làm lại</span>
-            </button>
+      <div class="tm-main">
+        <!-- LEFT: FORM -->
+        <section>
+          <div class="tm-intro">
+            <h1 class="tm-title" id="page-title"></h1>
+            <p class="tm-subtitle" id="page-subtitle"></p>
+            <p class="tm-note" id="form-intro"></p>
           </div>
 
-          <section class="preview-card">
-            <div class="preview-title" id="preview-title">
-              ĐĂNG KÝ DỊCH VỤ MỚI – KYB TRANMARKET
-            </div>
-            <div id="preview-content">
-Chào Tranmarket, tôi gửi đăng ký dịch vụ mới với thông tin như sau:
-            </div>
-            <div class="footer-note" id="footer-note">
-              Tranmarket là nền tảng kết nối dịch vụ cho cộng đồng, thông tin trực tiếp nằm giữa bạn và đơn vị cung cấp dịch vụ. Các thông tin KYB giúp đội ngũ Tranmarket đánh giá mức độ minh bạch và uy tín trước khi dịch vụ của bạn xuất hiện với cộng đồng người Việt tại Séc &amp; EU.
-            </div>
-          </section>
-        </form>
-      </main>
+          <div class="tm-card">
+            <form id="kyb-form" autocomplete="on">
+              <div class="form-grid two-col">
+                <div class="field">
+                  <label id="label-category" for="category"></label>
+                  <select id="category" class="select"></select>
+                </div>
+
+                <div class="field">
+                  <label id="label-company" for="company"></label>
+                  <input id="company" class="input" type="text" />
+                </div>
+
+                <div class="field">
+                  <label id="label-person" for="person"></label>
+                  <input id="person" class="input" type="text" />
+                </div>
+
+                <div class="field">
+                  <label id="label-area" for="area"></label>
+                  <input id="area" class="input" type="text" />
+                </div>
+
+                <div class="field">
+                  <label id="label-phone" for="phone"></label>
+                  <input id="phone" class="input" type="text" />
+                </div>
+
+                <div class="field">
+                  <label id="label-website" for="website"></label>
+                  <input
+                    id="website"
+                    class="input"
+                    type="text"
+                    placeholder="https://..."
+                  />
+                </div>
+
+                <div class="field">
+                  <label id="label-email" for="email"></label>
+                  <input id="email" class="input" type="email" />
+                </div>
+              </div>
+
+              <!-- Pi-ready block -->
+              <div class="field">
+                <label id="label-pi-accept" for="piAccept"></label>
+                <div class="pi-row">
+                  <input
+                    type="checkbox"
+                    id="piAccept"
+                    name="piAccept"
+                    data-kyb-pi-accept
+                  />
+                  <span class="pi-note" data-kyb-pi-note></span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label id="label-pi-level" for="piLevel"></label>
+                <select
+                  id="piLevel"
+                  name="piLevel"
+                  class="select"
+                  data-kyb-pi-level
+                >
+                  <option value=""></option>
+                  <option value="Basic"></option>
+                  <option value="Standard"></option>
+                  <option value="Full"></option>
+                </select>
+              </div>
+              <!-- END Pi-ready -->
+
+              <div class="field">
+                <label id="label-desc" for="desc"></label>
+                <textarea id="desc"></textarea>
+              </div>
+
+              <div class="field">
+                <label id="label-notes" for="notes"></label>
+                <textarea id="notes"></textarea>
+              </div>
+
+              <p class="tm-note" id="form-footer"></p>
+
+              <div class="tm-actions">
+                <button type="button" class="btn btn-primary" id="btn-mail">
+                  <span id="btn-mail-text"></span>
+                </button>
+                <button type="button" class="btn btn-outline" id="btn-copy">
+                  <span id="btn-copy-text"></span>
+                </button>
+                <button type="button" class="btn btn-outline" id="btn-print">
+                  <span id="btn-print-text"></span>
+                </button>
+                <button type="button" class="btn" id="btn-reset">
+                  <span id="btn-reset-text"></span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- RIGHT: PREVIEW -->
+        <section>
+          <div class="tm-card tm-preview-card">
+            <div class="preview-title" id="preview-title"></div>
+            <pre class="preview-content" id="preview-content"></pre>
+            <div class="preview-hint" id="preview-hint"></div>
+          </div>
+        </section>
+      </div>
     </div>
   </div>
 
   <script>
-    // ======================
-    // TEXT DICTIONARY
-    // ======================
+    const KYB_EMAIL = "tranmarket.kyb@gmail.com"; // đổi email nếu Trẫm muốn
+    let currentLang = "vi";
 
     const KYB_TEXT = {
       vi: {
@@ -425,8 +449,8 @@ Chào Tranmarket, tôi gửi đăng ký dịch vụ mới với thông tin như 
           "Kết nối doanh nghiệp / cá nhân cung cấp dịch vụ với cộng đồng người Việt tại Séc & EU.",
         formIntro:
           "Điền đầy đủ thông tin dưới đây. Bạn có thể in trang này, hoặc bấm “Tạo email đăng ký” để mở sẵn nội dung email gửi cho Tranmarket.",
-        footer:
-          "Tranmarket là nền tảng kết nối dịch vụ cho cộng đồng, thông tin trực tiếp nằm giữa bạn và đơn vị cung cấp dịch vụ. Các thông tin KYB giúp đội ngũ Tranmarket đánh giá mức độ minh bạch và uy tín trước khi dịch vụ của bạn xuất hiện với cộng đồng người Việt tại Séc & EU.",
+        formFooter:
+          "Nội dung này chỉ dùng để Tranmarket và đội KYB đánh giá, sẽ không hiển thị công khai.",
         labels: {
           category: "Danh mục dịch vụ",
           company: "Tên doanh nghiệp / dịch vụ",
@@ -439,35 +463,13 @@ Chào Tranmarket, tôi gửi đăng ký dịch vụ mới với thông tin như 
           piLevel: "Mức độ Pi-ready",
           desc: "Mô tả dịch vụ (ngắn gọn, 3–5 dòng)",
           notes: "Ghi chú nội bộ cho Tranmarket (chỉ dùng nội bộ)",
-piNote: "Doanh nghiệp chấp nhận thanh toán bằng Pi (theo thỏa thuận với khách hàng).",
-piLevelPlaceholder: "– Chọn mức độ Pi-ready (không bắt buộc) –",
-piBasic: "Basic – Chỉ chấp nhận Pi theo thỏa thuận",
-piStandard: "Standard – Pi + ưu đãi giảm giá",
-piFull: "Full – Ưu tiên khách trả bằng Pi, có ưu đãi đặc biệt",
-
         },
-        hintBottom:
-          "Nội dung này chỉ dùng để Tranmarket và đội KYB đánh giá, sẽ không hiển thị công khai.",
-        categories: [
-          "Logistics – Gửi hàng – Vận chuyển",
-          "Giấy tờ – Dịch thuật – Hồ sơ",
-          "Sửa chữa – Nhà ở – Xây dựng",
-          "Car & Garage – Gara xe",
-          "Taxi – Vận chuyển cá nhân",
-          "Travel – Du lịch – Tour",
-          "Beauty – Spa – Hair – Nails",
-          "Education – Giáo dục – Ngoại ngữ",
-          "Health – Hỗ trợ y tế",
-          "Food – Ăn uống – Nhà hàng",
-          "Business – Luật – Doanh nghiệp",
-          "Experience – Giải trí – Trải nghiệm",
-          "Rent – Thuê nhà – Phòng – Ký túc",
-          "Bazaars – Đồ cũ – Second-hand",
-          "Real Estate – Mua bán nhà đất",
-          "Ceremony – Cưới – Lễ – Tang",
-          "Pets – Thú cưng",
-          "Other – Dịch vụ khác / mở rộng",
-        ],
+        piNote:
+          "Doanh nghiệp chấp nhận thanh toán bằng Pi (theo thỏa thuận với khách hàng).",
+        piLevelPlaceholder: "-- Chọn mức độ Pi-ready (không bắt buộc) --",
+        piBasic: "Basic – Chỉ chấp nhận Pi theo thỏa thuận",
+        piStandard: "Standard – Pi + ưu đãi giảm giá",
+        piFull: "Full – Ưu tiên khách trả bằng Pi, có ưu đãi đặc biệt",
         buttons: {
           mail: "Tạo email đăng ký",
           copy: "Copy nội dung đăng ký",
@@ -476,13 +478,31 @@ piFull: "Full – Ưu tiên khách trả bằng Pi, có ưu đãi đặc biệt"
         },
         previewTitle: "ĐĂNG KÝ DỊCH VỤ MỚI – KYB TRANMARKET",
         previewHint:
-          "Nội dung xem trước sẽ được dùng cho email gửi đến Tranmarket và cho hồ sơ KYB.",
+          "Nội dung dưới đây sẽ được dùng cho email gửi đến Tranmarket.",
         mailSubject: "Đăng ký dịch vụ mới – KYB Tranmarket",
         mailBodyIntro:
           "Chào Tranmarket,\n\ntôi gửi đăng ký dịch vụ mới với thông tin như sau:\n",
         confirmReset: "Bạn có chắc muốn xóa toàn bộ và làm lại từ đầu?",
         copyOk: "Đã copy nội dung đăng ký vào clipboard.",
-        copyErr: "Không copy được. Vui lòng copy thủ công."
+        copyErr: "Không copy được. Vui lòng copy thủ công.",
+        categories: [
+          "Logistics – Gửi hàng – Vận chuyển",
+          "Giấy tờ – Dịch thuật – Hồ sơ",
+          "Sửa nhà – Nhà ở – Xây dựng",
+          "Car & Garage – Gara xe",
+          "Taxi – Vận chuyển cá nhân",
+          "Travel – Du lịch – Tour",
+          "Beauty – Spa – Hair – Nails",
+          "Education – Giáo dục – Ngoại ngữ",
+          "Health – Hỗ trợ y tế",
+          "Food – Nhà hàng – Catering",
+          "Business – Pháp lý – Doanh nghiệp",
+          "Experience – Sự kiện – Giải trí",
+          "Rent – Thuê nhà – Phòng – Ký túc",
+          "Bazaars – Second-hand – Flea",
+          "Real Estate – Mua bán nhà đất",
+          "Other – Dịch vụ mở rộng",
+        ],
       },
 
       en: {
@@ -492,8 +512,8 @@ piFull: "Full – Ưu tiên khách trả bằng Pi, có ưu đãi đặc biệt"
           "Connect your business / service with the Vietnamese community in Czechia & the EU.",
         formIntro:
           "Fill in the details below. You can print this page or click “Create registration email” to open a ready-to-send email for Tranmarket.",
-        footer:
-          "Tranmarket is a neutral service marketplace. All agreements are between you and the customer. KYB details help Tranmarket check transparency and reliability before your service appears to the Vietnamese community in Czechia & the EU.",
+        formFooter:
+          "Only Tranmarket & the KYB team see this note. It will never be shown to customers.",
         labels: {
           category: "Service category",
           company: "Business / service name",
@@ -506,15 +526,28 @@ piFull: "Full – Ưu tiên khách trả bằng Pi, có ưu đãi đặc biệt"
           piLevel: "Pi readiness level",
           desc: "Service description (short, 3–5 lines)",
           notes: "Internal note for Tranmarket (not public)",
-piNote: "The business accepts Pi payments (based on agreement with the customer).",
-piLevelPlaceholder: "– Select Pi readiness level (optional) –",
-piBasic: "Basic – Accept Pi by agreement only",
-piStandard: "Standard – Pi + discount or benefit",
-piFull: "Full – Priority for customers paying in Pi with special offers",
-
         },
-        hintBottom:
-          "Only Tranmarket & the KYB team see this note. It will never be shown to customers.",
+        piNote:
+          "The business accepts Pi payments (based on agreement with the customer).",
+        piLevelPlaceholder: "-- Select Pi readiness level (optional) --",
+        piBasic: "Basic – Accept Pi by agreement only",
+        piStandard: "Standard – Pi + discount or benefit",
+        piFull: "Full – Priority for customers paying in Pi with special offers",
+        buttons: {
+          mail: "Create registration email",
+          copy: "Copy registration content",
+          print: "Print / Save as PDF",
+          reset: "Clear & start over",
+        },
+        previewTitle: "NEW SERVICE REGISTRATION – KYB TRANMARKET",
+        previewHint:
+          "This content will be used in the email to Tranmarket.",
+        mailSubject: "New service registration – KYB Tranmarket",
+        mailBodyIntro:
+          "Hello Tranmarket,\n\nI would like to register a new service with the following details:\n",
+        confirmReset: "Are you sure you want to clear the form and start again?",
+        copyOk: "Registration content copied to clipboard.",
+        copyErr: "Could not copy to clipboard. Please copy manually.",
         categories: [
           "Logistics – Shipping – Transport",
           "Documents – Translation – Papers",
@@ -531,25 +564,8 @@ piFull: "Full – Priority for customers paying in Pi with special offers",
           "Rent – Rooms – Flats – Dorms",
           "Bazaars – Second-hand & Flea",
           "Real Estate – Buy & Sell Property",
-          "Ceremony – Wedding – Funeral",
-          "Pets – Pet care & services",
           "Other – Extended services",
         ],
-        buttons: {
-          mail: "Create registration email",
-          copy: "Copy registration content",
-          print: "Print / Save as PDF",
-          reset: "Clear & start over",
-        },
-        previewTitle: "NEW SERVICE REGISTRATION – KYB TRANMARKET",
-        previewHint:
-          "This preview will be used for the email to Tranmarket and for KYB records.",
-        mailSubject: "New service registration – KYB Tranmarket",
-        mailBodyIntro:
-          "Hello Tranmarket,\n\nI would like to register a new service with the following details:\n",
-        confirmReset: "Are you sure you want to clear the form and start again?",
-        copyOk: "Registration content copied to clipboard.",
-        copyErr: "Could not copy to clipboard. Please copy manually."
       },
 
       cs: {
@@ -558,9 +574,9 @@ piFull: "Full – Priority for customers paying in Pi with special offers",
         subtitle:
           "Propojujeme poskytovatele služeb s vietnamskou komunitou v České republice a EU.",
         formIntro:
-          "Vyplňte prosím údaje níže. Tuto stránku můžete vytisknout nebo kliknout na „Vytvořit registrační e-mail“ a otevřít předpřipravený e-mail pro Tranmarket.",
-        footer:
-          "Tranmarket je neutrální tržiště služeb. Veškeré dohody jsou pouze mezi vámi a klientem. Údaje KYB slouží k ověření transparentnosti a spolehlivosti, než se vaše služba zobrazí vietnamské komunitě v ČR a EU.",
+          "Vyplňte prosím údaje níže. Tuto stránku můžete vytisknout nebo kliknout na „Vytvořit registrační e-mail“ a otevřít předvyplněný e-mail pro Tranmarket.",
+        formFooter:
+          "Tuto poznámku vidí pouze Tranmarket a KYB tým. Nikdy se nezobrazí klientům.",
         labels: {
           category: "Kategorie služby",
           company: "Název firmy / služby",
@@ -573,15 +589,33 @@ piFull: "Full – Priority for customers paying in Pi with special offers",
           piLevel: "Úroveň připravenosti Pi",
           desc: "Popis služby (stručně, 3–5 řádků)",
           notes: "Interní poznámka pro Tranmarket (nezveřejňuje se)",
-piNote: "Podnik přijímá platby Pi (dle dohody se zákazníkem).",
-piLevelPlaceholder: "– Zvolte úroveň připravenosti Pi (nepovinné) –",
-piBasic: "Basic – Přijímá Pi pouze po dohodě",
-piStandard: "Standard – Pi + sleva nebo výhoda",
-piFull: "Full – Priorita pro platby v Pi se speciální nabídkou",
-
         },
-        hintBottom:
-          "Tuto poznámku vidí pouze Tranmarket a KYB tým. Nikdy se nezobrazí klientům.",
+        piNote:
+          "Podnik přijímá platby Pi (dle dohody se zákazníkem).",
+        piLevelPlaceholder:
+          "-- Zvolte úroveň připravenosti Pi (nepovinné) --",
+        piBasic: "Basic – Přijímá Pi pouze po dohodě",
+        piStandard: "Standard – Pi + sleva nebo výhoda",
+        piFull:
+          "Full – Priorita pro platby v Pi se speciální nabídkou",
+        buttons: {
+          mail: "Vytvořit registrační e-mail",
+          copy: "Zkopírovat obsah registrace",
+          print: "Tisk / Uložit jako PDF",
+          reset: "Vymazat a začít znovu",
+        },
+        previewTitle:
+          "NOVÁ REGISTRACE SLUŽBY – KYB TRANMARKET",
+        previewHint:
+          "Tento obsah bude použit v e-mailu pro Tranmarket.",
+        mailSubject: "Registrace nové služby – KYB Tranmarket",
+        mailBodyIntro:
+          "Dobrý den,\n\nzasílám registraci nové služby s následujícími údaji:\n",
+        confirmReset:
+          "Opravdu chcete vymazat formulář a začít znovu?",
+        copyOk: "Obsah registrace byl zkopírován do schránky.",
+        copyErr:
+          "Obsah se nepodařilo zkopírovat. Zkopírujte prosím ručně.",
         categories: [
           "Logistika – Zásilky – Doprava",
           "Dokumenty – Překlady – Formuláře",
@@ -598,313 +632,261 @@ piFull: "Full – Priorita pro platby v Pi se speciální nabídkou",
           "Pronájem – Pokoje – Byty – Koleje",
           "Bazary – Second-hand",
           "Reality – Prodej / Nákup nemovitostí",
-          "Obřady – Svatby – Pohřby",
-          "Mazlíčci – Péče o zvířata",
           "Ostatní – Rozšířené služby",
         ],
-        buttons: {
-          mail: "Vytvořit registrační e-mail",
-          copy: "Zkopírovat obsah registrace",
-          print: "Tisk / Uložit jako PDF",
-          reset: "Vymazat a začít znovu",
-        },
-        previewTitle: "NOVÁ REGISTRACE SLUŽBY – KYB TRANMARKET",
-        previewHint:
-          "Tento náhled se použije pro e-mail Tranmarketu a pro KYB dokumentaci.",
-        mailSubject: "Nová registrace služby – KYB Tranmarket",
-        mailBodyIntro:
-          "Dobrý den,\n\nzasílám registraci nové služby s následujícími údaji:\n",
-        confirmReset:
-          "Opravdu chcete vymazat celý formulář a začít znovu?",
-        copyOk: "Obsah registrace byl zkopírován do schránky.",
-        copyErr: "Kopírování selhalo. Zkopírujte prosím ručně."
-      }
+      },
     };
 
-    const SUPPORTED_LANGS = ["vi", "en", "cs"];
-    const KYB_EMAIL = "your-kyb-email@example.com"; // chỉnh lại email KYB thực tế
+    const els = {
+      brandSub: document.getElementById("brand-sub"),
+      pageTitle: document.getElementById("page-title"),
+      pageSubtitle: document.getElementById("page-subtitle"),
+      formIntro: document.getElementById("form-intro"),
+      formFooter: document.getElementById("form-footer"),
 
-    // ==========
-    // LANGUAGE DETECTION
-    // ==========
+      form: document.getElementById("kyb-form"),
+      category: document.getElementById("category"),
+      company: document.getElementById("company"),
+      person: document.getElementById("person"),
+      area: document.getElementById("area"),
+      phone: document.getElementById("phone"),
+      email: document.getElementById("email"),
+      website: document.getElementById("website"),
+      desc: document.getElementById("desc"),
+      notes: document.getElementById("notes"),
+      piAccept: document.getElementById("piAccept"),
+      piLevel: document.getElementById("piLevel"),
 
-    function detectInitialLang() {
-      const saved = localStorage.getItem("tm-lang");
-      if (saved && SUPPORTED_LANGS.includes(saved)) return saved;
+      lblCategory: document.getElementById("label-category"),
+      lblCompany: document.getElementById("label-company"),
+      lblPerson: document.getElementById("label-person"),
+      lblArea: document.getElementById("label-area"),
+      lblPhone: document.getElementById("label-phone"),
+      lblEmail: document.getElementById("label-email"),
+      lblWebsite: document.getElementById("label-website"),
+      lblPiAccept: document.getElementById("label-pi-accept"),
+      lblPiLevel: document.getElementById("label-pi-level"),
+      lblDesc: document.getElementById("label-desc"),
+      lblNotes: document.getElementById("label-notes"),
 
-      const navLangs =
-        navigator.languages ||
-        [navigator.language || navigator.userLanguage || ""];
+      piNote: document.querySelector("[data-kyb-pi-note]"),
+      piSelect: document.querySelector("[data-kyb-pi-level]"),
 
-      for (const lang of navLangs) {
-        const short = (lang || "").toLowerCase().slice(0, 2);
-        if (SUPPORTED_LANGS.includes(short)) return short;
-      }
+      previewTitle: document.getElementById("preview-title"),
+      previewContent: document.getElementById("preview-content"),
+      previewHint: document.getElementById("preview-hint"),
 
-      return "vi";
+      btnMail: document.getElementById("btn-mail"),
+      btnCopy: document.getElementById("btn-copy"),
+      btnPrint: document.getElementById("btn-print"),
+      btnReset: document.getElementById("btn-reset"),
+      btnMailText: document.getElementById("btn-mail-text"),
+      btnCopyText: document.getElementById("btn-copy-text"),
+      btnPrintText: document.getElementById("btn-print-text"),
+      btnResetText: document.getElementById("btn-reset-text"),
+    };
+
+    function getText() {
+      return KYB_TEXT[currentLang];
     }
 
-    let currentLang = detectInitialLang();
+    function buildCategoryOptions() {
+      const t = getText();
+      els.category.innerHTML = "";
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = "--";
+      els.category.appendChild(placeholder);
 
-    // ==========
-    // DOM + LOGIC
-    // ==========
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const els = {
-        brandSub: document.getElementById("brand-sub"),
-        title: document.getElementById("form-title"),
-        subtitle: document.getElementById("form-subtitle"),
-        intro: document.getElementById("form-intro"),
-        footer: document.getElementById("footer-note"),
-
-        labelCategory: document.getElementById("label-category"),
-        labelCompany: document.getElementById("label-company"),
-        labelPerson: document.getElementById("label-person"),
-        labelArea: document.getElementById("label-area"),
-        labelPhone: document.getElementById("label-phone"),
-        labelEmail: document.getElementById("label-email"),
-        labelWebsite: document.getElementById("label-website"),
-        labelDesc: document.getElementById("label-desc"),
-        labelNotes: document.getElementById("label-notes"),
-        hintBottom: document.getElementById("hint-bottom"),
-
-        category: document.getElementById("category"),
-        company: document.getElementById("company"),
-        person: document.getElementById("person"),
-        area: document.getElementById("area"),
-        phone: document.getElementById("phone"),
-        email: document.getElementById("email"),
-        website: document.getElementById("website"),
-        desc: document.getElementById("desc"),
-        notes: document.getElementById("notes"),
-
-        btnMail: document.getElementById("btn-mail"),
-        btnCopy: document.getElementById("btn-copy"),
-        btnPrint: document.getElementById("btn-print"),
-        btnReset: document.getElementById("btn-reset"),
-        btnMailLabel: document.getElementById("btn-mail-label"),
-        btnCopyLabel: document.getElementById("btn-copy-label"),
-        btnPrintLabel: document.getElementById("btn-print-label"),
-        btnResetLabel: document.getElementById("btn-reset-label"),
-
-        previewTitle: document.getElementById("preview-title"),
-        previewContent: document.getElementById("preview-content"),
-
-        form: document.getElementById("kyb-form")
-      };
-
-      function applyLanguage(lang) {
-        if (!SUPPORTED_LANGS.includes(lang)) return;
-
-        currentLang = lang;
-        localStorage.setItem("tm-lang", lang);
-
-        const t = KYB_TEXT[lang];
-
-        els.brandSub.textContent = t.brandSub;
-        els.title.textContent = t.title;
-        els.subtitle.textContent = t.subtitle;
-        els.intro.textContent = t.formIntro;
-        els.footer.textContent = t.footer;
-
-        els.labelCategory.textContent = t.labels.category;
-        els.labelCompany.textContent = t.labels.company;
-        els.labelPerson.textContent = t.labels.person;
-        els.labelArea.textContent = t.labels.area;
-        els.labelPhone.textContent = t.labels.phone;
-        els.labelEmail.textContent = t.labels.email;
-        els.labelWebsite.textContent = t.labels.website;
-        els.labelDesc.textContent = t.labels.desc;
-        els.labelNotes.textContent = t.labels.notes;
-        els.hintBottom.textContent = t.hintBottom;
-
-        els.btnMailLabel.textContent = t.buttons.mail;
-        els.btnCopyLabel.textContent = t.buttons.copy;
-        els.btnPrintLabel.textContent = t.buttons.print;
-        els.btnResetLabel.textContent = t.buttons.reset;
-
-        els.previewTitle.textContent = t.previewTitle;
-
-        // rebuild category options but keep current if possible
-        const prevValue = els.category.value;
-        els.category.innerHTML = '<option value="" hidden>-</option>';
-        t.categories.forEach((label) => {
-          const opt = document.createElement("option");
-          opt.value = label;
-          opt.textContent = label;
-          els.category.appendChild(opt);
-        });
-        if (t.categories.includes(prevValue)) {
-          els.category.value = prevValue;
-        } else if (prevValue === "") {
-          els.category.value = "";
-        }
-
-        // update lang buttons
-        document.querySelectorAll(".tm-lang-btn").forEach((btn) => {
-          const btnLang = btn.getAttribute("data-lang");
-          btn.classList.toggle("active", btnLang === lang);
-        });
-
-        updatePreview();
-      }
-
-      function getFormValues() {
-        return {
-          category: els.category.value.trim(),
-          company: els.company.value.trim(),
-          person: els.person.value.trim(),
-          area: els.area.value.trim(),
-          phone: els.phone.value.trim(),
-          email: els.email.value.trim(),
-          website: els.website.value.trim(),
-          desc: els.desc.value.trim(),
-          notes: els.notes.value.trim()
-        };
-      }
-
-    // PHẦN 2 – CODE (JS) – THAY TOÀN BỘ HÀM buildPreviewText BẰNG ĐOẠN NÀY
-
-function buildPreviewText() {
-  const t = KYB_TEXT[currentLang];
-  const v = getFormValues();
-
-  // Đọc thêm 2 field Pi-ready trực tiếp từ DOM
-  const piAccepted = document.querySelector("[data-kyb-pi-accept]")?.checked;
-  const piLevelRaw = document.querySelector("[data-kyb-pi-level]")?.value || "";
-  const piLevel = piLevelRaw || "Basic (default)";
-
-  let lines = [t.mailBodyIntro];
-
-  // Các dòng cũ giữ nguyên
-  lines.push(
-    `- ${t.labels.category}: ${v.category || "-"}`,
-    `- ${t.labels.company}: ${v.company || "-"}`,
-    `- ${t.labels.person}: ${v.person || "-"}`,
-    `- ${t.labels.area}: ${v.area || "-"}`,
-    `- ${t.labels.phone}: ${v.phone || "-"}`,
-    `- ${t.labels.email}: ${v.email || "-"}`,
-    `- ${t.labels.website}: ${v.website || "-"}`
-  );
-
-  // Thêm block Pi-ready (chỉ khi doanh nghiệp chọn)
-  if (piAccepted) {
-    lines.push(
-      "",
-      `- Pi payments: ACCEPTED`,
-      `- Pi readiness level: ${piLevel}`
-    );
-  }
-
-  // Phần mô tả + ghi chú (giữ format cũ)
-  lines.push(
-    "",
-    `${t.labels.desc}: ${v.desc || "-"}`,
-    "",
-    `${t.labels.notes}: ${v.notes || "-"}`
-  );
-
-  return lines.join("\n");
-}
-
-
-      function updatePreview() {
-        els.previewContent.textContent = buildPreviewText();
-      }
-    function updatePiTexts() {
-  const t = KYB_TEXT[currentLang];
-
-  // label checkbox + select
-  const lblAccept = document.getElementById("label-pi-accept");
-  const lblLevel = document.getElementById("label-pi-level");
-  if (lblAccept) lblAccept.textContent = t.labels.piAccept;
-  if (lblLevel) lblLevel.textContent = t.labels.piLevel;
-
-  // dòng chú thích nhỏ dưới checkbox
-  const note = document.querySelector("[data-kyb-pi-note]");
-  if (note) note.textContent = t.piNote;
-
-  // text trong các option của select
-  const sel = document.querySelector("[data-kyb-pi-level]");
-  if (sel && sel.options.length >= 4) {
-    sel.options[0].textContent = t.piLevelPlaceholder;
-    sel.options[1].textContent = t.piBasic;
-    sel.options[2].textContent = t.piStandard;
-    sel.options[3].textContent = t.piFull;
-  }
-}
-
-      // language button handlers
-    document.querySelectorAll(".tm-lang-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const lang = btn.getAttribute("data-lang");
-    applyLanguage(lang);
-    updatePiTexts();  // ⬅ thêm dòng này
-  });
-});
-
-      // form change -> update preview
-      [
-        els.category,
-        els.company,
-        els.person,
-        els.area,
-        els.phone,
-        els.email,
-        els.website,
-        els.desc,
-        els.notes
-      ].forEach((el) => {
-        el.addEventListener("input", updatePreview);
+      t.categories.forEach((c) => {
+        const opt = document.createElement("option");
+        opt.value = c;
+        opt.textContent = c;
+        els.category.appendChild(opt);
       });
+    }
 
-      // mail button
-      els.btnMail.addEventListener("click", () => {
-        const t = KYB_TEXT[currentLang];
-        const subject = t.mailSubject;
-        const body = buildPreviewText();
-        const mailto =
-          "mailto:" +
-          encodeURIComponent(KYB_EMAIL) +
-          "?subject=" +
-          encodeURIComponent(subject) +
-          "&body=" +
-          encodeURIComponent(body);
-        window.location.href = mailto;
-      });
+    function applyLanguage(lang) {
+      currentLang = lang;
+      const t = getText();
 
-      // copy button
-      els.btnCopy.addEventListener("click", async () => {
-        const t = KYB_TEXT[currentLang];
-        const text = buildPreviewText();
-        try {
-          await navigator.clipboard.writeText(text);
-          alert(t.copyOk);
-        } catch (err) {
-          console.warn(err);
-          alert(t.copyErr);
-        }
-      });
+      els.brandSub.textContent = t.brandSub;
+      els.pageTitle.textContent = t.title;
+      els.pageSubtitle.textContent = t.subtitle;
+      els.formIntro.textContent = t.formIntro;
+      els.formFooter.textContent = t.formFooter;
 
-      // print button
-      els.btnPrint.addEventListener("click", () => {
-        window.print();
-      });
+      els.lblCategory.textContent = t.labels.category;
+      els.lblCompany.textContent = t.labels.company;
+      els.lblPerson.textContent = t.labels.person;
+      els.lblArea.textContent = t.labels.area;
+      els.lblPhone.textContent = t.labels.phone;
+      els.lblEmail.textContent = t.labels.email;
+      els.lblWebsite.textContent = t.labels.website;
+      els.lblPiAccept.textContent = t.labels.piAccept;
+      els.lblPiLevel.textContent = t.labels.piLevel;
+      els.lblDesc.textContent = t.labels.desc;
+      els.lblNotes.textContent = t.labels.notes;
 
-      // reset button
-      els.btnReset.addEventListener("click", () => {
-        const t = KYB_TEXT[currentLang];
-        if (!confirm(t.confirmReset)) return;
-        els.form.reset();
-        applyLanguage(currentLang) // rebuild labels + categories
+      els.btnMailText.textContent = t.buttons.mail;
+      els.btnCopyText.textContent = t.buttons.copy;
+      els.btnPrintText.textContent = t.buttons.print;
+      els.btnResetText.textContent = t.buttons.reset;
+
+      els.previewTitle.textContent = t.previewTitle;
+      els.previewHint.textContent = t.previewHint;
+
+      buildCategoryOptions();
       updatePiTexts();
+      updatePreview();
+    }
 
+    function updatePiTexts() {
+      const t = getText();
+
+      if (els.piNote) {
+        els.piNote.textContent = t.piNote;
+      }
+
+      if (els.piSelect && els.piSelect.options.length >= 4) {
+        els.piSelect.options[0].textContent = t.piLevelPlaceholder;
+        els.piSelect.options[1].textContent = t.piBasic;
+        els.piSelect.options[2].textContent = t.piStandard;
+        els.piSelect.options[3].textContent = t.piFull;
+      }
+    }
+
+    function getFormValues() {
+      return {
+        category: els.category.value.trim(),
+        company: els.company.value.trim(),
+        person: els.person.value.trim(),
+        area: els.area.value.trim(),
+        phone: els.phone.value.trim(),
+        email: els.email.value.trim(),
+        website: els.website.value.trim(),
+        desc: els.desc.value.trim(),
+        notes: els.notes.value.trim(),
+        piAccepted: !!els.piAccept.checked,
+        piLevel: els.piLevel.value.trim(),
+      };
+    }
+
+    function buildPreviewText() {
+      const t = getText();
+      const v = getFormValues();
+
+      const lines = [];
+      lines.push(t.mailBodyIntro.trim());
+      lines.push("");
+
+      lines.push(`${t.labels.category}: ${v.category || "--"}`);
+      lines.push(`${t.labels.company}: ${v.company || "--"}`);
+      lines.push(`${t.labels.person}: ${v.person || "--"}`);
+      lines.push(`${t.labels.area}: ${v.area || "--"}`);
+      lines.push(`${t.labels.phone}: ${v.phone || "--"}`);
+      lines.push(`${t.labels.email}: ${v.email || "--"}`);
+      lines.push(`${t.labels.website}: ${v.website || "--"}`);
+
+      if (v.piAccepted) {
+        lines.push("");
+        if (currentLang === "vi") {
+          lines.push("Thanh toán bằng Pi: CÓ");
+        } else if (currentLang === "cs") {
+          lines.push("Platba v Pi: ANO");
+        } else {
+          lines.push("Pi payments: ACCEPTED");
+        }
+        lines.push(
+          `${t.labels.piLevel}: ${v.piLevel || t.piLevelPlaceholder}`
+        );
+      }
+
+      lines.push("");
+      lines.push(`${t.labels.desc}:`);
+      lines.push(v.desc || "--");
+      lines.push("");
+      lines.push(`${t.labels.notes}:`);
+      lines.push(v.notes || "--");
+
+      return lines.join("\n");
+    }
+
+    function updatePreview() {
+      els.previewContent.textContent = buildPreviewText();
+    }
+
+    // language switch buttons
+    document
+      .querySelectorAll(".tm-lang-btn")
+      .forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const lang = btn.getAttribute("data-lang");
+          document
+            .querySelectorAll(".tm-lang-btn")
+            .forEach((b) => b.classList.remove("is-active"));
+          btn.classList.add("is-active");
+          applyLanguage(lang);
+        });
       });
 
-      // initial
+    // form change -> update preview
+    [
+      els.category,
+      els.company,
+      els.person,
+      els.area,
+      els.phone,
+      els.email,
+      els.website,
+      els.desc,
+      els.notes,
+      els.piAccept,
+      els.piLevel,
+    ].forEach((el) => {
+      if (!el) return;
+      el.addEventListener("input", updatePreview);
+      el.addEventListener("change", updatePreview);
+    });
+
+    // mail button
+    els.btnMail.addEventListener("click", () => {
+      const t = getText();
+      const subject = encodeURIComponent(t.mailSubject);
+      const body = encodeURIComponent(buildPreviewText());
+      const mailto =
+        "mailto:" + encodeURIComponent(KYB_EMAIL) + "?subject=" + subject + "&body=" + body;
+      window.location.href = mailto;
+    });
+
+    // copy button
+    els.btnCopy.addEventListener("click", async () => {
+      const t = getText();
+      const text = buildPreviewText();
+      try {
+        await navigator.clipboard.writeText(text);
+        alert(t.copyOk);
+      } catch (err) {
+        console.warn(err);
+        alert(t.copyErr);
+      }
+    });
+
+    // print button
+    els.btnPrint.addEventListener("click", () => {
+      window.print();
+    });
+
+    // reset button
+    els.btnReset.addEventListener("click", () => {
+      const t = getText();
+      if (!confirm(t.confirmReset)) return;
+      els.form.reset();
       applyLanguage(currentLang);
     });
+
+    // initial load
+    applyLanguage(currentLang);
   </script>
 </body>
 </html>
