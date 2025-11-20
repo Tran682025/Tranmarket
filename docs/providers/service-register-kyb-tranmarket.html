@@ -372,24 +372,23 @@
               <label for="email" id="label-email">Email liên hệ</label>
               <!-- KYB: START PI-PURE PHASE1 INSERT HERE -->
 <div class="field">
-  <label for="piAccept">Thanh toán bằng Pi</label>
+  <label id="label-pi-accept" for="piAccept"></label>
   <div style="display:flex;align-items:center;gap:0.5rem;">
     <input type="checkbox" id="piAccept" name="piAccept" data-kyb-pi-accept />
-    <span style="font-size:0.85rem;opacity:0.85;">
-      Doanh nghiệp chấp nhận thanh toán bằng Pi (theo thỏa thuận với khách hàng).
-    </span>
+    <span data-kyb-pi-note style="font-size:0.85rem;opacity:0.85;"></span>
   </div>
 </div>
 
 <div class="field">
-  <label for="piLevel">Mức độ Pi-ready</label>
+  <label id="label-pi-level" for="piLevel"></label>
   <select id="piLevel" name="piLevel" data-kyb-pi-level>
-    <option value="">-- Chọn mức độ Pi-ready (không bắt buộc) --</option>
-    <option value="Basic">Basic – Chỉ chấp nhận Pi theo thỏa thuận</option>
-    <option value="Standard">Standard – Pi + ưu đãi giảm giá</option>
-    <option value="Full">Full – Ưu tiên khách trả bằng Pi, có ưu đãi đặc biệt</option>
+    <option value=""></option>
+    <option value="Basic"></option>
+    <option value="Standard"></option>
+    <option value="Full"></option>
   </select>
 </div>
+
 <!-- KYB: END PI-PURE PHASE1 INSERT -->
 
               <input id="email" class="input" type="email" />
@@ -474,6 +473,12 @@ Chào Tranmarket, tôi gửi đăng ký dịch vụ mới với thông tin như 
           piLevel: "Mức độ Pi-ready",
           desc: "Mô tả dịch vụ (ngắn gọn, 3–5 dòng)",
           notes: "Ghi chú nội bộ cho Tranmarket (chỉ dùng nội bộ)",
+piNote: "Doanh nghiệp chấp nhận thanh toán bằng Pi (theo thỏa thuận với khách hàng).",
+piLevelPlaceholder: "– Chọn mức độ Pi-ready (không bắt buộc) –",
+piBasic: "Basic – Chỉ chấp nhận Pi theo thỏa thuận",
+piStandard: "Standard – Pi + ưu đãi giảm giá",
+piFull: "Full – Ưu tiên khách trả bằng Pi, có ưu đãi đặc biệt",
+
         },
         hintBottom:
           "Nội dung này chỉ dùng để Tranmarket và đội KYB đánh giá, sẽ không hiển thị công khai.",
@@ -535,6 +540,12 @@ Chào Tranmarket, tôi gửi đăng ký dịch vụ mới với thông tin như 
           piLevel: "Pi readiness level",
           desc: "Service description (short, 3–5 lines)",
           notes: "Internal note for Tranmarket (not public)",
+piNote: "The business accepts Pi payments (based on agreement with the customer).",
+piLevelPlaceholder: "– Select Pi readiness level (optional) –",
+piBasic: "Basic – Accept Pi by agreement only",
+piStandard: "Standard – Pi + discount or benefit",
+piFull: "Full – Priority for customers paying in Pi with special offers",
+
         },
         hintBottom:
           "Only Tranmarket & the KYB team see this note. It will never be shown to customers.",
@@ -596,6 +607,12 @@ Chào Tranmarket, tôi gửi đăng ký dịch vụ mới với thông tin như 
           piLevel: "Úroveň připravenosti Pi",
           desc: "Popis služby (stručně, 3–5 řádků)",
           notes: "Interní poznámka pro Tranmarket (nezveřejňuje se)",
+piNote: "Podnik přijímá platby Pi (dle dohody se zákazníkem).",
+piLevelPlaceholder: "– Zvolte úroveň připravenosti Pi (nepovinné) –",
+piBasic: "Basic – Přijímá Pi pouze po dohodě",
+piStandard: "Standard – Pi + sleva nebo výhoda",
+piFull: "Full – Priorita pro platby v Pi se speciální nabídkou",
+
         },
         hintBottom:
           "Tuto poznámku vidí pouze Tranmarket a KYB tým. Nikdy se nezobrazí klientům.",
@@ -829,14 +846,37 @@ function buildPreviewText() {
       function updatePreview() {
         els.previewContent.textContent = buildPreviewText();
       }
+    function updatePiTexts() {
+  const t = KYB_TEXT[currentLang];
+
+  // label checkbox + select
+  const lblAccept = document.getElementById("label-pi-accept");
+  const lblLevel = document.getElementById("label-pi-level");
+  if (lblAccept) lblAccept.textContent = t.labels.piAccept;
+  if (lblLevel) lblLevel.textContent = t.labels.piLevel;
+
+  // dòng chú thích nhỏ dưới checkbox
+  const note = document.querySelector("[data-kyb-pi-note]");
+  if (note) note.textContent = t.piNote;
+
+  // text trong các option của select
+  const sel = document.querySelector("[data-kyb-pi-level]");
+  if (sel && sel.options.length >= 4) {
+    sel.options[0].textContent = t.piLevelPlaceholder;
+    sel.options[1].textContent = t.piBasic;
+    sel.options[2].textContent = t.piStandard;
+    sel.options[3].textContent = t.piFull;
+  }
+}
 
       // language button handlers
-      document.querySelectorAll(".tm-lang-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const lang = btn.getAttribute("data-lang");
-          applyLanguage(lang);
-        });
-      });
+    document.querySelectorAll(".tm-lang-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const lang = btn.getAttribute("data-lang");
+    applyLanguage(lang);
+    updatePiTexts();  // ⬅ thêm dòng này
+  });
+});
 
       // form change -> update preview
       [
@@ -891,7 +931,9 @@ function buildPreviewText() {
         const t = KYB_TEXT[currentLang];
         if (!confirm(t.confirmReset)) return;
         els.form.reset();
-        applyLanguage(currentLang); // rebuild labels + categories
+        applyLanguage(currentLang) // rebuild labels + categories
+      updatePiTexts();
+
       });
 
       // initial
