@@ -379,7 +379,7 @@
         brandSub: "Sân chơi dịch vụ Pi-ready cho cộng đồng Việt & quốc tế",
         heroTitle: "Chọn lĩnh vực dịch vụ bạn đang cần",
         heroSub:
-          "Chọn lĩnh vực dịch vụ bạn đang cần để tìm chính xác dịch vụ phù hợp.",
+          subtitle: "Chọn lĩnh vực dịch vụ bạn đang cần để tìm chính xác dịch vụ phù hợp.",
         heroNote:
           "Tranmarket chỉ đóng vai trò <strong>sân chơi kết nối</strong> – <span>không giữ tiền, không bảo lãnh giao dịch, không thay thế tư vấn pháp lý</span>. Mọi thỏa thuận đều diễn ra trực tiếp giữa bạn và đơn vị cung cấp dịch vụ.",
         footer:
@@ -391,7 +391,7 @@
         brandSub: "Pi-ready service playground for Vietnamese & global users",
         heroTitle: "Choose the service area you are looking for",
         heroSub:
-        "Choose the service area you are looking for. Click a tile to jump to the matching service category.",  
+        heroSubbs: "Choose the service area you are looking for. Click a tile to jump to the matching service category.",  
         heroNote:
           "Tranmarket acts only as a <strong>neutral connector</strong> – <span>it does not hold funds, guarantee deals or replace legal advice</span>. All agreements happen directly between you and the service provider.",
         footer:
@@ -403,7 +403,7 @@
         brandSub: "Pi-ready platforma služeb pro Vietnamce i mezinárodní komunitu",
         heroTitle: "Vyberte oblast služeb, kterou zrovna hledáte",
         heroSub:
-        "Vyberte oblast služby, kterou hledáte. Kliknutím na dlaždici přejdete do odpovídající kategorie služby.",
+        heroSubs: "Vyberte oblast služby, kterou hledáte. Kliknutím na dlaždici přejdete do odpovídající kategorie služby.",
         heroNote:
           "Tranmarket je pouze <strong>neutrálním prostředníkem</strong> – <span>nedrží peníze, negarantuje obchody a nenahrazuje právní poradenství</span>. Všechny dohody probíhají přímo mezi vámi a poskytovatelem služby.",
         footer:
@@ -587,7 +587,8 @@
       CATEGORIES.forEach((cat) => {
         const data = cat[currentLang];
         const card = document.createElement("a");
-        card.href = cat.href || "#";
+        card.href = "service-register-kyb-tranmarket.html";
+        card.target = "_blank";
         card.className = "cat-card" + (cat.other ? " other" : "");
         card.setAttribute("data-key", cat.key);
 
