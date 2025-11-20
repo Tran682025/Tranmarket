@@ -47,15 +47,35 @@
       width: 100%;
       max-width: 960px;
     }
+    /* KYB – nền logo Pi vàng full-card, cực mờ */
+.kyb-card {
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto;
+  border-radius: 24px;
+  background: radial-gradient(circle at top, #261131 0, #12041f 40%, #050013 100%);
+  padding: 24px 16px 40px; /* tùy ý */
+  overflow: hidden;
+}
 
-    .kyb-card {
-      background: radial-gradient(circle at top left, #3c1b6a 0, #170b3a 40%, #120827 100%);
-      border-radius: var(--radius-card);
-      box-shadow: var(--shadow-soft);
-      padding: 20px 18px 26px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
+/* Logo phủ kín toàn bộ card */
+.kyb-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../assets/trm-logo-hero.png") center / cover no-repeat;
+  opacity: 0.08; /* muốn nhạt hơn chỉnh 0.14 – 0.16 */
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
 
+/* Giữ nội dung nằm trên lớp logo */
+.kyb-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+   
     @media (min-width: 640px) {
       .kyb-card {
         padding: 26px 30px 32px;
@@ -121,6 +141,13 @@
     .tm-lang-toggle::-webkit-scrollbar {
       display: none;
     }
+    /* ✔ Hiển thị nút chọn ngôn ngữ nằm trên cùng */
+.tm-lang-toggle {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 20;
+}
 
     .tm-lang-label {
       font-size: 0.72rem;
@@ -344,11 +371,20 @@
 
     
   </style>
+  
 </head>
 <body>
   <div class="page-wrapper">
     <div class="kyb-card">
+     /* ✔ Hiển thị nút chọn ngôn ngữ trên cùng — không bị hero che */
+.card-header {
+  position: relative;
+  z-index: 10;
+}
+
+      
       <header class="card-header">
+        
         <div class="logo-wrap">
          <div class="logo-badge">
          <img src="../assets/trm-logo-nav.png" alt="Tranmarket logo">
