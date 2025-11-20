@@ -669,7 +669,6 @@
       },
     };
 
-    let currentLang = "vi";
     // Ngôn ngữ hỗ trợ
 const SUPPORTED_LANGS = ["vi", "en", "cs"];
 
@@ -768,6 +767,7 @@ function detectInitialLang() {
         btn.classList.toggle("active", btnLang === lang);
     });
 }
+
 
       // rebuild category options but keep current value if possible
       const prevValue = els.category.value;
@@ -896,7 +896,7 @@ function detectInitialLang() {
     });
 
     // initial
-    applyLanguage("vi");
+    applyLanguage(currentLang);
   </script>
 </body>
 </html>
