@@ -669,6 +669,7 @@
       },
     };
 
+    let currentLang = "vi";
     // Ngôn ngữ hỗ trợ
 const SUPPORTED_LANGS = ["vi", "en", "cs"];
 
@@ -694,7 +695,7 @@ function detectInitialLang() {
 }
 
 // Dùng hàm auto ở trên để set ngôn ngữ hiện tại
-let currentLang = detectInitialLang();
+    currentLang = detectInitialLang();
 
     const els = {
       brandSub: document.getElementById("brand-sub"),
