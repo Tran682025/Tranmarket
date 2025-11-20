@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tranmarket – Danh mục dịch vụ (Category A / Day 6)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-body: #05001a;
+      --bg-panel: #130b33;
+      --bg-card: #1b123f;
+      --accent: #b580ff;
+      --accent-strong: #e18bff;
+      --mint: #3cd3c4;
+      --mint-soft: #7be9dc;
+      --text-main: #ffffff;
+      --text-muted: #c5c2f3;
+      --text-soft: #9792d6;
+      --border-soft: #332a70;
+      --shadow-soft: 0 24px 48px rgba(0, 0, 0, 0.65);
+      --radius-card: 18px;
+      --radius-icon: 10px; /* bo nhẹ kiểu C */
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-main);
+      background:
+        radial-gradient(circle at top left, #2f1e6a 0, #05001a 52%, #000000 100%);
+      color: var(--text-main);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px 10px 40px;
+    }
+
+    .page-wrapper {
+      width: 100%;
+      max-width: 1120px;
+    }
+
+    .tm-shell {
+      background: radial-gradient(circle at top, #281759 0, #120927 55%, #050015 100%);
+      border-radius: 26px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 20px 18px 22px;
+    }
+
+    @media (min-width: 768px) {
+      .tm-shell {
+        padding: 24px 26px 28px;
+      }
+    }
+
+    .tm-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .tm-logo-wrap {
+      width: 60px;
+      height: 60px;
+      border-radius: 22px;
+      background: radial-gradient(circle at 30% 10%, #fffdf5 0, #ffe7b0 28%, #723715 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .tm-logo-wrap img {
+      width: 54px;
+      height: 54px;
+      object-fit: cover;
+      border-radius: 18px;
+    }
+
+    .tm-brand-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .tm-brand-name {
+      font-size: 1.12rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fdf0ff;
+      margin-bottom: 2px;
+    }
+
+    .tm-brand-sub {
+      font-size: 0.86rem;
+      color: var(--mint-soft);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tm-lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: auto;
+    }
+
+    .tm-lang-label {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .tm-lang-btn {
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: transparent;
+      color: var(--text-soft);
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      min-width: 38px;
+      transition: all 0.16s ease-out;
+    }
+
+    .tm-lang-btn.active {
+      background: var(--mint);
+      border-color: var(--mint-soft);
+      color: #021517;
+      font-weight: 600;
+    }
+
+    .tm-hero-title {
+      font-size: 1.42rem;
+      font-weight: 800;
+      margin: 3px 0 4px;
+    }
+
+    .tm-hero-sub {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .tm-hero-note {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 16px;
+    }
+
+    .tm-hero-note strong {
+      color: var(--accent-strong);
+    }
+
+    .tm-hero-note span {
+      color: var(--mint-soft);
+      font-weight: 500;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (min-width: 640px) {
+      .category-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 980px) {
+      .category-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .cat-card {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 11px 11px 12px;
+      border-radius: var(--radius-card);
+      background: radial-gradient(circle at top left, #241245 0, #170b32 58%, #0a041a 100%);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      cursor: pointer;
+      transition: transform 0.14s ease-out, box-shadow 0.14s ease-out,
+        border-color 0.14s ease-out, background 0.14s ease-out;
+      min-height: 76px;
+    }
+
+    .cat-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius-card);
+      border: 1px solid transparent;
+      background: linear-gradient(120deg, rgba(60, 211, 196, 0.22), rgba(181, 128, 255, 0.0));
+      opacity: 0;
+      transition: opacity 0.16s ease-out;
+      pointer-events: none;
+    }
+
+    .cat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.7);
+      border-color: rgba(123, 233, 220, 0.45);
+      background: radial-gradient(circle at top left, #2d175a 0, #1a0e39 55%, #080317 100%);
+    }
+
+    .cat-card:hover::before {
+      opacity: 1;
+    }
+
+    .cat-card:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.6);
+    }
+
+    .cat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-icon);
+      background: radial-gradient(circle at 30% 20%, #f6fffd 0, #cffff8 30%, #2c7370 100%);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cat-icon span {
+      font-size: 1.5rem;
+    }
+
+    .cat-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .cat-title-main {
+      font-size: 0.96rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cat-title-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cat-title-extra {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cat-tag {
+      font-size: 0.7rem;
+      color: var(--mint-soft);
+      margin-top: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .cat-card.other {
+      border-style: dashed;
+      border-color: rgba(123, 233, 220, 0.5);
+      background: radial-gradient(circle at top left, #26164d 0, #100723 60%, #050013 100%);
+    }
+
+    .cat-card.other .cat-icon {
+      background: radial-gradient(circle at 30% 20%, #fdf9ff 0, #ffe2ff 26%, #5d2a73 96%);
+    }
+
+    .tm-footer-note {
+      margin-top: 16px;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    .tm-footer-note strong {
+      color: var(--mint-soft);
+    }
+
+    .tm-footer-note span {
+      color: var(--accent-strong);
+    }
+
+    @media (max-width: 480px) {
+      .tm-header {
+        flex-wrap: wrap;
+        row-gap: 8px;
+      }
+      .tm-lang-toggle {
+        width: 100%;
+        justify-content: flex-end;
+      }
+      .tm-hero-title {
+        font-size: 1.28rem;
+      }
+    }
+
+    @media (min-width: 880px) {
+      .tm-hero-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 16px;
+      }
+      .tm-hero-text {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <main class="tm-shell">
+      <header class="tm-header">
+        <div class="tm-logo-wrap">
+          <!-- thay đường dẫn logo nếu cần -->
+          <img src="../assets/trm-logo-hero.png" alt="Tranmarket logo" />
+        </div>
+        <div class="tm-brand-text">
+          <div class="tm-brand-name">TRANMARKET</div>
+          <div id="brand-sub" class="tm-brand-sub"></div>
+        </div>
+        <div class="tm-lang-toggle">
+          <span class="tm-lang-label">Lang</span>
+          <button class="tm-lang-btn active" data-lang="vi" id="btn-lang-vi">VI</button>
+          <button class="tm-lang-btn" data-lang="en" id="btn-lang-en">EN</button>
+          <button class="tm-lang-btn" data-lang="cs" id="btn-lang-cs">CZ</button>
+        </div>
+      </header>
+
+      <section class="tm-hero-row">
+        <div class="tm-hero-text">
+          <h1 class="tm-hero-title" id="hero-title"></h1>
+          <p class="tm-hero-sub" id="hero-sub"></p>
+          <p class="tm-hero-note" id="hero-note"></p>
+        </div>
+      </section>
+
+      <section class="tm-categories">
+        <div id="category-grid" class="category-grid"></div>
+      </section>
+
+      <p class="tm-footer-note" id="footer-note"></p>
+    </main>
+  </div>
+
+  <script>
+    const TEXT = {
+      vi: {
+        brandSub: "Sân chơi dịch vụ Pi-ready cho cộng đồng Việt & quốc tế",
+        heroTitle: "Chọn lĩnh vực dịch vụ bạn đang cần",
+        heroSub:
+          "Category A – Dành cho khách hàng cá nhân & doanh nghiệp. Bấm vào một ô để đi đến sân chơi dịch vụ phù hợp.",
+        heroNote:
+          "Tranmarket chỉ đóng vai trò <strong>sân chơi kết nối</strong> – <span>không giữ tiền, không bảo lãnh giao dịch, không thay thế tư vấn pháp lý</span>. Mọi thỏa thuận đều diễn ra trực tiếp giữa bạn và đơn vị cung cấp dịch vụ.",
+        footer:
+          "Mỗi lĩnh vực dịch vụ tương ứng với một Category B chi tiết (Day 5, Day 7…). Khi hệ sinh thái Pi Network mở rộng, Tranmarket có thể kết nối thêm thanh toán Pi, đánh giá cộng đồng và các công cụ hỗ trợ khác – mà vẫn giữ nguyên vai trò một sân chơi trung lập, minh bạch.",
+        tagMain: "Dành cho khách hàng",
+        tagOther: "Mở rộng & đặc biệt",
+      },
+      en: {
+        brandSub: "Pi-ready service playground for Vietnamese & global users",
+        heroTitle: "Choose the service area you are looking for",
+        heroSub:
+          "Category A – For individual and business customers. Click a tile to jump into the matching service playground.",
+        heroNote:
+          "Tranmarket acts only as a <strong>neutral connector</strong> – <span>it does not hold funds, guarantee deals or replace legal advice</span>. All agreements happen directly between you and the service provider.",
+        footer:
+          "Each service area links to a more detailed Category B (Day 5, Day 7…). As the Pi Network ecosystem grows, Tranmarket may connect Pi payments, community rating and extra tools – while staying a neutral and transparent playground.",
+        tagMain: "For customers",
+        tagOther: "Extension & special",
+      },
+      cs: {
+        brandSub: "Pi-ready platforma služeb pro Vietnamce i mezinárodní komunitu",
+        heroTitle: "Vyberte oblast služeb, kterou zrovna hledáte",
+        heroSub:
+          "Kategorie A – Pro koncové zákazníky i firmy. Klikněte na dlaždici a přejdete do příslušné oblasti služeb.",
+        heroNote:
+          "Tranmarket je pouze <strong>neutrálním prostředníkem</strong> – <span>nedrží peníze, negarantuje obchody a nenahrazuje právní poradenství</span>. Všechny dohody probíhají přímo mezi vámi a poskytovatelem služby.",
+        footer:
+          "Každá oblast služeb odpovídá podrobnější kategorii B (Day 5, Day 7…). S růstem ekosystému Pi Network může Tranmarket propojit i platby v Pi, komunitní hodnocení a další nástroje – stále jako neutrální a transparentní „hřiště“ služeb.",
+        tagMain: "Pro zákazníky",
+        tagOther: "Rozšíření & speciální",
+      },
+    };
+
+    const CATEGORIES = [
+      {
+        key: "logistics",
+        icon: "📦",
+        href: "providers/service-logistics.html",
+        vi: { main: "Logistics – Gửi hàng – Vận chuyển", sub: "Quốc tế, EU, nội địa, container, kho bãi" },
+        en: { main: "Logistics & Shipping", sub: "International, EU, domestic, cargo, storage" },
+        cs: { main: "Logistika & přeprava", sub: "Mezinárodní, EU, vnitrostátní, cargo, sklad" },
+      },
+      {
+        key: "documents",
+        icon: "📑",
+        href: "providers/service-docs-translation.html",
+        vi: { main: "Giấy tờ – Dịch thuật – Hồ sơ", sub: "Công chứng, lãnh sự, lý lịch tư pháp, GPLX…" },
+        en: { main: "Documents – Translation – Papers", sub: "Notary, legalization, police check, licences…" },
+        cs: { main: "Doklady – Překlady – Dokumenty", sub: "Notář, legalizace, výpisy, řidičák…" },
+      },
+      {
+        key: "repairs",
+        icon: "🧱",
+        href: "providers/service-repairs-housing.html",
+        vi: { main: "Sửa chữa – Nhà ở – Xây dựng", sub: "Điện nước, cải tạo, nội thất, vệ sinh sau sửa" },
+        en: { main: "Repairs – Housing – Construction", sub: "Renovations, utilities, interiors, cleaning" },
+        cs: { main: "Opravy – Bydlení – Stavby", sub: "Rekonstrukce, elektro, voda, úklid po opravách" },
+      },
+      {
+        key: "car",
+        icon: "🚗",
+        href: "providers/service-car-garage.html",
+        vi: { main: "Car & Garage – Gara xe", sub: "Sửa chữa, bảo dưỡng, đồng sơn, đăng kiểm, detailing" },
+        en: { main: "Car & Garage", sub: "Repairs, service, paint, inspections, detailing" },
+        cs: { main: "Auto & Servis", sub: "Servis, opravy, lakovna, STK, detailing" },
+      },
+      {
+        key: "taxi",
+        icon: "🚕",
+        href: "providers/service-taxi.html",
+        vi: { main: "Taxi – Vận chuyển cá nhân", sub: "Trong thành phố, đường dài, sân bay, thuê xe có lái" },
+        en: { main: "Taxi – Personal transport", sub: "City, long-distance, airport, driver with car" },
+        cs: { main: "Taxi – Osobní doprava", sub: "Město, dálkově, letiště, auto s řidičem" },
+      },
+      {
+        key: "travel",
+        icon: "🗺️",
+        href: "providers/service-travel.html",
+        vi: { main: "Travel – Du lịch – Tour", sub: "Tour Séc, EU, hành hương, vé máy bay, lịch trình" },
+        en: { main: "Travel – Tours – Tourism", sub: "CZ/EU tours, pilgrimage, flights, planning" },
+        cs: { main: "Cestování – Zájezdy – Turistika", sub: "Zájezdy, poutě, letenky, plánování cest" },
+      },
+      {
+        key: "beauty",
+        icon: "💅",
+        href: "providers/service-beauty.html",
+        vi: { main: "Beauty – Spa – Hair – Nails", sub: "Tóc, nail, spa mặt, massage, make up, phun xăm" },
+        en: { main: "Beauty – Spa – Hair – Nails", sub: "Hair, nails, facial, massage, makeup, brows" },
+        cs: { main: "Krása – Spa – Vlasy – Nehty", sub: "Vlasy, nehty, pleť, masáže, make-up, obočí" },
+      },
+      {
+        key: "education",
+        icon: "📚",
+        href: "providers/service-education.html",
+        vi: { main: "Education – Giáo dục – Học tập", sub: "Gia sư, ngoại ngữ, luyện thi, học nghề, kỹ năng" },
+        en: { main: "Education – Tutoring – Language", sub: "Tutoring, languages, exams, skills, training" },
+        cs: { main: "Vzdělávání – Doučování – Jazyky", sub: "Doučování, jazyky, zkoušky, dovednosti" },
+      },
+      {
+        key: "health",
+        icon: "🩺",
+        href: "providers/service-health.html",
+        vi: { main: "Health – Hỗ trợ y tế", sub: "Dẫn khám, phiên dịch, chăm sóc, dinh dưỡng, fitness" },
+        en: { main: "Health – Medical support", sub: "Escort, translation, care, nutrition, coaching" },
+        cs: { main: "Zdraví – Zdravotní podpora", sub: "Doprovod, tlumočení, péče, výživa, trenér" },
+      },
+      {
+        key: "food",
+        icon: "🍜",
+        href: "providers/service-food.html",
+        vi: { main: "Food – Ăn uống – Nhà hàng", sub: "Quán Việt, châu Á, đặt bàn, ship đồ ăn, catering" },
+        en: { main: "Food – Restaurant – Catering", sub: "Vietnamese, Asian, booking, delivery, catering" },
+        cs: { main: "Jídlo – Restaurace – Catering", sub: "Viet/Asian, rezervace, rozvoz, catering" },
+      },
+      {
+        key: "business",
+        icon: "📊",
+        href: "providers/service-business.html",
+        vi: { main: "Business – Luật – Doanh nghiệp", sub: "Thành lập công ty, kế toán, pháp lý, HR" },
+        en: { main: "Business – Law – Company services", sub: "Company setup, accounting, legal, HR" },
+        cs: { main: "Firma – Právo – Podnikové služby", sub: "Založení firmy, účetnictví, právo, HR" },
+      },
+      {
+        key: "experience",
+        icon: "🎉",
+        href: "providers/service-experience.html",
+        vi: { main: "Experience – Giải trí – Trải nghiệm", sub: "Chụp ảnh, quay phim, workshop, thể thao, party" },
+        en: { main: "Experience – Lifestyle – Leisure", sub: "Photo, video, workshops, sports, events" },
+        cs: { main: "Zážitky – Volný čas – Lifestyle", sub: "Foto, video, workshopy, sport, akce" },
+      },
+      {
+        key: "rent",
+        icon: "🏠",
+        href: "providers/service-rent-housing.html",
+        vi: { main: "Rent – Thuê nhà – Phòng – Ký túc", sub: "Ngắn hạn, dài hạn, share phòng, housing linh hoạt" },
+        en: { main: "Rent – House / Flat / Dorm", sub: "Short-term, long-term, shared, flexible housing" },
+        cs: { main: "Pronájem – Byt / Dům / Kolej", sub: "Krátkodobě, dlouhodobě, spolubydlení" },
+      },
+      {
+        key: "bazaar",
+        icon: "♻️",
+        href: "providers/service-bazaar.html",
+        vi: { main: "Bazaars – Đồ cũ – Second-hand", sub: "Thanh lý, tặng lại, share đồ còn tốt" },
+        en: { main: "Bazaars – Second-hand", sub: "Resell, donate, share still-good items" },
+        cs: { main: "Bazar – Second-hand", sub: "Výprodej, darování, sdílení věcí" },
+      },
+      {
+        key: "real-estate",
+        icon: "🏡",
+        href: "providers/service-real-estate.html",
+        vi: { main: "Real Estate – Mua bán nhà đất", sub: "Nhà, căn hộ, đất, tư vấn pháp lý & ngân hàng" },
+        en: { main: "Real Estate – Buy & Sell", sub: "Houses, flats, land, legal & bank support" },
+        cs: { main: "Nemovitosti – Prodej / Nákup", sub: "Domy, byty, pozemky, právní & bankovní servis" },
+      },
+      {
+        key: "ceremony",
+        icon: "⛪",
+        href: "providers/service-ceremony.html",
+        vi: { main: "Ceremony – Cưới – Lễ – Tang", sub: "Tổ chức cưới hỏi, lễ nghi gia đình, hỗ trợ tang lễ" },
+        en: { main: "Ceremony – Wedding – Funeral", sub: "Weddings, family ceremonies, funeral support" },
+        cs: { main: "Obřady – Svatby – Pohřby", sub: "Svatby, rodinné obřady, podpora při pohřbu" },
+      },
+      {
+        key: "pets",
+        icon: "🐾",
+        href: "providers/service-pets.html",
+        vi: { main: "Pets – Thú cưng", sub: "Chăm sóc, tắm, cắt tỉa, trông giữ, dắt đi dạo" },
+        en: { main: "Pets – Pet care", sub: "Grooming, sitting, walking, care" },
+        cs: { main: "Domácí mazlíčci – Péče", sub: "Stříhání, hlídání, venčení, péče" },
+      },
+      {
+        key: "other",
+        icon: "✨",
+        href: "providers/service-other.html",
+        vi: { main: "Other – Dịch vụ khác / mở rộng", sub: "Những dịch vụ đặc biệt hoặc mới chưa có danh mục riêng" },
+        en: { main: "Other – Extended / Special services", sub: "Special or new services not yet in a dedicated category" },
+        cs: { main: "Další – Rozšířené / Speciální služby", sub: "Speciální nebo nové služby mimo hlavní kategorie" },
+        other: true,
+      },
+    ];
+
+    let currentLang = "vi";
+
+    const els = {
+      brandSub: document.getElementById("brand-sub"),
+      heroTitle: document.getElementById("hero-title"),
+      heroSub: document.getElementById("hero-sub"),
+      heroNote: document.getElementById("hero-note"),
+      footerNote: document.getElementById("footer-note"),
+      grid: document.getElementById("category-grid"),
+    };
+
+    function renderText() {
+      const t = TEXT[currentLang];
+      els.brandSub.textContent = t.brandSub;
+      els.heroTitle.textContent = t.heroTitle;
+      els.heroSub.textContent = t.heroSub;
+      els.heroNote.innerHTML = t.heroNote;
+      els.footerNote.innerHTML = t.footer;
+    }
+
+    function renderCategories() {
+      const t = TEXT[currentLang];
+      els.grid.innerHTML = "";
+      CATEGORIES.forEach((cat) => {
+        const data = cat[currentLang];
+        const card = document.createElement("a");
+        card.href = cat.href || "#";
+        card.className = "cat-card" + (cat.other ? " other" : "");
+        card.setAttribute("data-key", cat.key);
+
+        const icon = document.createElement("div");
+        icon.className = "cat-icon";
+        const iconSpan = document.createElement("span");
+        iconSpan.textContent = cat.icon;
+        icon.appendChild(iconSpan);
+
+        const content = document.createElement("div");
+        content.className = "cat-content";
+
+        const titleMain = document.createElement("div");
+        titleMain.className = "cat-title-main";
+        titleMain.textContent = data.main;
+
+        const titleSub = document.createElement("div");
+        titleSub.className = "cat-title-sub";
+        titleSub.textContent = data.sub;
+
+        const titleExtra = document.createElement("div");
+        titleExtra.className = "cat-title-extra";
+        if (currentLang === "vi") {
+          titleExtra.textContent = "";
+        } else if (currentLang === "en") {
+          titleExtra.textContent = "";
+        } else if (currentLang === "cs") {
+          titleExtra.textContent = "";
+        }
+
+        const tag = document.createElement("div");
+        tag.className = "cat-tag";
+        tag.textContent = cat.other ? t.tagOther : t.tagMain;
+
+        content.appendChild(titleMain);
+        content.appendChild(titleSub);
+        if (titleExtra.textContent) content.appendChild(titleExtra);
+        content.appendChild(tag);
+
+        card.appendChild(icon);
+        card.appendChild(content);
+
+        els.grid.appendChild(card);
+      });
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      document.querySelectorAll(".tm-lang-btn").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+      renderText();
+      renderCategories();
+    }
+
+    document.querySelectorAll(".tm-lang-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        applyLanguage(btn.dataset.lang);
+      });
+    });
+
+    applyLanguage("vi");
+  </script>
+</body>
+</html>
