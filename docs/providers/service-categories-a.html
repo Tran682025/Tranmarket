@@ -110,41 +110,32 @@
     }
 
     .tm-lang-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(13, 9, 40, 0.95);
-      border-radius: 999px;
-      padding: 4px 6px 4px 10px;
-      border: 1px solid rgba(151, 146, 214, 0.5);
-    }
+    display: flex;
+    gap: 4px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.tm-lang-toggle::-webkit-scrollbar {
+    display: none;
+}
 
-    .tm-lang-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-soft);
-      opacity: 0.9;
-    }
-
-    .tm-lang-btn {
-      border: 0;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: transparent;
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      cursor: pointer;
-      min-width: 38px;
-      transition: all 0.16s ease-out;
-    }
-
-    .tm-lang-btn.active {
-      background: var(--mint);
-      border-color: var(--mint);
-      color: #021517;
-      font-weight: 600;
-    }
+.tm-lang-btn {
+    border: 0;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    cursor: pointer;
+    min-width: 42px;
+}
+.tm-lang-btn.active {
+    background: var(--mint);
+    color: #021517;
+    font-weight: 600;
+}
 
     .tm-hero-row {
       display: flex;
