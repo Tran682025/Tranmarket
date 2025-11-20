@@ -304,6 +304,43 @@
         color: #555555;
       }
     }
+    
+/* --- KYB: nền logo Pi vàng mờ --- */
+
+.page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.kyb-card {
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto;
+  border-radius: 24px;
+  background: radial-gradient(circle at top, #261131 0, #12041f 40%, #050013 100%);
+  overflow: hidden;
+}
+
+/* Logo Pi vàng siêu to, nằm mờ phía sau nội dung */
+.kyb-card::before {
+  content: "";
+  position: absolute;
+  inset: -80px -80px auto -80px;
+  background: url("../assets/trm-logo-hero.png") center top / cover no-repeat;
+  opacity: 0.18;           /* muốn đậm hơn thì tăng lên 0.22–0.25 */
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* Đảm bảo toàn bộ nội dung nằm trên lớp logo */
+.kyb-card > * {
+  position: relative;
+}
+
+    
   </style>
 </head>
 <body>
