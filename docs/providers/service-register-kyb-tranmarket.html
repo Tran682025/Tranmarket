@@ -370,6 +370,28 @@
 
             <div class="field">
               <label for="email" id="label-email">Email liên hệ</label>
+              <!-- KYB: START PI-PURE PHASE1 INSERT HERE -->
+<div class="field">
+  <label for="piAccept">Thanh toán bằng Pi</label>
+  <div style="display:flex;align-items:center;gap:0.5rem;">
+    <input type="checkbox" id="piAccept" name="piAccept" data-kyb-pi-accept />
+    <span style="font-size:0.85rem;opacity:0.85;">
+      Doanh nghiệp chấp nhận thanh toán bằng Pi (theo thỏa thuận với khách hàng).
+    </span>
+  </div>
+</div>
+
+<div class="field">
+  <label for="piLevel">Mức độ Pi-ready</label>
+  <select id="piLevel" name="piLevel" data-kyb-pi-level>
+    <option value="">-- Chọn mức độ Pi-ready (không bắt buộc) --</option>
+    <option value="Basic">Basic – Chỉ chấp nhận Pi theo thỏa thuận</option>
+    <option value="Standard">Standard – Pi + ưu đãi giảm giá</option>
+    <option value="Full">Full – Ưu tiên khách trả bằng Pi, có ưu đãi đặc biệt</option>
+  </select>
+</div>
+<!-- KYB: END PI-PURE PHASE1 INSERT -->
+
               <input id="email" class="input" type="email" />
             </div>
 
@@ -753,31 +775,50 @@ Chào Tranmarket, tôi gửi đăng ký dịch vụ mới với thông tin như 
         };
       }
 
-      function buildPreviewText() {
-        const t = KYB_TEXT[currentLang];
-        const v = getFormValues();
+    // PHẦN 2 – CODE (JS) – THAY TOÀN BỘ HÀM buildPreviewText BẰNG ĐOẠN NÀY
 
-        let lines = [t.mailBodyIntro];
+function buildPreviewText() {
+  const t = KYB_TEXT[currentLang];
+  const v = getFormValues();
 
-        lines.push(
-          `- ${t.labels.category}: ${v.category || "-"}`,
-          `- ${t.labels.company}: ${v.company || "-"}`,
-          `- ${t.labels.person}: ${v.person || "-"}`,
-          `- ${t.labels.area}: ${v.area || "-"}`,
-          `- ${t.labels.phone}: ${v.phone || "-"}`,
-          `- ${t.labels.email}: ${v.email || "-"}`,
-          `- ${t.labels.website}: ${v.website || "-"}`
-        );
+  // Đọc thêm 2 field Pi-ready trực tiếp từ DOM
+  const piAccepted = document.querySelector("[data-kyb-pi-accept]")?.checked;
+  const piLevelRaw = document.querySelector("[data-kyb-pi-level]")?.value || "";
+  const piLevel = piLevelRaw || "Basic (default)";
 
-        lines.push("");
-        lines.push(`${t.labels.desc}:`);
-        lines.push(v.desc || "-");
-        lines.push("");
-        lines.push(`${t.labels.notes}:`);
-        lines.push(v.notes || "-");
+  let lines = [t.mailBodyIntro];
 
-        return lines.join("\n");
-      }
+  // Các dòng cũ giữ nguyên
+  lines.push(
+    `- ${t.labels.category}: ${v.category || "-"}`,
+    `- ${t.labels.company}: ${v.company || "-"}`,
+    `- ${t.labels.person}: ${v.person || "-"}`,
+    `- ${t.labels.area}: ${v.area || "-"}`,
+    `- ${t.labels.phone}: ${v.phone || "-"}`,
+    `- ${t.labels.email}: ${v.email || "-"}`,
+    `- ${t.labels.website}: ${v.website || "-"}`
+  );
+
+  // Thêm block Pi-ready (chỉ khi doanh nghiệp chọn)
+  if (piAccepted) {
+    lines.push(
+      "",
+      `- Pi payments: ACCEPTED`,
+      `- Pi readiness level: ${piLevel}`
+    );
+  }
+
+  // Phần mô tả + ghi chú (giữ format cũ)
+  lines.push(
+    "",
+    `${t.labels.desc}: ${v.desc || "-"}`,
+    "",
+    `${t.labels.notes}: ${v.notes || "-"}`
+  );
+
+  return lines.join("\n");
+}
+
 
       function updatePreview() {
         els.previewContent.textContent = buildPreviewText();
