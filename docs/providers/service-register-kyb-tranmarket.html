@@ -371,55 +371,27 @@
 
     
   </style>
-  
-</head>
-<body>
-  <div class="page-wrapper">
-    <div class="kyb-card">
-     /* ✔ Hiển thị nút chọn ngôn ngữ trên cùng — không bị hero che */
-.card-header {
-  position: relative;
-  z-index: 10;
-}
+  <header class="card-header">
 
-      
-      .logo-wrap {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+  <div class="logo-wrap">
+    <div class="logo-badge">
+      <img src="../assets/trm-logo-nav.png" alt="Tranmarket logo">
+    </div>
 
-.logo-badge {
-  width: 44px;
-  height: 44px;
-  border-radius: 18px;
-  background: radial-gradient(circle at 25% 0, #ffd99a 0, #cca35d 40%, #7a5321 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
-  overflow: hidden;          /* để nếu ảnh vuông vẫn tròn */
-}
+    <div>
+      <div class="brand-main">TRANMARKET</div>
+      <div class="brand-sub" id="brand-sub">PI-READY SERVICE MARKETPLACE</div>
+    </div>
+  </div>
 
-.logo-badge img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+  <div class="tm-lang-toggle">
+    <span class="tm-lang-label">LANG</span>
+    <button class="tm-lang-btn active" data-lang="vi" id="btn-lang-vi">VI</button>
+    <button class="tm-lang-btn" data-lang="en" id="btn-lang-en">EN</button>
+    <button class="tm-lang-btn" data-lang="cs" id="btn-lang-cs">CZ</button>
+  </div>
 
-.brand-main {
-  font-size: 1.35rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-}
-
-.brand-sub {
-  font-size: 0.8rem;
-  color: var(--text-soft);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin-top: 2px;
-}
+</header>
 
 
       <main>
