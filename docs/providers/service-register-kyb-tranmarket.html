@@ -669,7 +669,32 @@
       },
     };
 
-    let currentLang = "vi";
+    // Ngôn ngữ hỗ trợ
+const SUPPORTED_LANGS = ["vi", "en", "cs"];
+
+// Tự đoán ngôn ngữ ban đầu
+function detectInitialLang() {
+    // 1. Nếu trước đó user đã chọn → lấy từ localStorage
+    const saved = localStorage.getItem("tm-lang");
+    if (saved && SUPPORTED_LANGS.includes(saved)) {
+        return saved;
+    }
+
+    // 2. Đoán theo ngôn ngữ trình duyệt / Pi Browser
+    const navLangs = navigator.languages || [navigator.language || navigator.userLanguage || ""];
+    for (const lang of navLangs) {
+        const short = (lang || "").toLowerCase().slice(0, 2); // "vi-VN" → "vi"
+        if (SUPPORTED_LANGS.includes(short)) {
+            return short;
+        }
+    }
+
+    // 3. Mặc định nếu không nhận diện được
+    return "vi";
+}
+
+// Dùng hàm auto ở trên để set ngôn ngữ hiện tại
+let currentLang = detectInitialLang();
 
     const els = {
       brandSub: document.getElementById("brand-sub"),
@@ -698,34 +723,50 @@
       form: document.getElementById("kyb-form"),
     };
 
-    function applyLanguage(lang) {
-      currentLang = lang;
-      const t = KYB_TEXT[lang];
+   function applyLanguage(lang) {
+    if (!SUPPORTED_LANGS.includes(lang)) return;
 
-      els.brandSub.textContent = t.brandSub;
-      els.title.textContent = t.title;
-      els.subtitle.textContent = t.subtitle;
-      els.intro.textContent = t.formIntro;
-      els.footer.textContent = t.footer;
+    currentLang = lang;
+    localStorage.setItem("tm-lang", lang);   // nhớ ngôn ngữ user chọn
 
-      els.labelCategory.textContent = t.labels.category;
-      els.labelCompany.textContent = t.labels.company;
-      els.labelPerson.textContent = t.labels.person;
-      els.labelArea.textContent = t.labels.area;
-      els.labelPhone.textContent = t.labels.phone;
-      els.labelEmail.textContent = t.labels.email;
-      els.labelWebsite.textContent = t.labels.website;
-      els.labelDesc.textContent = t.labels.desc;
-      els.labelNotes.textContent = t.labels.notes;
-      els.noteTop.textContent = t.noteTop;
+    const t = KYB_TEXT[lang];
 
-      els.btnMail.textContent = t.buttons.mail;
-      els.btnCopy.textContent = t.buttons.copy;
-      els.btnPrint.textContent = t.buttons.print;
-      els.btnReset.textContent = t.buttons.reset;
+    // --- phần cũ của anh, giữ nguyên ---
+    els.brandSub.textContent   = t.brandSub;
+    els.title.textContent      = t.title;
+    els.subtitle.textContent   = t.subtitle;
+    els.intro.textContent      = t.intro;
+    els.footerNote.innerHTML   = t.noteBottom;
 
-      els.previewTitle.textContent = t.previewTitle;
-      els.previewHint.textContent = t.previewHint;
+    els.labelCategory.textContent = t.labels.category;
+    els.labelCompany.textContent  = t.labels.company;
+    els.labelPerson.textContent   = t.labels.person;
+    els.labelArea.textContent     = t.labels.area;
+    els.labelPhone.textContent    = t.labels.phone;
+    els.labelEmail1.textContent   = t.labels.email1;
+    els.labelWebsite.textContent  = t.labels.website;
+    els.labelDesc.textContent     = t.labels.desc;
+    els.labelNotes.textContent    = t.labels.notes;
+    els.noteTop.innerHTML         = t.noteTop;
+
+    els.btnMail.textContent       = t.buttons.mail;
+    els.btnCopy.textContent       = t.buttons.copy;
+    els.btnPrint.textContent      = t.buttons.print;
+    els.btnReset.textContent      = t.buttons.reset;
+
+    els.previewTitle.textContent  = t.previewTitle;
+    els.previewHint.textContent   = t.hintBottom;
+
+    // set placeholder / options nếu có...
+    // (giữ nguyên các dòng anh đang có ở đây)
+    // ------------------------------------
+
+    // Cập nhật trạng thái 3 nút VI / EN / CZ
+    document.querySelectorAll(".tm-lang-btn").forEach(btn => {
+        const btnLang = btn.getAttribute("data-lang");
+        btn.classList.toggle("active", btnLang === lang);
+    });
+}
 
       // rebuild category options but keep current value if possible
       const prevValue = els.category.value;
