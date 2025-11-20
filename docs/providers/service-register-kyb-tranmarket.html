@@ -324,6 +324,35 @@
         padding: 0;
       }
     }
+    /* FIX LANG TOGGLE ON MOBILE */
+.tm-lang-toggle {
+    display: flex;
+    gap: 4px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.tm-lang-toggle::-webkit-scrollbar {
+    display: none;
+}
+
+.tm-lang-btn {
+    border: 0;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    cursor: pointer;
+    min-width: 42px;
+}
+.tm-lang-btn.active {
+    background: var(--mint);
+    color: #021517;
+    font-weight: 600;
+}
+
   </style>
 </head>
 <body>
