@@ -365,10 +365,10 @@
 .kyb-card::before {
   content: "";
   position: absolute;
-  width: 20px;          /* chỉnh size coin ở đây */
-  height: 20px;
-  top: -15px;            /* đẩy hơi ra mép cho đỡ chật */
-  left: -15px;
+  width: 220px;          /* chỉnh size coin ở đây */
+  height: 220px;
+  top: -40px;            /* đẩy hơi ra mép cho đỡ chật */
+  left: -40px;
   background: url("../assets/trm-logo-hero.png") center center / contain no-repeat;
   opacity: 0.10;         /* nếu còn chói, hạ xuống 0.06–0.08 */
   filter: blur(0.4px);
@@ -379,6 +379,26 @@
 /* Đảm bảo toàn bộ nội dung nằm trên lớp logo */
 .kyb-card > * {
   position: relative;
+}
+/* Logo nav tròn nhỏ ở đầu dòng TRANMARKET */
+.logo-badge {
+  width: 44px;       /* chỉnh kích thước coin ở đây */
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.logo-badge img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* khoảng cách giữa logo và chữ */
 }
 
     
