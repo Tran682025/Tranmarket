@@ -1,0 +1,41 @@
+[
+  {
+    "id": "garage-tran-auto",
+    "company": "Tran Auto Garage",
+    "category": "Oto – Sửa chữa – Bảo dưỡng",
+    "area": "Praha + Středočeský kraj",
+    "contact": "Tran Oanh",
+    "phone": "+420 777 123 456",
+    "email": "garage@tranmarket.cz",
+    "website": "https://garage.tranmarket.cz",
+    "description": "Chuyên bảo dưỡng, sửa chữa ô tô châu Âu, kiểm tra xe trước khi mua, hỗ trợ đăng kiểm.",
+    "piAccept": true,
+    "piLevel": "Full"
+  },
+  {
+    "id": "beauty-karlovy",
+    "company": "Karlovy Beauty Studio",
+    "category": "Làm đẹp – Nails – Salon",
+    "area": "Karlovy Vary",
+    "contact": "Nguyen Hoa",
+    "phone": "+420 602 987 654",
+    "email": "beauty@tranmarket.cz",
+    "website": "",
+    "description": "Studio nails – spa chăm sóc da, phục vụ cộng đồng người Việt và khách bản địa.",
+    "piAccept": true,
+    "piLevel": "Standard"
+  },
+  {
+    "id": "ship-vn-cz",
+    "company": "Ship4VN Express",
+    "category": "Gửi hàng – Chuyển phát",
+    "area": "Toàn Séc + Việt Nam",
+    "contact": "Le Minh",
+    "phone": "+420 777 000 999",
+    "email": "ship4vn@tranmarket.cz",
+    "website": "",
+    "description": "Gửi hàng hai chiều Séc – Việt Nam, hỗ trợ khai hải quan và tư vấn đóng gói.",
+    "piAccept": false,
+    "piLevel": ""
+  }
+]
