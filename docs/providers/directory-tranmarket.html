@@ -12,6 +12,7 @@
       --tm-accent: #a855f7;
       --tm-accent-soft: rgba(168, 85, 247, 0.12);
       --tm-text: #f9fafb;
+    
       --tm-muted: #9ca3af;
       --tm-badge-basic: #4ade80;
       --tm-badge-standard: #38bdf8;
@@ -351,6 +352,24 @@
   </div>
 
   <script>
+    let currentLang = "vi";
+let DIR_TEXT = {};
+
+async function loadDirText() {
+  const res = await fetch("./directory-text.json");
+  DIR_TEXT = await res.json();
+  applyDirectoryLang();
+}
+
+function applyDirectoryLang() {
+  const t = DIR_TEXT[currentLang];
+  document.getElementById("dir-title").textContent = t.title;
+  document.getElementById("dir-subtitle").textContent = t.subtitle;
+  document.getElementById("filter-all").textContent = t.all;
+  document.getElementById("filter-pi").textContent = t.piReady;
+  document.getElementById("search-box").placeholder = t.search;
+}
+
     var state = {
       allProviders: [],
       filtered: []
@@ -614,6 +633,15 @@
             "Không tải được danh sách doanh nghiệp. Vui lòng thử lại sau.";
         });
     }
+document.querySelectorAll(".tm-lang-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    currentLang = btn.dataset.lang;
+    applyDirectoryLang();
+    buildDirectory(); // reload data UI nếu đang filter
+  });
+});
+
+loadDirText();
 
     initFilters();
     loadProviders();
