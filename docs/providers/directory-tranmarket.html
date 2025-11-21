@@ -610,29 +610,29 @@ function applyDirectoryLang() {
       els.search.addEventListener("input", applyFilters);
     }
 
-    function loadProviders() {
-      fetch("./providers.json", { cache: "no-store" })
-        .then(function(res) {
-          if (!res.ok) throw new Error("Failed to load providers.json");
-          return res.json();
-        })
-        .then(function(data) {
-          if (Object.prototype.toString.call(data) !== "[object Array]") {
-            state.allProviders = [];
-          } else {
-            state.allProviders = data;
-          }
-          state.filtered = state.allProviders.slice();
-          populateCategoryFilter();
-          renderProviders();
-        })
-        .catch(function(err) {
-          console.error(err);
-          els.empty.style.display = "block";
-          els.empty.textContent =
-            "Không tải được danh sách doanh nghiệp. Vui lòng thử lại sau.";
-        });
-    }
+   function loadProviders() {
+  fetch("./kyb-text.json", { cache: "no-store" })
+    .then(function (res) {
+      if (!res.ok) throw new Error("Failed to load kyb-text.json");
+      return res.json();
+    })
+    .then(function (data) {
+      if (Object.prototype.toString.call(data) !== "[object Array]") {
+        state.allProviders = [];
+      } else {
+        state.allProviders = data;
+      }
+      state.filtered = state.allProviders.slice();
+      populateCategoryFilter();
+      renderProviders();
+    })
+    .catch(function (err) {
+      console.error(err);
+      els.empty.style.display = "block";
+      els.empty.textContent = "Không tải được danh sách doanh nghiệp. Vui lòng thử lại sau.";
+    });
+}
+
 document.querySelectorAll(".tm-lang-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     currentLang = btn.dataset.lang;
