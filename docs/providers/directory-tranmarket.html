@@ -386,297 +386,144 @@
   
   </div>
 
-  <script>
-// =========================
-// CONFIG
-// =========================
-const DIR_LANG_URL = "./directory-text.json";  // text đa ngôn ngữ
-const PROVIDERS_URL = "./kyb-text.json";       // danh sách doanh nghiệp
+<script>
+// =======================
+// Directory – data & state
+// =======================
+const DATA_URL = 'kyb-text.json'; // cùng thư mục với file HTML
 
-// =========================
-// STATE
-// =========================
-const state = {
-  lang: {},
-  currentLang: "vi",
-  providers: [],
-  filtered: []
-};
+let allProviders = [];
+let currentLanguage = 'vi';
 
-// =========================
-// ELEMENTS
-// =========================
-const els = {
-  title: document.getElementById("dsr-title"),
-  subtitle: document.getElementById("dsr-subtitle"),
-  filterAll: document.getElementById("filter-all"),
-  filterPiSelect: document.getElementById("filter-pi"),
-  search: document.getElementById("filter-search"),
-  grid: document.getElementById("providers-grid"),
-  empty: document.getElementById("providers-empty"),
-  summary: document.getElementById("tm-summary"),
-  categorySelect: document.getElementById("filter-category"),
-  langButtons: document.querySelectorAll(".tm-lang-btn")
-};
+// chạy khi DOM sẵn sàng
+document.addEventListener('DOMContentLoaded', () => {
+  loadProviders();
+  setupFilters();
+  setupLangSwitch();
+});
 
-// =========================
-// HELPERS
-// =========================
-function escapeHtml(str) {
-  if (!str) return "";
-  return String(str)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-function badgeHtml(provider) {
-  if (!provider.piAccept) return "";
-  const level = (provider.piLevel || "").trim();
-
-  let cls = "tm-badge";
-  if (level === "Basic") cls += " tm-badge-basic";
-  else if (level === "Standard") cls += " tm-badge-standard";
-  else if (level === "Full") cls += " tm-badge-full";
-  else if (level === "PiOnly") cls += " tm-badge-pi-only";
-
-  const label =
-    level === "PiOnly"
-      ? "PI-ONLY"
-      : level
-      ? "PI-READY"
-      : "PI";
-
-  return `<span class="${cls}">${label}</span>`;
-}
-
-function buildCardHtml(p) {
-  const badge = badgeHtml(p);
-
-  return `
-    <article class="tm-card" data-id="${escapeHtml(p.id)}">
-      <div class="tm-card-main">
-        <div class="tm-card-header">
-          <div class="tm-card-name">${escapeHtml(p.company)}</div>
-          ${badge}
-        </div>
-
-        <div class="tm-card-lines">
-          <div class="tm-card-line">${escapeHtml(p.category)}</div>
-          <div class="tm-card-line">${escapeHtml(p.area)}</div>
-          <div class="tm-card-line">${escapeHtml(p.description || "")}</div>
-        </div>
-      </div>
-
-      <div class="tm-card-footer">
-        <div class="tm-card-contact">
-          <div>${escapeHtml(p.contact || "")}</div>
-          <div>${escapeHtml(p.phone || "")}</div>
-          <div>${escapeHtml(p.email || "")}</div>
-        </div>
-
-        <div class="tm-card-actions">
-          ${
-            p.website
-              ? `<a href="${p.website}" target="_blank" rel="noopener" class="tm-btn tm-btn-ghost">Website</a>`
-              : ""
-          }
-          ${
-            p.email
-              ? `<a href="mailto:${p.email}" class="tm-btn tm-btn-primary">Gửi email</a>`
-              : ""
-          }
-        </div>
-      </div>
-    </article>
-  `;
-}
-
-// =========================
-// LANGUAGE
-// =========================
-function applyLang() {
-  const t =
-    state.lang[state.currentLang] ||
-    state.lang["vi"] ||
-    null;
-
-  if (!t) return;
-
-  if (els.title) els.title.textContent = t.title;
-  if (els.subtitle) els.subtitle.textContent = t.subtitle;
-  if (els.filterAll) els.filterAll.textContent = t.all;
-
-  if (els.filterPiSelect && els.filterPiSelect.options.length > 0) {
-    els.filterPiSelect.options[0].textContent = t.piReady;
-  }
-
-  if (els.search) els.search.placeholder = t.search;
-  if (els.empty) els.empty.textContent = t.nodata;
-}
-
-function loadDirectoryText() {
-  return fetch(DIR_LANG_URL)
-    .then((res) => {
-      if (!res.ok) throw new Error("Failed to load directory-text.json");
-      return res.json();
+// nạp dữ liệu từ JSON
+function loadProviders() {
+  fetch(DATA_URL)
+    .then(res => res.json())
+    .then(data => {
+      allProviders = data;          // giữ nguyên data gốc
+      renderProviders(allProviders); // render lần đầu
     })
-    .then((data) => {
-      state.lang = data || {};
-      applyLang();
-    })
-    .catch((err) => {
-      console.error(err);
+    .catch(err => {
+      console.error('Error loading providers:', err);
     });
 }
 
-// =========================
-// FILTER + RENDER
-// =========================
+// vẽ danh sách provider
+function renderProviders(list) {
+  const container = document.getElementById('providers-list');
+  if (!container) return;
+
+  container.innerHTML = '';
+
+  if (!list || list.length === 0) {
+    container.innerHTML = `
+      <p class="empty-state">
+        No providers match your filters.
+      </p>
+    `;
+    return;
+  }
+
+  list.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'provider-card';
+
+    card.innerHTML = `
+      <div class="provider-header">
+        <h3>${p.company}</h3>
+        ${p.piAccept ? `<span class="pi-badge">${p.piLevel || 'Pi-ready'}</span>` : ''}
+      </div>
+      <p class="provider-category">${p.category}</p>
+      <p class="provider-area">${p.area}</p>
+      <p class="provider-desc">${p.description}</p>
+      <div class="provider-contact">
+        <span>${p.contact}</span>
+        ${p.phone ? `<span>☎ ${p.phone}</span>` : ''}
+        ${p.email ? `<span>✉ ${p.email}</span>` : ''}
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+// =======================
+// Filters
+// =======================
+function setupFilters() {
+  const catSelect = document.getElementById('filter-category');
+  const piSelect  = document.getElementById('filter-pi');
+  const searchInp = document.getElementById('filter-search');
+
+  if (catSelect)  catSelect.addEventListener('change', applyFilters);
+  if (piSelect)   piSelect.addEventListener('change', applyFilters);
+  if (searchInp)  searchInp.addEventListener('input', applyFilters);
+}
+
 function applyFilters() {
-  const categoryValue = els.categorySelect
-    ? els.categorySelect.value
-    : "all";
-  const piValue = els.filterPiSelect
-    ? els.filterPiSelect.value
-    : "all";
-  const searchValue = els.search
-    ? els.search.value.trim().toLowerCase()
-    : "";
+  const catSelect = document.getElementById('filter-category');
+  const piSelect  = document.getElementById('filter-pi');
+  const searchInp = document.getElementById('filter-search');
 
-  state.filtered = state.providers.filter((p) => {
-    // category
-    if (categoryValue !== "all" && p.category !== categoryValue) {
-      return false;
+  const catValue = catSelect ? catSelect.value : 'all';
+  const piValue  = piSelect  ? piSelect.value  : 'all';
+  const keyword  = searchInp ? searchInp.value.trim().toLowerCase() : '';
+
+  const filtered = allProviders.filter(p => {
+    // lọc theo category
+    if (catValue && catValue !== 'all' && p.category !== catValue) return false;
+
+    // lọc theo Pi-ready
+    if (piValue && piValue !== 'all') {
+      if (piValue === 'pi-ready' && !p.piAccept) return false;
+      if (piValue === 'pi-full' && p.piLevel !== 'Full') return false;
     }
 
-    // pi-level
-    if (piValue !== "all") {
-      if (piValue === "PiOnly") {
-        if (p.piLevel !== "PiOnly") return false;
-      } else {
-        if (p.piLevel !== piValue) return false;
-      }
-    }
-
-    // search
-    if (searchValue) {
-      const haystack = (
-        (p.company || "") +
-        " " +
-        (p.category || "") +
-        " " +
-        (p.area || "") +
-        " " +
-        (p.description || "")
-      )
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
-      const needle = searchValue
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
-
-      if (!haystack.includes(needle)) return false;
+    // lọc theo từ khóa
+    if (keyword) {
+      const text = `${p.company} ${p.area} ${p.contact} ${p.description}`.toLowerCase();
+      if (!text.includes(keyword)) return false;
     }
 
     return true;
   });
 
-  renderProviders();
+  renderProviders(filtered);
 }
 
-function renderProviders() {
-  if (!els.grid || !els.empty) return;
+// =======================
+// Language switch (chỉ đổi UI text, không đụng data)
+// =======================
+function setupLangSwitch() {
+  const btnVI = document.getElementById('lang-vi');
+  const btnEN = document.getElementById('lang-en');
+  const btnCZ = document.getElementById('lang-cz');
 
-  if (!state.filtered || state.filtered.length === 0) {
-    els.grid.innerHTML = "";
-    els.empty.style.display = "block";
-    return;
-  }
-
-  els.empty.style.display = "none";
-
-  const total = state.providers.length;
-  const piCount = state.filtered.filter((p) => p.piAccept).length;
-
-  if (els.summary) {
-    els.summary.textContent =
-      `${state.filtered.length} / ${total} doanh nghiệp hiển thị – ` +
-      `${piCount} đơn vị nhận thanh toán Pi.`;
-  }
-
-  els.grid.innerHTML = state.filtered.map(buildCardHtml).join("");
+  if (btnVI) btnVI.addEventListener('click', () => setLanguage('vi'));
+  if (btnEN) btnEN.addEventListener('click', () => setLanguage('en'));
+  if (btnCZ) btnCZ.addEventListener('click', () => setLanguage('cz'));
 }
 
-// =========================
-// LOAD PROVIDERS
-// =========================
-function loadProviders() {
-  return fetch(PROVIDERS_URL, { cache: "no-store" })
-    .then((res) => {
-      if (!res.ok) throw new Error("Failed to load kyb-text.json");
-      return res.json();
-    })
-    .then((data) => {
-      if (!Array.isArray(data)) {
-        state.providers = [];
-      } else {
-        state.providers = data;
-      }
-      state.filtered = state.providers.slice();
-      renderProviders();
-    })
-    .catch((err) => {
-      console.error(err);
-      if (els.empty) {
-        els.empty.style.display = "block";
-        els.empty.textContent =
-          "Không tải được danh sách doanh nghiệp. Vui lòng thử lại sau.";
-      }
-    });
+function setLanguage(lang) {
+  currentLanguage = lang;
+
+  // chỉ đổi text tĩnh trên trang (heading, description, label…)
+  // KHÔNG đụng tới allProviders, KHÔNG fetch lại JSON
+  // ví dụ:
+  // document.getElementById('directory-title').textContent = ...
+  // document.getElementById('directory-subtitle').textContent = ...
+
+  // TODO: nối với hệ thống đa ngôn ngữ sẵn có của Tranmarket
 }
-
-// =========================
-// INIT
-// =========================
-function initFilters() {
-  if (els.categorySelect) {
-    els.categorySelect.addEventListener("change", applyFilters);
-  }
-  if (els.filterPiSelect) {
-    els.filterPiSelect.addEventListener("change", applyFilters);
-  }
-  if (els.search) {
-    els.search.addEventListener("input", applyFilters);
-  }
-
-  if (els.langButtons && els.langButtons.length > 0) {
-    els.langButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const lang = btn.dataset.lang;
-        if (!lang || lang === state.currentLang) return;
-
-        state.currentLang = lang;
-
-        els.langButtons.forEach((b) => {
-          b.classList.toggle("active", b === btn);
-        });
-
-        // chỉ đổi text, KHÔNG đụng tới danh sách doanh nghiệp
-        applyLang();
-      });
-    });
-  }
-}
-
-// chạy khi DOM sẵn sàng (file script đặt cuối body nên OK)
-initFilters();
-loadDirectoryText();
-loadProviders();
 </script>
+
 
 </body>
 </html>
