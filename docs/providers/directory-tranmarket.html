@@ -62,6 +62,23 @@
       color: var(--tm-muted);
     }
     .tm-lang-pill {
+      .tm-lang-btn {
+  background: transparent;
+  border: none;
+  padding: 0 0.4rem;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+.tm-lang-btn:hover {
+  opacity: 0.65;
+}
+.tm-lang-btn.active {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
       display: inline-flex;
       align-items: center;
       padding: 0.12rem 0.4rem;
@@ -309,9 +326,12 @@
           <div class="tm-brand-sub">Pi-ready service marketplace directory</div>
         </div>
       </div>
-      <div class="tm-lang-pill">
-        <span>VI</span><span>/ EN / CZ</span>
-      </div>
+    <div class="tm-lang-pill">
+  <button class="tm-lang-btn" data-lang="vi">VI</button>
+  <button class="tm-lang-btn" data-lang="en">EN</button>
+  <button class="tm-lang-btn" data-lang="cz">CZ</button>
+</div>
+
     </header>
 
     <section class="tm-panel">
