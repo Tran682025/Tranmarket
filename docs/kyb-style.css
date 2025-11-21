@@ -1,0 +1,298 @@
+:root {
+  --tm-bg: #050816;
+  --tm-card: #0f172a;
+  --tm-border: #1e293b;
+  --tm-accent: #8b5cf6;
+  --tm-accent-soft: rgba(139, 92, 246, 0.15);
+  --tm-text: #e5e7eb;
+  --tm-text-muted: #9ca3af;
+  --tm-error: #f97373;
+  --tm-radius-lg: 18px;
+  --tm-radius-md: 12px;
+  --tm-radius-pill: 999px;
+  --tm-shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.85);
+  --tm-font-main: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at top left, #111827 0, #020617 42%, #000 100%);
+  color: var(--tm-text);
+  font-family: var(--tm-font-main);
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+
+.tm-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  backdrop-filter: blur(18px);
+  background: linear-gradient(to right, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.88));
+  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.tm-logo span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  border-radius: var(--tm-radius-pill);
+  background: radial-gradient(circle at 0 0, #22d3ee, transparent 55%),
+    linear-gradient(135deg, #4c1d95, #8b5cf6, #22d3ee);
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.tm-lang-switcher {
+  display: flex;
+  gap: 6px;
+}
+
+.lang-btn {
+  border-radius: var(--tm-radius-pill);
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  padding: 5px 11px;
+  font-size: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  color: var(--tm-text-muted);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.lang-btn:hover {
+  border-color: var(--tm-accent);
+  color: var(--tm-text);
+  transform: translateY(-1px);
+}
+
+.lang-btn.active {
+  background: radial-gradient(circle at top, var(--tm-accent-soft), transparent 55%);
+  border-color: var(--tm-accent);
+  color: #f9fafb;
+}
+
+/* Main layout */
+
+.tm-main {
+  flex: 1;
+  padding: 20px 14px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tm-intro {
+  max-width: 960px;
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+.tm-intro h1 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  letter-spacing: 0.02em;
+}
+
+.tm-intro p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--tm-text-muted);
+}
+
+.tm-form {
+  width: 100%;
+  max-width: 960px;
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.18), transparent 55%),
+    linear-gradient(to bottom right, #020617, #020617);
+  border-radius: 26px;
+  padding: 18px 16px 22px;
+  box-shadow: var(--tm-shadow-soft);
+  border: 1px solid rgba(148, 163, 184, 0.32);
+}
+
+.tm-section {
+  padding: 10px 0 14px;
+  border-bottom: 1px dashed rgba(148, 163, 184, 0.3);
+}
+
+.tm-section:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.tm-section h2 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: #e5e7eb;
+}
+
+.tm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.tm-field label {
+  font-size: 13px;
+  color: var(--tm-text-muted);
+}
+
+.tm-field input,
+.tm-field select,
+.tm-field textarea {
+  border-radius: var(--tm-radius-md);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: rgba(15, 23, 42, 0.88);
+  color: var(--tm-text);
+  padding: 8px 10px;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.tm-field input::placeholder,
+.tm-field textarea::placeholder {
+  color: #64748b;
+}
+
+.tm-field input:focus,
+.tm-field select:focus,
+.tm-field textarea:focus {
+  border-color: var(--tm-accent);
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.45);
+  background: rgba(15, 23, 42, 0.96);
+}
+
+/* Layout helpers */
+
+.tm-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.tm-checkbox-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-bottom: 8px;
+}
+
+.tm-checkbox-row label,
+.tm-checkbox-col label {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 13px;
+  color: var(--tm-text-muted);
+  cursor: pointer;
+}
+
+.tm-checkbox-col {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+
+.tm-checkbox-col input[type="checkbox"],
+.tm-checkbox-row input[type="checkbox"] {
+  margin-top: 2px;
+  accent-color: var(--tm-accent);
+}
+
+/* Actions */
+
+.tm-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 10px;
+}
+
+.tm-btn-primary {
+  border: none;
+  border-radius: var(--tm-radius-pill);
+  padding: 9px 22px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #4c1d95, #8b5cf6, #22c1c3);
+  color: #f9fafb;
+  cursor: pointer;
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.8);
+  transform: translateY(0);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+
+.tm-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.95);
+  filter: brightness(1.05);
+}
+
+.tm-btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.9);
+}
+
+/* Console hint */
+
+.tm-console-hint {
+  max-width: 960px;
+  width: 100%;
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--tm-text-muted);
+}
+
+/* Responsive */
+
+@media (min-width: 720px) {
+  .tm-main {
+    padding: 26px 20px 46px;
+  }
+
+  .tm-intro h1 {
+    font-size: 24px;
+  }
+
+  .tm-form {
+    padding: 22px 22px 26px;
+  }
+
+  .tm-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1040px) {
+  .tm-main {
+    padding-top: 32px;
+  }
+}
