@@ -1,0 +1,29 @@
+{
+  "vi": {
+    "title": "Danh sách doanh nghiệp đã đăng ký",
+    "subtitle": "Các đơn vị dưới đây đã gửi form KYB cho Tranmarket và được kiểm tra thủ công. Badge Pi cho biết mức độ sẵn sàng nhận thanh toán bằng Pi.",
+    "all": "Tất cả danh mục",
+    "piReady": "Tất cả mức Pi-ready",
+    "search": "Tìm theo tên, khu vực, ngành nghề...",
+    "loading": "Đang tải dữ liệu...",
+    "nodata": "Không tải được danh sách doanh nghiệp. Vui lòng thử lại sau."
+  },
+  "en": {
+    "title": "Directory of registered businesses",
+    "subtitle": "These providers have submitted KYB forms and were manually reviewed by Tranmarket. The Pi badge indicates the level of readiness to accept Pi payments.",
+    "all": "All categories",
+    "piReady": "All Pi-ready levels",
+    "search": "Search by name, region, industry...",
+    "loading": "Loading data...",
+    "nodata": "Unable to load the business directory. Please try again later."
+  },
+  "cz": {
+    "title": "Seznam registrovaných podniků",
+    "subtitle": "Tito poskytovatelé podali KYB formulář a byli ručně ověřeni Tranmarketem. Odznak Pi označuje úroveň připravenosti přijímat platby Pi.",
+    "all": "Všechny kategorie",
+    "piReady": "Všechny úrovně Pi-ready",
+    "search": "Hledat podle názvu, oblasti, oboru...",
+    "loading": "Načítání dat...",
+    "nodata": "Seznam podniků se nepodařilo načíst. Zkuste to prosím znovu."
+  }
+}
