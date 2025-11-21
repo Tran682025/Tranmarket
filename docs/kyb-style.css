@@ -40,15 +40,22 @@ body {
 .tm-header {
   position: sticky;
   top: 0;
-  z-index: 20;
+  z-index: 40;
+  width: 100%;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: space-between;   /* thêm dòng này */
-  padding: 14px 18px;
+  justify-content: space-between;
+  padding: 10px 22px;
   backdrop-filter: blur(18px);
-  background: linear-gradient(to right, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.88));
+  background: linear-gradient(
+    to right,
+    rgba(15, 23, 42, 0.96),
+    rgba(15, 23, 42, 0.90)
+  );
   border-bottom: 1px solid rgba(148, 163, 184, 0.25);
 }
+
 
 .tm-logo span {
   display: inline-flex;
