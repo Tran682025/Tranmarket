@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tranmarket – KYB Admin Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #f5f3ff;
+      --bg-soft: #ffffff;
+      --primary: #6b46ff;
+      --primary-soft: #ede7ff;
+      --primary-dark: #4c2bcc;
+      --border: #ddd6fe;
+      --text: #1f2933;
+      --muted: #6b7280;
+      --danger: #dc2626;
+      --success: #16a34a;
+      --warning: #d97706;
+      --radius-lg: 18px;
+      --radius-xl: 22px;
+      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at top left, #ede9fe 0, #f5f3ff 40%, #ffffff 100%);
+      color: var(--text);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* HEADER / NAVBAR */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(20px);
+      background: linear-gradient(
+        to bottom,
+        rgba(245, 243, 255, 0.9),
+        rgba(245, 243, 255, 0.75)
+      );
+      border-bottom: 1px solid rgba(199, 210, 254, 0.7);
+    }
+
+    .navbar-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      object-fit: cover;
+      box-shadow: 0 12px 30px rgba(79, 70, 229, 0.35);
+      background: #fff;
+    }
+
+    .nav-title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-title-main {
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-title-sub {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(199, 210, 254, 0.9);
+      box-shadow: 0 10px 28px rgba(148, 163, 184, 0.35);
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      cursor: pointer;
+      color: var(--muted);
+      font-weight: 500;
+      transition: all 0.16s ease;
+      text-transform: uppercase;
+    }
+
+    .lang-btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 10px 28px rgba(88, 80, 236, 0.55);
+    }
+
+    .nav-tag {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(22, 163, 74, 0.08);
+      color: #166534;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid rgba(22, 163, 74, 0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 640px) {
+      .nav-title-main {
+        font-size: 16px;
+      }
+      .nav-title-sub {
+        display: none;
+      }
+      .nav-tag {
+        display: none;
+      }
+    }
+
+    /* MAIN LAYOUT */
+
+    .page-wrapper {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 18px 16px 32px;
+    }
+
+    .page-header {
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .page-kicker {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .page-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 640px;
+    }
+
+    @media (max-width: 640px) {
+      .page-title {
+        font-size: 20px;
+      }
+    }
+
+    /* STATS CARDS */
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .stat-card {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: var(--radius-xl);
+      padding: 12px 14px;
+      border: 1px solid rgba(199, 210, 254, 0.9);
+      box-shadow: 0 18px 40px rgba(148, 163, 184, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .stat-value-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .stat-badge {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(129, 140, 248, 0.1);
+      border: 1px solid rgba(129, 140, 248, 0.5);
+      color: #4338ca;
+    }
+
+    .stat-trend {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .stat-trend span {
+      font-weight: 600;
+    }
+
+    .stat-total .stat-value {
+      color: var(--primary-dark);
+    }
+
+    .stat-pending .stat-value {
+      color: var(--warning);
+    }
+
+    .stat-approved .stat-value {
+      color: var(--success);
+    }
+
+    .stat-rejected .stat-value {
+      color: var(--danger);
+    }
+
+    @media (max-width: 800px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 520px) {
+      .stats-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* FILTERS + TABLE WRAPPER */
+
+    .panel {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 22px;
+      padding: 16px 16px 10px;
+      border: 1px solid rgba(199, 210, 254, 0.9);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .filters-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .filter-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 160px;
+      flex: 1 1 160px;
+    }
+
+    .filter-label {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .filter-input,
+    .filter-select {
+      border-radius: 999px;
+      border: 1px solid rgba(209, 213, 219, 0.9);
+      padding: 7px 10px;
+      font-size: 13px;
+      outline: none;
+      background: rgba(249, 250, 251, 0.9);
+      transition: all 0.15s ease;
+    }
+
+    .filter-input:focus,
+    .filter-select:focus {
+      border-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 0 0 1px rgba(129, 140, 248, 0.45);
+    }
+
+    .filters-right {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      flex: 0 0 auto;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .btn {
+      border-radius: 999px;
+      border: none;
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.16s ease;
+      white-space: nowrap;
+    }
+
+    .btn-outline {
+      background: rgba(248, 250, 252, 0.8);
+      border: 1px solid rgba(203, 213, 225, 0.9);
+      color: var(--muted);
+    }
+
+    .btn-outline:hover {
+      background: #e5e7eb;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 14px 32px rgba(88, 80, 236, 0.58);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-icon {
+      font-size: 14px;
+    }
+
+    @media (max-width: 720px) {
+      .filters-right {
+        width: 100%;
+        justify-content: flex-start;
+        margin-left: 0;
+      }
+    }
+
+    /* TABLE */
+
+    .table-wrapper {
+      border-radius: 18px;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      overflow: hidden;
+      background: #fff;
+      margin-top: 6px;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+      max-height: 520px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      font-size: 13px;
+    }
+
+    thead {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: linear-gradient(
+        to right,
+        rgba(238, 242, 255, 0.98),
+        rgba(239, 246, 255, 0.98)
+      );
+      backdrop-filter: blur(16px);
+    }
+
+    th,
+    td {
+      padding: 8px 12px;
+      border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+      text-align: left;
+    }
+
+    th {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(249, 250, 251, 0.7);
+    }
+
+    tbody tr:hover {
+      background: rgba(238, 242, 255, 0.9);
+    }
+
+    .col-id {
+      font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .col-name {
+      font-weight: 600;
+    }
+
+    .col-country {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .col-contact {
+      font-size: 12px;
+    }
+
+    .sub-text {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border-width: 1px;
+      border-style: solid;
+    }
+
+    .status-pending {
+      background: rgba(251, 191, 36, 0.08);
+      border-color: rgba(217, 119, 6, 0.5);
+      color: #92400e;
+    }
+
+    .status-reviewing {
+      background: rgba(56, 189, 248, 0.09);
+      border-color: rgba(14, 165, 233, 0.55);
+      color: #0369a1;
+    }
+
+    .status-approved {
+      background: rgba(22, 163, 74, 0.08);
+      border-color: rgba(22, 163, 74, 0.55);
+      color: #166534;
+    }
+
+    .status-rejected {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(220, 38, 38, 0.6);
+      color: #b91c1c;
+    }
+
+    .risk-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--muted);
+    }
+
+    .risk-low {
+      background: #16a34a;
+    }
+
+    .risk-medium {
+      background: #d97706;
+    }
+
+    .risk-high {
+      background: #dc2626;
+    }
+
+    .actions {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .btn-ghost {
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      padding: 4px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      color: var(--primary-dark);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(99, 102, 241, 0.08);
+    }
+
+    .table-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(248, 250, 252, 0.98);
+      border-top: 1px solid rgba(226, 232, 240, 0.9);
+    }
+
+    .pager {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .pager-btn {
+      border-radius: 999px;
+      padding: 2px 7px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .pager-btn:hover {
+      background: rgba(209, 213, 219, 0.5);
+    }
+
+    .pager-btn[disabled] {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    /* DETAIL PANEL */
+
+    .detail-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.32);
+      display: none;
+      align-items: center;
+      justify-content: flex-end;
+      z-index: 60;
+    }
+
+    .detail-overlay.active {
+      display: flex;
+    }
+
+    .detail-panel {
+      width: 100%;
+      max-width: 420px;
+      height: 100%;
+      background: #f9fafb;
+      box-shadow: -20px 0 40px rgba(15, 23, 42, 0.45);
+      border-left: 1px solid rgba(199, 210, 254, 0.9);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-header {
+      padding: 14px 16px 10px;
+      background: linear-gradient(
+        to right,
+        rgba(79, 70, 229, 0.06),
+        rgba(129, 140, 248, 0.08)
+      );
+      border-bottom: 1px solid rgba(199, 210, 254, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .detail-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .detail-subtitle {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .detail-close-btn {
+      border-radius: 999px;
+      border: none;
+      background: rgba(248, 250, 252, 0.9);
+      padding: 5px 8px;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .detail-body {
+      padding: 12px 16px 16px;
+      overflow-y: auto;
+      font-size: 13px;
+    }
+
+    .detail-section {
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed rgba(209, 213, 219, 0.9);
+    }
+
+    .detail-section:last-child {
+      border-bottom: none;
+    }
+
+    .detail-section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 12px;
+    }
+
+    .detail-item-label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .detail-item-value {
+      font-size: 13px;
+      font-weight: 500;
+      word-break: break-word;
+    }
+
+    .detail-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .detail-note {
+      font-size: 13px;
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 720px) {
+      .detail-panel {
+        max-width: 100%;
+        border-radius: 18px 18px 0 0;
+        height: 82%;
+        margin-top: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="nav-left">
+        <img
+          src="trm-logo-nav.png"
+          alt="Tranmarket Logo"
+          class="nav-logo-img"
+          onerror="this.style.display='none';"
+        />
+        <div class="nav-title">
+          <div class="nav-title-main">Tranmarket KYB</div>
+          <div class="nav-title-sub" data-i18n="nav.subtitle">
+            Business Onboarding & Compliance Desk
+          </div>
+        </div>
+      </div>
+      <div class="nav-right">
+        <div class="nav-tag" data-i18n="nav.tag">Phase 5 · Admin</div>
+        <div class="lang-toggle">
+          <button class="lang-btn active" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="cz">CZ</button>
+          <button class="lang-btn" data-lang="vi">VI</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-wrapper">
+    <section class="page-header">
+      <div class="page-kicker" data-i18n="page.kicker">
+        Live KYB Submissions Monitor
+      </div>
+      <h1 class="page-title" data-i18n="page.title">
+        KYB Submissions Dashboard
+      </h1>
+      <p class="page-subtitle" data-i18n="page.subtitle">
+        Review, triage and approve business KYB forms submitted via Tranmarket.
+        Data shown below is test-only mock data for Phase 5 prototype and will
+        be wired to a real backend in Phase 6.
+      </p>
+    </section>
+
+    <section class="stats-grid">
+      <article class="stat-card stat-total">
+        <div class="stat-label" data-i18n="stats.total.label">
+          Total submissions
+        </div>
+        <div class="stat-value-row">
+          <div class="stat-value" id="stat-total">0</div>
+          <div class="stat-badge" data-i18n="stats.total.badge">
+            All KYB forms
+          </div>
+        </div>
+        <div class="stat-trend" data-i18n="stats.total.trend">
+          Includes all businesses regardless of status.
+        </div>
+      </article>
+
+      <article class="stat-card stat-pending">
+        <div class="stat-label" data-i18n="stats.pending.label">
+          Pending review
+        </div>
+        <div class="stat-value-row">
+          <div class="stat-value" id="stat-pending">0</div>
+          <div class="stat-badge" data-i18n="stats.pending.badge">
+            Need action
+          </div>
+        </div>
+        <div class="stat-trend" data-i18n="stats.pending.trend">
+          New or untouched submissions awaiting manual review.
+        </div>
+      </article>
+
+      <article class="stat-card stat-approved">
+        <div class="stat-label" data-i18n="stats.approved.label">
+          Approved
+        </div>
+        <div class="stat-value-row">
+          <div class="stat-value" id="stat-approved">0</div>
+          <div class="stat-badge" data-i18n="stats.approved.badge">
+            Onboarded
+          </div>
+        </div>
+        <div class="stat-trend" data-i18n="stats.approved.trend">
+          Fully verified businesses allowed to use Tranmarket services.
+        </div>
+      </article>
+
+      <article class="stat-card stat-rejected">
+        <div class="stat-label" data-i18n="stats.rejected.label">
+          Rejected / blocked
+        </div>
+        <div class="stat-value-row">
+          <div class="stat-value" id="stat-rejected">0</div>
+          <div class="stat-badge" data-i18n="stats.rejected.badge">
+            Declined
+          </div>
+        </div>
+        <div class="stat-trend" data-i18n="stats.rejected.trend">
+          Failed KYB / risk checks – not allowed to operate on Tranmarket.
+        </div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="filters-row">
+        <div class="filter-item">
+          <label class="filter-label" data-i18n="filters.search.label">
+            Search
+          </label>
+          <input
+            type="text"
+            id="filter-search"
+            class="filter-input"
+            placeholder="Business name, ID, contact person..."
+            data-i18n-placeholder="filters.search.placeholder"
+          />
+        </div>
+
+        <div class="filter-item">
+          <label class="filter-label" data-i18n="filters.status.label">
+            Status
+          </label>
+          <select id="filter-status" class="filter-select">
+            <option value="" data-i18n="filters.status.all">All statuses</option>
+            <option value="pending" data-i18n="filters.status.pending">
+              Pending
+            </option>
+            <option value="reviewing" data-i18n="filters.status.reviewing">
+              Reviewing
+            </option>
+            <option value="approved" data-i18n="filters.status.approved">
+              Approved
+            </option>
+            <option value="rejected" data-i18n="filters.status.rejected">
+              Rejected
+            </option>
+          </select>
+        </div>
+
+        <div class="filter-item">
+          <label class="filter-label" data-i18n="filters.jurisdiction.label">
+            Jurisdiction
+          </label>
+          <select id="filter-jurisdiction" class="filter-select">
+            <option value="" data-i18n="filters.jurisdiction.all">
+              All jurisdictions
+            </option>
+            <option value="CZ" data-i18n="filters.jurisdiction.cz">
+              Czech Republic / EU
+            </option>
+            <option value="VN" data-i18n="filters.jurisdiction.vn">
+              Viet Nam
+            </option>
+            <option value="EU" data-i18n="filters.jurisdiction.eu">
+              Other EU
+            </option>
+            <option value="US" data-i18n="filters.jurisdiction.us">
+              United States
+            </option>
+            <option value="OTHER" data-i18n="filters.jurisdiction.other">
+              Other
+            </option>
+          </select>
+        </div>
+
+        <div class="filters-right">
+          <button class="btn btn-outline" id="btn-clear">
+            <span class="btn-icon">↺</span>
+            <span data-i18n="filters.clear">Reset filters</span>
+          </button>
+          <button class="btn btn-primary" id="btn-export">
+            <span class="btn-icon">⇩</span>
+            <span data-i18n="filters.export">Export CSV (mock)</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th data-i18n="table.id">ID</th>
+                <th data-i18n="table.business">Business</th>
+                <th data-i18n="table.jurisdiction">Jurisdiction</th>
+                <th data-i18n="table.contact">Contact</th>
+                <th data-i18n="table.submitted">Submitted</th>
+                <th data-i18n="table.status">Status</th>
+                <th data-i18n="table.actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="kyb-table-body">
+              <!-- Rows rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer">
+          <div id="table-summary">
+            <!-- Summary text via JS -->
+          </div>
+          <div class="pager">
+            <button class="pager-btn" id="pager-prev">‹</button>
+            <span id="pager-label">1 / 1</span>
+            <button class="pager-btn" id="pager-next">›</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="detail-overlay" id="detail-overlay">
+    <aside class="detail-panel">
+      <header class="detail-header">
+        <div>
+          <div class="detail-title" id="detail-title">Business name</div>
+          <div class="detail-subtitle" id="detail-subtitle">
+            KYB ID · Status
+          </div>
+        </div>
+        <button class="detail-close-btn" id="detail-close">✕</button>
+      </header>
+      <div class="detail-body">
+        <section class="detail-section">
+          <div class="detail-section-title" data-i18n="detail.section.business">
+            Business information
+          </div>
+          <div class="detail-grid" id="detail-business-grid"></div>
+        </section>
+
+        <section class="detail-section">
+          <div class="detail-section-title" data-i18n="detail.section.compliance">
+            Compliance profile
+          </div>
+          <div class="detail-grid" id="detail-compliance-grid"></div>
+          <div class="detail-badge-row" id="detail-badges"></div>
+        </section>
+
+        <section class="detail-section">
+          <div class="detail-section-title" data-i18n="detail.section.notes">
+            Internal notes / risk flags
+          </div>
+          <div class="detail-note" id="detail-notes"></div>
+        </section>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    // TRANSLATIONS
+
+    const translations = {
+      en: {
+        "nav.subtitle": "Business Onboarding & Compliance Desk",
+        "nav.tag": "Phase 5 · Admin",
+        "page.kicker": "Live KYB Submissions Monitor",
+        "page.title": "KYB Submissions Dashboard",
+        "page.subtitle":
+          "Review, triage and approve business KYB forms submitted via Tranmarket. Data below is mock-only for Phase 5 UI. Backend integration will be done in Phase 6.",
+        "stats.total.label": "Total submissions",
+        "stats.total.badge": "All KYB forms",
+        "stats.total.trend": "All records currently loaded in the dashboard.",
+        "stats.pending.label": "Pending review",
+        "stats.pending.badge": "Need action",
+        "stats.pending.trend":
+          "New / untouched submissions that need manual decision.",
+        "stats.approved.label": "Approved",
+        "stats.approved.badge": "Onboarded",
+        "stats.approved.trend":
+          "Verified companies allowed to operate on Tranmarket.",
+        "stats.rejected.label": "Rejected / blocked",
+        "stats.rejected.badge": "Declined",
+        "stats.rejected.trend":
+          "Failed KYB, risk or policy checks. Not allowed on platform.",
+        "filters.search.label": "Search",
+        "filters.search.placeholder":
+          "Business name, ID, contact email or phone...",
+        "filters.status.label": "Status",
+        "filters.status.all": "All statuses",
+        "filters.status.pending": "Pending",
+        "filters.status.reviewing": "Reviewing",
+        "filters.status.approved": "Approved",
+        "filters.status.rejected": "Rejected",
+        "filters.jurisdiction.label": "Jurisdiction",
+        "filters.jurisdiction.all": "All jurisdictions",
+        "filters.jurisdiction.cz": "Czech Republic / EU",
+        "filters.jurisdiction.vn": "Viet Nam",
+        "filters.jurisdiction.eu": "Other EU",
+        "filters.jurisdiction.us": "United States",
+        "filters.jurisdiction.other": "Other",
+        "filters.clear": "Reset filters",
+        "filters.export": "Export CSV (mock)",
+        "table.id": "ID",
+        "table.business": "Business",
+        "table.jurisdiction": "Jurisdiction",
+        "table.contact": "Contact",
+        "table.submitted": "Submitted",
+        "table.status": "Status",
+        "table.actions": "Actions",
+        "detail.section.business": "Business information",
+        "detail.section.compliance": "Compliance profile",
+        "detail.section.notes": "Internal notes / risk flags",
+        "status.pending": "Pending",
+        "status.reviewing": "Reviewing",
+        "status.approved": "Approved",
+        "status.rejected": "Rejected",
+        "risk.low": "Low risk",
+        "risk.medium": "Medium risk",
+        "risk.high": "High risk",
+        "badge.pi": "Accepts Pi payments",
+        "badge.eu": "EU regulated",
+        "badge.manualCheck": "Manual check required",
+        "badge.blocked": "Blocked",
+      },
+      cz: {
+        "nav.subtitle": "Onboarding firem a compliance centrum",
+        "nav.tag": "Fáze 5 · Admin",
+        "page.kicker": "Živý přehled KYB žádostí",
+        "page.title": "KYB dashboard – firmy",
+        "page.subtitle":
+          "Kontrolujte, třiďte a schvalujte KYB formuláře firem, které žádají o přístup na Tranmarket. Níže uvedená data jsou testovací pro Fázi 5. Napojení na backend bude ve Fázi 6.",
+        "stats.total.label": "Celkem žádostí",
+        "stats.total.badge": "Všechny formuláře",
+        "stats.total.trend": "Všechny záznamy aktuálně načtené v dashboardu.",
+        "stats.pending.label": "Čeká na kontrolu",
+        "stats.pending.badge": "Nutná akce",
+        "stats.pending.trend":
+          "Nové / nedotčené žádosti, které čekají na rozhodnutí.",
+        "stats.approved.label": "Schváleno",
+        "stats.approved.badge": "Onboardováno",
+        "stats.approved.trend":
+          "Ověřené firmy, které mohou používat Tranmarket.",
+        "stats.rejected.label": "Zamítnuto / blokováno",
+        "stats.rejected.badge": "Odmítnuto",
+        "stats.rejected.trend":
+          "Neprošly KYB, risk nebo interními pravidly – nemohou využívat platformu.",
+        "filters.search.label": "Hledat",
+        "filters.search.placeholder":
+          "Název firmy, ID, kontaktní e-mail nebo telefon...",
+        "filters.status.label": "Stav",
+        "filters.status.all": "Všechny stavy",
+        "filters.status.pending": "Čeká",
+        "filters.status.reviewing": "V řešení",
+        "filters.status.approved": "Schváleno",
+        "filters.status.rejected": "Zamítnuto",
+        "filters.jurisdiction.label": "Jurisdikce",
+        "filters.jurisdiction.all": "Všechny jurisdikce",
+        "filters.jurisdiction.cz": "Česká republika / EU",
+        "filters.jurisdiction.vn": "Vietnam",
+        "filters.jurisdiction.eu": "Ostatní EU",
+        "filters.jurisdiction.us": "Spojené státy",
+        "filters.jurisdiction.other": "Ostatní",
+        "filters.clear": "Vymazat filtry",
+        "filters.export": "Export CSV (mock)",
+        "table.id": "ID",
+        "table.business": "Firma",
+        "table.jurisdiction": "Jurisdikce",
+        "table.contact": "Kontakt",
+        "table.submitted": "Odesláno",
+        "table.status": "Stav",
+        "table.actions": "Akce",
+        "detail.section.business": "Informace o firmě",
+        "detail.section.compliance": "Compliance profil",
+        "detail.section.notes": "Interní poznámky / rizika",
+        "status.pending": "Čeká",
+        "status.reviewing": "V řešení",
+        "status.approved": "Schváleno",
+        "status.rejected": "Zamítnuto",
+        "risk.low": "Nízké riziko",
+        "risk.medium": "Střední riziko",
+        "risk.high": "Vysoké riziko",
+        "badge.pi": "Přijímá platby v Pi",
+        "badge.eu": "Regulováno v EU",
+        "badge.manualCheck": "Nutná ruční kontrola",
+        "badge.blocked": "Blokováno",
+      },
+      vi: {
+        "nav.subtitle": "Bộ phận tiếp nhận doanh nghiệp & kiểm soát tuân thủ",
+        "nav.tag": "Giai đoạn 5 · Quản trị",
+        "page.kicker": "Bảng điều khiển KYB theo thời gian thực",
+        "page.title": "Bảng điều khiển hồ sơ KYB doanh nghiệp",
+        "page.subtitle":
+          "Xem, phân loại và phê duyệt các form KYB doanh nghiệp gửi từ Tranmarket. Dữ liệu dưới đây là giả lập cho Giai đoạn 5. Kết nối backend sẽ được thực hiện ở Giai đoạn 6.",
+        "stats.total.label": "Tổng số hồ sơ",
+        "stats.total.badge": "Tất cả form KYB",
+        "stats.total.trend":
+          "Bao gồm toàn bộ hồ sơ đang được tải trong bảng điều khiển.",
+        "stats.pending.label": "Đang chờ duyệt",
+        "stats.pending.badge": "Cần xử lý",
+        "stats.pending.trend":
+          "Những hồ sơ mới / chưa động tới, cần quyết định thủ công.",
+        "stats.approved.label": "Đã phê duyệt",
+        "stats.approved.badge": "Đã onboard",
+        "stats.approved.trend":
+          "Doanh nghiệp đã xác minh, được phép sử dụng Tranmarket.",
+        "stats.rejected.label": "Từ chối / chặn",
+        "stats.rejected.badge": "Đã từ chối",
+        "stats.rejected.trend":
+          "Không đạt KYB, kiểm tra rủi ro hoặc chính sách – không được hoạt động.",
+        "filters.search.label": "Tìm kiếm",
+        "filters.search.placeholder":
+          "Tên doanh nghiệp, ID, email hoặc số điện thoại...",
+        "filters.status.label": "Trạng thái",
+        "filters.status.all": "Mọi trạng thái",
+        "filters.status.pending": "Đang chờ",
+        "filters.status.reviewing": "Đang xét",
+        "filters.status.approved": "Đã duyệt",
+        "filters.status.rejected": "Đã từ chối",
+        "filters.jurisdiction.label": "Khu vực pháp lý",
+        "filters.jurisdiction.all": "Mọi khu vực",
+        "filters.jurisdiction.cz": "Séc / EU",
+        "filters.jurisdiction.vn": "Việt Nam",
+        "filters.jurisdiction.eu": "EU khác",
+        "filters.jurisdiction.us": "Hoa Kỳ",
+        "filters.jurisdiction.other": "Khác",
+        "filters.clear": "Xóa bộ lọc",
+        "filters.export": "Xuất CSV (giả lập)",
+        "table.id": "Mã hồ sơ",
+        "table.business": "Doanh nghiệp",
+        "table.jurisdiction": "Khu vực pháp lý",
+        "table.contact": "Liên hệ",
+        "table.submitted": "Ngày gửi",
+        "table.status": "Trạng thái",
+        "table.actions": "Thao tác",
+        "detail.section.business": "Thông tin doanh nghiệp",
+        "detail.section.compliance": "Hồ sơ tuân thủ",
+        "detail.section.notes": "Ghi chú nội bộ / cảnh báo rủi ro",
+        "status.pending": "Đang chờ",
+        "status.reviewing": "Đang xét",
+        "status.approved": "Đã duyệt",
+        "status.rejected": "Đã từ chối",
+        "risk.low": "Rủi ro thấp",
+        "risk.medium": "Rủi ro trung bình",
+        "risk.high": "Rủi ro cao",
+        "badge.pi": "Chấp nhận thanh toán Pi",
+        "badge.eu": "Được quản lý trong EU",
+        "badge.manualCheck": "Cần kiểm tra thủ công",
+        "badge.blocked": "Đã chặn",
+      },
+    };
+
+    let currentLang = "en";
+
+    function applyTranslations(lang) {
+      const dict = translations[lang] || translations.en;
+
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) {
+          el.textContent = dict[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        if (dict[key]) {
+          el.setAttribute("placeholder", dict[key]);
+        }
+      });
+    }
+
+    document.querySelectorAll(".lang-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const lang = btn.getAttribute("data-lang") || "en";
+        currentLang = lang;
+        document
+          .querySelectorAll(".lang-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        applyTranslations(lang);
+        renderTable();
+        updateTableSummary();
+      });
+    });
+
+    // MOCK DATA
+
+    const kybSubmissions = [
+      {
+        id: "TRM-KYB-0001",
+        businessName: "Tranmarket CZ s.r.o.",
+        registrationNumber: "C12345678",
+        country: "CZ",
+        jurisdiction: "CZ",
+        city: "Liberec",
+        addressLine: "Masarykova 12",
+        website: "https://tranmarket.cz",
+        sector: "Logistics & VN-EU Services",
+        contactName: "Tran Oanh",
+        contactEmail: "kyb@tranmarket.cz",
+        contactPhone: "+420 602 000 111",
+        servicesOffered: "Marketplace platform, cross-border logistics, translation & support for Vietnamese community.",
+        amlProfile: "Low risk – EU registered entity, clear ownership, operating mainly within CZ/EU.",
+        acceptsPi: true,
+        piUsageNotes: "Plans to accept Pi for selected services after Pi Open Mainnet.",
+        riskLevel: "low",
+        status: "approved",
+        submittedAt: "2025-11-18 09:42",
+        internalNotes:
+          "Verified with CZ business register. Founder has clear motivation to build long-term platform. Monitoring recommended only for standard AML screening schedule.",
+      },
+      {
+        id: "TRM-KYB-0002",
+        businessName: "Saigon Nails & Spa Liberec",
+        registrationNumber: "C98765432",
+        country: "CZ",
+        jurisdiction: "CZ",
+        city: "Liberec",
+        addressLine: "Pražská 45",
+        website: "",
+        sector: "Beauty & personal care",
+        contactName: "Nguyen Thi Hoa",
+        contactEmail: "hoa.salon@example.com",
+        contactPhone: "+420 608 333 222",
+        servicesOffered: "Nail salon & spa services for local customers, focus on Vietnamese & Czech community.",
+        amlProfile: "Medium risk – cash-intensive business, needs clearer reporting on cash vs digital payments.",
+        acceptsPi: false,
+        piUsageNotes: "Interested in Pi promotions but not ready to accept Pi yet.",
+        riskLevel: "medium",
+        status: "reviewing",
+        submittedAt: "2025-11-19 15:12",
+        internalNotes:
+          "Request additional documentation on ownership structure and bank statements. Manual follow-up call needed to explain KYB expectations.",
+      },
+      {
+        id: "TRM-KYB-0003",
+        businessName: "EU-VN Cargo Express",
+        registrationNumber: "SK55667788",
+        country: "EU",
+        jurisdiction: "EU",
+        city: "Berlin",
+        addressLine: "Friedrichstrasse 100",
+        website: "https://euvncargo.eu",
+        sector: "International shipping & customs",
+        contactName: "Le Minh Anh",
+        contactEmail: "contact@euvncargo.eu",
+        contactPhone: "+49 160 999 888",
+        servicesOffered: "Air & sea freight, customs clearance and parcel forwarding between EU and Viet Nam.",
+        amlProfile:
+          "Higher risk – operates across multiple jurisdictions, needs stronger KYC on their own customers.",
+        acceptsPi: true,
+        piUsageNotes:
+          "Wants to use Pi as loyalty / discount token for shipping fees once regulation is clear.",
+        riskLevel: "high",
+        status: "pending",
+        submittedAt: "2025-11-20 11:05",
+        internalNotes:
+          "Flag for enhanced due diligence. Request detailed AML policy, list of main corridors and typical shipment values.",
+      },
+      {
+        id: "TRM-KYB-0004",
+        businessName: "HN Coffee & Bakery",
+        registrationNumber: "VN11223344",
+        country: "VN",
+        jurisdiction: "VN",
+        city: "Ha Noi",
+        addressLine: "36 Tran Hung Dao",
+        website: "",
+        sector: "Food & beverage",
+        contactName: "Pham Quang Huy",
+        contactEmail: "owner@hncoffee.vn",
+        contactPhone: "+84 908 123 456",
+        servicesOffered: "Coffee shop & bakery, local customers, online delivery via apps.",
+        amlProfile:
+          "Low to medium – standard F&B business. Need proof of business license and tax registration.",
+        acceptsPi: false,
+        piUsageNotes: "Potential partner for Pi marketing campaigns in Viet Nam.",
+        riskLevel: "medium",
+        status: "pending",
+        submittedAt: "2025-11-21 08:37",
+        internalNotes:
+          "Waiting for scanned documents. Once received and verified, can be approved with normal monitoring.",
+      },
+      {
+        id: "TRM-KYB-0005",
+        businessName: "Global Crypto Arbitrage Ltd.",
+        registrationNumber: "UK99887766",
+        country: "OTHER",
+        jurisdiction: "OTHER",
+        city: "London",
+        addressLine: "1 Canary Wharf",
+        website: "https://global-arb.example",
+        sector: "Crypto trading & arbitrage",
+        contactName: "John Smith",
+        contactEmail: "kyb@global-arb.example",
+        contactPhone: "+44 20 0000 9999",
+        servicesOffered:
+          "High-frequency crypto arbitrage between centralized exchanges and DeFi protocols.",
+        amlProfile:
+          "Very high risk – complex flows, cross-border, unclear beneficial ownership.",
+        acceptsPi: false,
+        piUsageNotes:
+          "Requested integration to move Pi off-platform, which violates policy.",
+        riskLevel: "high",
+        status: "rejected",
+        submittedAt: "2025-11-17 17:58",
+        internalNotes:
+          "Rejected – model not aligned with Tranmarket mission. Not allowed to move Pi between CEX and off-platform wallets. Keep record as blocked entity.",
+      },
+    ];
+
+    // TABLE / FILTER LOGIC
+
+    const state = {
+      page: 1,
+      pageSize: 10,
+      filtered: [...kybSubmissions],
+    };
+
+    function filterData() {
+      const searchValue = document
+        .getElementById("filter-search")
+        .value.toLowerCase()
+        .trim();
+      const statusValue = document.getElementById("filter-status").value;
+      const jurisdictionValue =
+        document.getElementById("filter-jurisdiction").value;
+
+      let data = [...kybSubmissions];
+
+      if (searchValue) {
+        data = data.filter((item) => {
+          const haystack = [
+            item.id,
+            item.businessName,
+            item.registrationNumber,
+            item.contactName,
+            item.contactEmail,
+            item.contactPhone,
+          ]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase();
+          return haystack.includes(searchValue);
+        });
+      }
+
+      if (statusValue) {
+        data = data.filter((item) => item.status === statusValue);
+      }
+
+      if (jurisdictionValue) {
+        data = data.filter((item) => item.jurisdiction === jurisdictionValue);
+      }
+
+      state.filtered = data;
+      state.page = 1;
+    }
+
+    function paginateData() {
+      const start = (state.page - 1) * state.pageSize;
+      const end = start + state.pageSize;
+      return state.filtered.slice(start, end);
+    }
+
+    function getStatusLabel(status) {
+      const key = "status." + status;
+      const dict = translations[currentLang] || translations.en;
+      return dict[key] || status;
+    }
+
+    function getStatusClass(status) {
+      switch (status) {
+        case "pending":
+          return "status-pending";
+        case "reviewing":
+          return "status-reviewing";
+        case "approved":
+          return "status-approved";
+        case "rejected":
+          return "status-rejected";
+        default:
+          return "";
+      }
+    }
+
+    function getRiskLabel(level) {
+      const dict = translations[currentLang] || translations.en;
+      const key = "risk." + level;
+      return dict[key] || level;
+    }
+
+    function getRiskDotClass(level) {
+      if (level === "low") return "risk-dot risk-low";
+      if (level === "medium") return "risk-dot risk-medium";
+      if (level === "high") return "risk-dot risk-high";
+      return "risk-dot";
+    }
+
+    function renderTable() {
+      filterData();
+      const tbody = document.getElementById("kyb-table-body");
+      tbody.innerHTML = "";
+      const pageData = paginateData();
+
+      pageData.forEach((item) => {
+        const tr = document.createElement("tr");
+
+        const tdId = document.createElement("td");
+        tdId.className = "col-id";
+        tdId.textContent = item.id;
+        tr.appendChild(tdId);
+
+        const tdBusiness = document.createElement("td");
+        tdBusiness.className = "col-name";
+        tdBusiness.innerHTML = `
+          <div>${item.businessName}</div>
+          <div class="sub-text">${item.registrationNumber || ""}</div>
+        `;
+        tr.appendChild(tdBusiness);
+
+        const tdJurisdiction = document.createElement("td");
+        tdJurisdiction.className = "col-country";
+        tdJurisdiction.innerHTML = `
+          <div>${item.country || item.jurisdiction}</div>
+          <div class="sub-text">${item.city || ""}</div>
+        `;
+        tr.appendChild(tdJurisdiction);
+
+        const tdContact = document.createElement("td");
+        tdContact.className = "col-contact";
+        tdContact.innerHTML = `
+          <div>${item.contactName}</div>
+          <div class="sub-text">${item.contactEmail}</div>
+        `;
+        tr.appendChild(tdContact);
+
+        const tdSubmitted = document.createElement("td");
+        tdSubmitted.innerHTML = `
+          <div>${item.submittedAt}</div>
+        `;
+        tr.appendChild(tdSubmitted);
+
+        const tdStatus = document.createElement("td");
+        const pill = document.createElement("span");
+        pill.className = "status-pill " + getStatusClass(item.status);
+        pill.innerHTML = `
+          <span class="${getRiskDotClass(item.riskLevel)}"></span>
+          <span>${getStatusLabel(item.status)}</span>
+        `;
+        tdStatus.appendChild(pill);
+        tr.appendChild(tdStatus);
+
+        const tdActions = document.createElement("td");
+        tdActions.className = "actions";
+        const viewBtn = document.createElement("button");
+        viewBtn.className = "btn-ghost";
+        viewBtn.innerHTML = `<span>👁</span><span>View</span>`;
+        viewBtn.addEventListener("click", () => openDetail(item));
+        tdActions.appendChild(viewBtn);
+        tr.appendChild(tdActions);
+
+        tbody.appendChild(tr);
+      });
+
+      // Update stats
+      const total = kybSubmissions.length;
+      const pending = kybSubmissions.filter((x) => x.status === "pending").length;
+      const approved = kybSubmissions.filter(
+        (x) => x.status === "approved"
+      ).length;
+      const rejected = kybSubmissions.filter(
+        (x) => x.status === "rejected"
+      ).length;
+
+      document.getElementById("stat-total").textContent = total;
+      document.getElementById("stat-pending").textContent = pending;
+      document.getElementById("stat-approved").textContent = approved;
+      document.getElementById("stat-rejected").textContent = rejected;
+
+      updatePager();
+      updateTableSummary();
+    }
+
+    function updatePager() {
+      const total = state.filtered.length;
+      const totalPages = Math.max(1, Math.ceil(total / state.pageSize));
+      if (state.page > totalPages) {
+        state.page = totalPages;
+      }
+      document.getElementById(
+        "pager-label"
+      ).textContent = `${state.page} / ${totalPages}`;
+      document
+        .getElementById("pager-prev")
+        .setAttribute("disabled", state.page <= 1 ? "disabled" : "");
+      document
+        .getElementById("pager-next")
+        .setAttribute(
+          "disabled",
+          state.page >= totalPages ? "disabled" : ""
+        );
+    }
+
+    function updateTableSummary() {
+      const total = kybSubmissions.length;
+      const shown = state.filtered.length;
+      const dict = translations[currentLang] || translations.en;
+      const summaryEl = document.getElementById("table-summary");
+      if (currentLang === "cz") {
+        summaryEl.textContent = `Zobrazeno ${shown} z ${total} záznamů (mock data pro Fázi 5).`;
+      } else if (currentLang === "vi") {
+        summaryEl.textContent = `Đang hiển thị ${shown} / ${total} hồ sơ (dữ liệu giả lập cho Giai đoạn 5).`;
+      } else {
+        summaryEl.textContent = `Showing ${shown} of ${total} records (mock data for Phase 5).`;
+      }
+    }
+
+    document.getElementById("pager-prev").addEventListener("click", () => {
+      if (state.page > 1) {
+        state.page -= 1;
+        renderTable();
+      }
+    });
+
+    document.getElementById("pager-next").addEventListener("click", () => {
+      const total = state.filtered.length;
+      const totalPages = Math.max(1, Math.ceil(total / state.pageSize));
+      if (state.page < totalPages) {
+        state.page += 1;
+        renderTable();
+      }
+    });
+
+    document.getElementById("filter-search").addEventListener("input", () => {
+      state.page = 1;
+      renderTable();
+    });
+
+    document.getElementById("filter-status").addEventListener("change", () => {
+      state.page = 1;
+      renderTable();
+    });
+
+    document
+      .getElementById("filter-jurisdiction")
+      .addEventListener("change", () => {
+        state.page = 1;
+        renderTable();
+      });
+
+    document.getElementById("btn-clear").addEventListener("click", () => {
+      document.getElementById("filter-search").value = "";
+      document.getElementById("filter-status").value = "";
+      document.getElementById("filter-jurisdiction").value = "";
+      state.page = 1;
+      renderTable();
+    });
+
+    document.getElementById("btn-export").addEventListener("click", () => {
+      // Simple mock – logs CSV output into console.
+      const headers = [
+        "id",
+        "businessName",
+        "registrationNumber",
+        "country",
+        "jurisdiction",
+        "city",
+        "addressLine",
+        "website",
+        "sector",
+        "contactName",
+        "contactEmail",
+        "contactPhone",
+        "status",
+        "riskLevel",
+        "submittedAt",
+      ];
+      const rows = state.filtered.map((item) =>
+        headers
+          .map((h) => {
+            const value = (item[h] ?? "").toString().replace(/"/g, '""');
+            return `"${value}"`;
+          })
+          .join(",")
+      );
+      const csv = [headers.join(","), ...rows].join("\n");
+      console.log("CSV EXPORT (MOCK):\n" + csv);
+      alert(
+        currentLang === "vi"
+          ? "CSV (mock) đã được in ra console. Phase 6 sẽ thêm tải file."
+          : currentLang === "cz"
+          ? "CSV (mock) byl vypsán do konzole. Ve Fázi 6 přidáme stažení souboru."
+          : "CSV (mock) has been logged to console. Phase 6 will add file download."
+      );
+    });
+
+    // DETAIL PANEL
+
+    const overlay = document.getElementById("detail-overlay");
+    const detailCloseBtn = document.getElementById("detail-close");
+
+    function openDetail(item) {
+      document.getElementById("detail-title").textContent =
+        item.businessName || "";
+
+      const statusLabel = getStatusLabel(item.status);
+      document.getElementById(
+        "detail-subtitle"
+      ).textContent = `${item.id} · ${statusLabel}`;
+
+      const businessGrid = document.getElementById("detail-business-grid");
+      businessGrid.innerHTML = "";
+
+      const businessFields = [
+        { label: "Registration ID", value: item.registrationNumber },
+        { label: "Country", value: item.country },
+        { label: "Jurisdiction", value: item.jurisdiction },
+        { label: "City", value: item.city },
+        { label: "Address", value: item.addressLine },
+        { label: "Website", value: item.website },
+        { label: "Sector", value: item.sector },
+        { label: "Submitted at", value: item.submittedAt },
+        { label: "Contact person", value: item.contactName },
+        { label: "Contact email", value: item.contactEmail },
+        { label: "Contact phone", value: item.contactPhone },
+      ];
+
+      businessFields.forEach((f) => {
+        if (!f.value) return;
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = `
+          <div class="detail-item-label">${f.label}</div>
+          <div class="detail-item-value">${f.value}</div>
+        `;
+        businessGrid.appendChild(wrapper);
+      });
+
+      const complianceGrid = document.getElementById("detail-compliance-grid");
+      complianceGrid.innerHTML = "";
+
+      const complianceFields = [
+        { label: "Services offered", value: item.servicesOffered },
+        { label: "AML profile", value: item.amlProfile },
+        { label: "Pi usage notes", value: item.piUsageNotes },
+      ];
+
+      complianceFields.forEach((f) => {
+        if (!f.value) return;
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = `
+          <div class="detail-item-label">${f.label}</div>
+          <div class="detail-item-value">${f.value}</div>
+        `;
+        complianceGrid.appendChild(wrapper);
+      });
+
+      const badgesRow = document.getElementById("detail-badges");
+      badgesRow.innerHTML = "";
+
+      const riskBadge = document.createElement("span");
+      riskBadge.className = "status-pill " + getStatusClass(item.status);
+      riskBadge.innerHTML = `
+        <span class="${getRiskDotClass(item.riskLevel)}"></span>
+        <span>${getRiskLabel(item.riskLevel)}</span>
+      `;
+      badgesRow.appendChild(riskBadge);
+
+      const dict = translations[currentLang] || translations.en;
+
+      if (item.acceptsPi) {
+        const piBadge = document.createElement("span");
+        piBadge.className = "status-pill status-approved";
+        piBadge.innerHTML = `
+          <span class="risk-dot risk-low"></span>
+          <span>${dict["badge.pi"] || "Accepts Pi payments"}</span>
+        `;
+        badgesRow.appendChild(piBadge);
+      }
+
+      if (item.jurisdiction === "CZ" || item.jurisdiction === "EU") {
+        const euBadge = document.createElement("span");
+        euBadge.className = "status-pill status-reviewing";
+        euBadge.innerHTML = `
+          <span class="risk-dot risk-medium"></span>
+          <span>${dict["badge.eu"] || "EU regulated"}</span>
+        `;
+        badgesRow.appendChild(euBadge);
+      }
+
+      if (item.status === "pending" || item.status === "reviewing") {
+        const manualBadge = document.createElement("span");
+        manualBadge.className = "status-pill status-pending";
+        manualBadge.innerHTML = `
+          <span class="risk-dot risk-medium"></span>
+          <span>${dict["badge.manualCheck"] || "Manual check required"}</span>
+        `;
+        badgesRow.appendChild(manualBadge);
+      }
+
+      if (item.status === "rejected") {
+        const blockedBadge = document.createElement("span");
+        blockedBadge.className = "status-pill status-rejected";
+        blockedBadge.innerHTML = `
+          <span class="risk-dot risk-high"></span>
+          <span>${dict["badge.blocked"] || "Blocked"}</span>
+        `;
+        badgesRow.appendChild(blockedBadge);
+      }
+
+      document.getElementById("detail-notes").textContent =
+        item.internalNotes || "";
+
+      overlay.classList.add("active");
+    }
+
+    function closeDetail() {
+      overlay.classList.remove("active");
+    }
+
+    detailCloseBtn.addEventListener("click", closeDetail);
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) {
+        closeDetail();
+      }
+    });
+
+    // INIT
+
+    applyTranslations(currentLang);
+    renderTable();
+  </script>
+</body>
+</html>
