@@ -296,3 +296,13 @@ body {
     padding-top: 32px;
   }
 }
+.tm-logo-img {
+  height: 28px;
+  width: auto;
+  margin-right: 8px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.tm-logo span {
+  vertical-align: middle;
+}
