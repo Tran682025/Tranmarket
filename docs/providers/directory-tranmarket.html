@@ -14,7 +14,23 @@
       --tm-text: #f9fafb;
     
       --tm-muted: #9ca3af;
-      --tm-badge-basic: #4ade80;
+      --tm-badge-basic: #4ade80;.tm-lang-btn {
+  background: transparent;
+  border: none;
+  padding: 0 0.4rem;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+.tm-lang-btn:hover {
+  opacity: 0.65;
+}
+.tm-lang-btn.active {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
       --tm-badge-standard: #38bdf8;
       --tm-badge-full: #facc15;
     }
@@ -61,23 +77,24 @@
       font-size: 0.75rem;
       color: var(--tm-muted);
     }
-    .tm-lang-pill {
-      .tm-lang-btn {
-  background: transparent;
-  border: none;
-  padding: 0 0.4rem;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  transition: 0.25s ease;
-}
-.tm-lang-btn:hover {
-  opacity: 0.65;
-}
-.tm-lang-btn.active {
-  font-weight: 700;
-  text-decoration: underline;
-}
+<header class="tm-header">
+  <div class="tm-brand">
+    <img src="../assets/trm-logo-nav.png" alt="Tranmarket logo" class="tm-logo-small" />
+    <div>
+      <div class="tm-brand-name">TRANMARKET</div>
+      <div class="tm-brand-sub">Pi-ready service marketplace directory</div>
+    </div>
+  </div>
+
+  <div class="tm-lang-pill">
+    <button class="tm-lang-btn active" data-lang="vi">VI</button>
+    <span>/</span>
+    <button class="tm-lang-btn" data-lang="en">EN</button>
+    <span>/</span>
+    <button class="tm-lang-btn" data-lang="cz">CZ</button>
+  </div>
+</header>
+
 
       display: inline-flex;
       align-items: center;
@@ -653,11 +670,10 @@ function applyDirectoryLang() {
     });
 }
 
-document.querySelectorAll(".tm-lang-btn").forEach(btn => {
+document.querySelectorAll(".tm-lang-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     currentLang = btn.dataset.lang;
     applyDirectoryLang();
-    buildDirectory(); // reload data UI nếu đang filter
   });
 });
 
