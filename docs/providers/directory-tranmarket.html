@@ -350,42 +350,40 @@
 </div>
 
     </header>
+<section class="tm-panel">
+  <div class="tm-panel-header">
+    <div class="tm-title" id="dsr-title">
+      Danh sách doanh nghiệp đã đăng ký
+    </div>
+    <div class="tm-subtitle" id="dsr-subtitle">
+      Các đơn vị dưới đây đã gửi form KYB cho Tranmarket và được kiểm tra thủ công. Badge Pi cho biết mức độ sẵn sàng nhận thanh toán bằng Pi.
+    </div>
+    <div class="tm-counter" id="tm-summary"></div>
+  </div>
 
-    <section class="tm-panel">
-      <div class="tm-panel-header">
-        <div>
-          <div class="tm-title">Danh sách doanh nghiệp đã đăng ký</div>
-          <div class="tm-subtitle">
-            Các đơn vị dưới đây đã gửi form KYB cho Tranmarket và được kiểm tra thủ công. Badge Pi cho biết mức độ sẵn sàng nhận thanh toán bằng Pi.
-          </div>
-        </div>
-        <div class="tm-counter" id="tm-summary"></div>
-      </div>
+  <div class="tm-filters">
+    <select id="filter-category" class="tm-select">
+      <option value="all" id="filter-all">Tất cả danh mục</option>
+      <!-- các option khác giữ nguyên -->
+    </select>
 
-      <div class="tm-filters">
-        <select id="filter-category" class="tm-select">
-          <option value="">Tất cả danh mục</option>
-        </select>
-        <select id="filter-pi" class="tm-select">
-          <option value="">Tất cả mức Pi-ready</option>
-          <option value="Basic">Pi-ready (Basic)</option>
-          <option value="Standard">Pi-ready (Standard)</option>
-          <option value="Full">Pi-ready (Full)</option>
-          <option value="PiOnly">Chỉ hiển thị nơi nhận Pi</option>
-        </select>
-        <input
-          id="filter-search"
-          class="tm-input"
-          type="text"
-          placeholder="Tìm theo tên, khu vực, người phụ trách..."
-        />
-      </div>
+    <select id="filter-pi" class="tm-select">
+      <option value="all" id="filter-pi">Tất cả mức Pi-ready</option>
+      <option value="Basic">Basic – Pi-ready (Basic)</option>
+      <option value="Standard">Standard – Pi-ready (Standard)</option>
+      <option value="Full">Full – Pi-ready (Full)</option>
+      <option value="PiOnly">PiOnly – Chỉ nhận thanh toán Pi</option>
+    </select>
 
-      <div id="providers-grid" class="tm-grid"></div>
-      <div id="providers-empty" class="tm-empty" style="display:none;">
-        Chưa có doanh nghiệp nào phù hợp với bộ lọc hiện tại.
-      </div>
-    </section>
+    <input
+      id="filter-search"
+      type="text"
+      placeholder="Tìm theo tên, khu vực, ngành nghề..."
+    />
+  </div>
+</section>
+
+  
   </div>
 
   <script>
