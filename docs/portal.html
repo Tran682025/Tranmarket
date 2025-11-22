@@ -1,0 +1,545 @@
+<!-- docs/portal.html  –  Tranmarket Phase 6 Service Portal -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>TRANMARKET – Web3 Service Portal</title>
+
+  <meta name="description"
+        content="TRANMARKET Web3 Service Portal – cổng dịch vụ cho cộng đồng người Việt tại Séc & EU, hỗ trợ thanh toán bằng Pi Web3." />
+
+  <style>
+    :root {
+      --bg-main: #020018;
+      --card-bg: rgba(8, 0, 40, 0.9);
+      --accent: #9f7bff;
+      --accent-soft: rgba(159, 123, 255, 0.25);
+      --accent-strong: #ffbb00;
+      --text-main: #f5f6ff;
+      --text-muted: #b7bce6;
+      --radius-xl: 24px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.65);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      min-height: 100vh;
+      background-color: var(--bg-main);
+      background-image: url("assets/trm-logo-background.png");
+      background-size: cover;
+      background-position: center;
+      color: var(--text-main);
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(159, 123, 255, 0.22), transparent 55%),
+                  radial-gradient(circle at bottom, rgba(255, 80, 170, 0.18), transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1120px;
+      padding: 32px 20px 36px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Top bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #fff2, transparent 50%),
+                  #1b1029;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 0 24px rgba(0, 0, 0, 0.8);
+    }
+
+    .brand-logo img {
+      width: 120%;
+      height: auto;
+    }
+
+    .brand-text-main {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .brand-text-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .lang-switch button {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 13px;
+      cursor: pointer;
+      padding: 4px 10px;
+      border-radius: 999px;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .lang-switch button.active {
+      background: var(--accent-soft);
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    /* Hero section */
+    .hero {
+      margin-top: 4px;
+      padding: 28px 24px 26px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, rgba(7, 0, 40, 0.9), rgba(10, 0, 50, 0.96));
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+      gap: 26px;
+      align-items: center;
+    }
+
+    .hero-main-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .hero-main-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .hero-main-desc {
+      font-size: 14px;
+      color: var(--text-main);
+      opacity: 0.92;
+      line-height: 1.45;
+      margin-bottom: 12px;
+    }
+
+    .hero-tagline {
+      font-size: 12px;
+      color: var(--accent-strong);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero-logo-wrap {
+      text-align: center;
+    }
+
+    .hero-logo {
+      width: 140px;
+      height: 140px;
+      margin: 4px auto 10px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #fff3, transparent 55%),
+                  #20142f;
+      box-shadow: 0 0 38px rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-logo img {
+      width: 120%;
+      height: auto;
+    }
+
+    .hero-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      border-radius: var(--radius-xl);
+      background: var(--card-bg);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(159, 123, 255, 0.18), transparent 55%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      z-index: 1;
+    }
+
+    .card-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      z-index: 1;
+    }
+
+    .card-body {
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--text-main);
+      opacity: 0.96;
+      z-index: 1;
+    }
+
+    .card-action {
+      margin-top: 12px;
+      z-index: 1;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+      background: linear-gradient(90deg, #7a00ff, #ffbb00);
+      box-shadow: 0 0 16px rgba(0, 0, 0, 0.7);
+      text-decoration: none;
+    }
+
+    .btn-primary span {
+      margin-left: 6px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.8;
+    }
+
+    footer {
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-logo {
+        width: 120px;
+        height: 120px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding-inline: 14px;
+      }
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero {
+        padding: 20px 16px 18px;
+      }
+      .brand-text-main {
+        font-size: 13px;
+      }
+      .brand-text-sub {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<div class="page">
+
+  <!-- Top bar -->
+  <header class="top-bar">
+    <div class="brand">
+      <div class="brand-logo">
+        <img src="assets/trm-logo-nav.png" alt="TRANMARKET logo">
+      </div>
+      <div>
+        <div class="brand-text-main">TRANMARKET</div>
+        <div class="brand-text-sub" id="brand-sub"></div>
+      </div>
+    </div>
+
+    <div class="lang-switch">
+      <button id="btn-en" onclick="switchLang('en')">EN</button>
+      <button id="btn-cz" onclick="switchLang('cz')">CZ</button>
+      <button id="btn-vi" onclick="switchLang('vi')">VN</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div>
+      <div class="hero-main-title" id="hero-title"></div>
+      <div class="hero-main-sub" id="hero-sub"></div>
+      <div class="hero-main-desc" id="hero-desc"></div>
+      <div class="hero-tagline" id="hero-tagline"></div>
+    </div>
+
+    <div class="hero-logo-wrap">
+      <div class="hero-logo">
+        <img src="assets/trm-logo-hero.png" alt="TRANMARKET hero logo">
+      </div>
+      <div class="hero-note" id="hero-note"></div>
+    </div>
+  </section>
+
+  <!-- Cards -->
+  <section class="grid">
+    <article class="card">
+      <div class="card-title" id="card1-title"></div>
+      <div class="card-sub" id="card1-sub"></div>
+      <div class="card-body" id="card1-body"></div>
+      <div class="card-action">
+        <!-- Sửa link này tới trang danh mục dịch vụ thật của Trẫm -->
+        <a href="day5-category-b.html" class="btn-primary" id="card1-btn">
+          <span id="card1-btn-text"></span>
+          <span>›</span>
+        </a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-title" id="card2-title"></div>
+      <div class="card-sub" id="card2-sub"></div>
+      <div class="card-body" id="card2-body"></div>
+      <div class="card-action">
+        <!-- Sửa link này tới KYB thật của Trẫm -->
+        <a href="kyb.html" class="btn-primary" id="card2-btn">
+          <span id="card2-btn-text"></span>
+          <span>›</span>
+        </a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-title" id="card3-title"></div>
+      <div class="card-sub" id="card3-sub"></div>
+      <div class="card-body" id="card3-body"></div>
+      <div class="card-action">
+        <!-- Sửa link này tới trang giới thiệu / direct -->
+        <a href="direct.html" class="btn-primary" id="card3-btn">
+          <span id="card3-btn-text"></span>
+          <span>›</span>
+        </a>
+      </div>
+    </article>
+  </section>
+
+  <footer id="copyright"></footer>
+
+</div>
+
+<script>
+  const langPack = {
+    en: {
+      brandSub: "Web3 Services for Vietnamese in CZ & EU",
+
+      heroTitle: "Tranmarket Web3 Service Portal",
+      heroSub: "(Cổng dịch vụ Web3 cho cộng đồng người Việt)",
+      heroDesc:
+        "Browse trusted services, register your own business profile, and connect the Vietnamese community in Czechia & the EU with Web3-ready tools.",
+      heroTagline: "Powered by Pi Web3",
+
+      heroNote:
+        "Access this portal after connecting your Pi Wallet. Each service can optionally accept Pi payments as we unlock full Web3 integration.",
+
+      card1Title: "Service Directory",
+      card1Sub: "Find trusted services",
+      card1Body:
+        "Explore categories like shipping, legal, car repair, translation, money transfer, real estate and more. All tailored for Vietnamese in CZ & EU.",
+      card1Btn: "Open directory",
+
+      card2Title: "Register Your Service (KYB)",
+      card2Sub: "Show up where your community is",
+      card2Body:
+        "If you provide a real service, create a Tranmarket profile. Let the community find you easily and prepare for Pi-ready payments.",
+      card2Btn: "Start KYB form",
+
+      card3Title: "About Tranmarket",
+      card3Sub: "Vision & roadmap",
+      card3Body:
+        "Learn why Tranmarket was built, our Web3 strategy with Pi, and how we connect real-life services with a trusted digital identity.",
+      card3Btn: "Read overview",
+
+      copyright:
+        "© 2025 TRANMARKET Web3 Services — All rights reserved."
+    },
+
+    vi: {
+      brandSub: "Nền tảng dịch vụ Web3 cho người Việt tại Séc & EU",
+
+      heroTitle: "Cổng dịch vụ Tranmarket Web3",
+      heroSub: "(Dành cho cộng đồng người Việt tại Séc & EU)",
+      heroDesc:
+        "Tại đây bạn có thể tìm kiếm dịch vụ uy tín, đăng ký hồ sơ doanh nghiệp của mình và từng bước chuẩn bị chấp nhận thanh toán bằng Pi.",
+      heroTagline: "Vận hành bởi Pi Web3",
+
+      heroNote:
+        "Hãy truy cập cổng này sau khi đã kết nối ví Pi. Mỗi dịch vụ có thể lựa chọn nhận thanh toán bằng Pi khi tính năng Web3 được mở rộng.",
+
+      card1Title: "Danh mục dịch vụ",
+      card1Sub: "Tìm dịch vụ phù hợp",
+      card1Body:
+        "Khám phá các mục như chuyển hàng, pháp lý, sửa xe, phiên dịch, chuyển tiền, bất động sản… được thiết kế cho người Việt tại Séc & EU.",
+      card1Btn: "Mở danh mục",
+
+      card2Title: "Đăng ký dịch vụ (KYB)",
+      card2Sub: "Để cộng đồng dễ dàng tìm thấy bạn",
+      card2Body:
+        "Nếu bạn đang cung cấp dịch vụ thật, hãy tạo hồ sơ Tranmarket. Điều này giúp khách hàng dễ liên hệ và sẵn sàng cho thanh toán bằng Pi.",
+      card2Btn: "Mở form KYB",
+
+      card3Title: "Giới thiệu Tranmarket",
+      card3Sub: "Tầm nhìn & lộ trình",
+      card3Body:
+        "Tìm hiểu lý do Tranmarket được xây dựng, chiến lược Web3 với Pi và cách chúng tôi kết nối dịch vụ đời sống với danh tính số đáng tin cậy.",
+      card3Btn: "Xem tổng quan",
+
+      copyright:
+        "© 2025 TRANMARKET Web3 Services — Bảo lưu mọi quyền."
+    },
+
+    cz: {
+      brandSub: "Web3 platforma služeb pro Vietnamce v ČR a EU",
+
+      heroTitle: "Tranmarket Web3 portál služeb",
+      heroSub: "(Pro vietnamskou komunitu v České republice a EU)",
+      heroDesc:
+        "Najděte ověřené služby, registrujte své vlastní podnikání a propojte vietnamskou komunitu s Web3 nástroji připravenými na Pi.",
+      heroTagline: "Poháněno technologií Pi Web3",
+
+      heroNote:
+        "K tomuto portálu přistupujte po připojení své Pi peněženky. Jednotlivé služby mohou postupně přijímat platby v Pi, jakmile se Web3 integrace rozšíří.",
+
+      card1Title: "Adresář služeb",
+      card1Sub: "Najít spolehlivé služby",
+      card1Body:
+        "Prozkoumejte kategorie jako přeprava, právní služby, autoservis, tlumočení, převody peněz, reality a další – zaměřené na Vietnamce v ČR a EU.",
+      card1Btn: "Otevřít adresář",
+
+      card2Title: "Registrace služby (KYB)",
+      card2Sub: "Buďte vidět tam, kde je komunita",
+      card2Body:
+        "Pokud poskytujete reálnou službu, vytvořte si profil Tranmarket. Zákazníci vás snáze najdou a vy se připravíte na platby v Pi.",
+      card2Btn: "Otevřít KYB formulář",
+
+      card3Title: "O Tranmarketu",
+      card3Sub: "Vize a roadmapa",
+      card3Body:
+        "Zjistěte, proč byl Tranmarket vytvořen, jaká je naše Web3 strategie s Pi a jak propojujeme reálné služby s důvěryhodní digitální identitou.",
+      card3Btn: "Zobrazit přehled",
+
+      copyright:
+        "© 2025 TRANMARKET Web3 Services — Všechna práva vyhrazena."
+    }
+  };
+
+  function switchLang(l) {
+    const p = langPack[l];
+
+    document.getElementById("brand-sub").innerText = p.brandSub;
+
+    document.getElementById("hero-title").innerText = p.heroTitle;
+    document.getElementById("hero-sub").innerText = p.heroSub;
+    document.getElementById("hero-desc").innerText = p.heroDesc;
+    document.getElementById("hero-tagline").innerText = p.heroTagline;
+    document.getElementById("hero-note").innerText = p.heroNote;
+
+    document.getElementById("card1-title").innerText = p.card1Title;
+    document.getElementById("card1-sub").innerText = p.card1Sub;
+    document.getElementById("card1-body").innerText = p.card1Body;
+    document.getElementById("card1-btn-text").innerText = p.card1Btn;
+
+    document.getElementById("card2-title").innerText = p.card2Title;
+    document.getElementById("card2-sub").innerText = p.card2Sub;
+    document.getElementById("card2-body").innerText = p.card2Body;
+    document.getElementById("card2-btn-text").innerText = p.card2Btn;
+
+    document.getElementById("card3-title").innerText = p.card3Title;
+    document.getElementById("card3-sub").innerText = p.card3Sub;
+    document.getElementById("card3-body").innerText = p.card3Body;
+    document.getElementById("card3-btn-text").innerText = p.card3Btn;
+
+    document.getElementById("copyright").innerText = p.copyright;
+
+    document.querySelectorAll(".lang-switch button").forEach(btn => btn.classList.remove("active"));
+    document.getElementById("btn-" + l).classList.add("active");
+  }
+
+  // Mặc định mở ra = tiếng Anh
+  switchLang("en");
+</script>
+
+</body>
+</html>
