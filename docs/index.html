@@ -4,10 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tranmarket — Web3 Gateway</title>
-
-<!-- Pi SDK -->
-<script src="https://sdk.minepi.com/pi-sdk.js"></script>
-
 <style>
   body {
     margin: 0;
@@ -89,12 +85,12 @@
 <div class="sub" id="sub"></div>
 <div class="powered" id="powered"></div>
 
-<button class="btn" id="btn-connect" onclick="connectWallet()"></button>
+<button class="btn" id="btn-connect" onclick="connectPiWallet()"></button>
+
 
 <footer id="copyright"></footer>
 
 <script>
-// ========== Ngôn ngữ ==========
 const langPack = {
   en: {
     headline: "Connect Wallet to Enter",
@@ -118,6 +114,33 @@ const langPack = {
     copyright: "© 2025 Tranmarket Web3 Services — Všechna práva vyhrazena."
   }
 };
+async function connectPiWallet() {
+  // Nếu không có Pi SDK → không phải Pi Browser
+  if (!window.Pi) {
+    alert("Không tìm thấy Pi SDK.\nHãy mở trang này bên trong Pi Browser để kết nối ví Pi.");
+    return;
+  }
+
+  // Khởi tạo Pi SDK
+  Pi.init({ version: "2.0", sandbox: true });
+
+  try {
+    const scopes = ["username", "payments"];
+    const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+
+    console.log("Auth OK:", auth);
+    alert("Kết nối ví thành công cho user: " + auth.user.username);
+
+    // TODO: giai đoạn tiếp theo sẽ gọi tạo payment + backend 8787
+  } catch (err) {
+    console.error("Auth Error:", err);
+    alert("Kết nối ví thất bại: " + (err?.message || "Lỗi không xác định"));
+  }
+}
+
+function onIncompletePaymentFound(payment) {
+  console.log("Incomplete Payment:", payment);
+}
 
 function switchLang(l) {
   document.getElementById("headline").innerText = langPack[l].headline;
@@ -128,34 +151,8 @@ function switchLang(l) {
   document.querySelectorAll(".lang-switch button").forEach(btn => btn.classList.remove("active"));
   document.getElementById("btn-" + l).classList.add("active");
 }
+
 switchLang("en");
-
-// ========== Web3: Connect ví xong chuyển sang Portal ==========
-async function connectWallet() {
-  try {
-    if (!window.Pi) {
-      alert("Please open this page in Pi Browser.\n(Vui lòng mở trang này bằng Pi Browser)");
-      return;
-    }
-
-    const scopes = ["payments"];
-    const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
-
-    // lưu session
-    localStorage.setItem("pi_auth", JSON.stringify(auth));
-
-    // chuyển sang portal.html
-    window.location.href = "portal.html";
-
-  } catch (err) {
-    console.error(err);
-    alert("Kết nối ví thất bại. Vui lòng thử lại.");
-  }
-}
-
-function onIncompletePaymentFound(payment) {
-  console.log("Incomplete payment found:", payment);
-}
 </script>
 
 </body>
