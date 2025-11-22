@@ -87,8 +87,10 @@
 
 <button class="btn" id="btn-connect" onclick="connectPiWallet()"></button>
 
-
 <footer id="copyright"></footer>
+
+<!-- 1) LOAD PI SDK TRƯỚC KHI DÙNG window.Pi -->
+<script src="https://sdk.minepi.com/pi-sdk.js"></script>
 
 <script>
 const langPack = {
@@ -114,6 +116,7 @@ const langPack = {
     copyright: "© 2025 Tranmarket Web3 Services — Všechna práva vyhrazena."
   }
 };
+
 async function connectPiWallet() {
   // Nếu không có Pi SDK → không phải Pi Browser
   if (!window.Pi) {
@@ -121,11 +124,17 @@ async function connectPiWallet() {
     return;
   }
 
-  // Khởi tạo Pi SDK
-  Pi.init({ version: "2.0", sandbox: true });
+  // 2) KHỞI TẠO PI SDK – PHẢI CÓ appId
+  Pi.init({
+    version: "2.0",
+    appId: "THAY_APP_ID_TRANMARKET_VAO_DAY", // <<< SỬA LẠI THÀNH APP ID THẬT
+    sandbox: true                            // Testnet = true
+  });
 
   try {
-    const scopes = ["username", "payments"];
+    // Phase 7 chỉ cần username; payments để Phase 8 cũng được
+    const scopes = ["username"];
+
     const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
 
     console.log("Auth OK:", auth);
@@ -143,15 +152,21 @@ function onIncompletePaymentFound(payment) {
 }
 
 function switchLang(l) {
-  document.getElementById("headline").innerText = langPack[l].headline;
-  document.getElementById("sub").innerText = langPack[l].sub;
-  document.getElementById("powered").innerText = langPack[l].powered;
+  // Lưu lại ngôn ngữ hiện tại cho Phase sau
+  window.trmCurrentLang = l;
+
+  document.getElementById("headline").innerText   = langPack[l].headline;
+  document.getElementById("sub").innerText        = langPack[l].sub;
+  document.getElementById("powered").innerText    = langPack[l].powered;
   document.getElementById("btn-connect").innerText = langPack[l].button;
-  document.getElementById("copyright").innerText = langPack[l].copyright;
-  document.querySelectorAll(".lang-switch button").forEach(btn => btn.classList.remove("active"));
+  document.getElementById("copyright").innerText  = langPack[l].copyright;
+
+  document.querySelectorAll(".lang-switch button")
+    .forEach(btn => btn.classList.remove("active"));
   document.getElementById("btn-" + l).classList.add("active");
 }
 
+// Ngôn ngữ mặc định khi load trang
 switchLang("en");
 </script>
 
