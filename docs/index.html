@@ -149,7 +149,8 @@ async function connectPiWallet() {
 
 async function notifyBackend(username) {
   try {
-    const res = await fetch("http://localhost:8787/phase8", {
+const res = await fetch("http://10.0.0.81:8787/phase8", {
+
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username })
