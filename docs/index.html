@@ -1,172 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Tranmarket — Web3 Gateway</title>
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-image: url("assets/trm-logo-background.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: white;
-    text-align: center;
-  }
-  .lang-switch {
-    position: absolute;
-    top: 25px;
-    right: 30px;
-  }
-  .lang-switch button {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 0 6px;
-    opacity: 0.5;
-  }
-  .lang-switch button.active {
-    opacity: 1;
-    font-weight: bold;
-    text-decoration: underline;
-  }
-  .logo {
-    width: 25%;
-    max-width: 260px;
-    margin-top: 90px;
-  }
-  h1 {
-    margin-top: 35px;
-    font-size: 34px;
-    font-weight: bold;
-  }
-  .sub {
-    font-size: 18px;
-    opacity: 0.9;
-    margin-top: 4px;
-  }
-  .powered {
-    margin-top: 18px;
-    font-size: 20px;
-    opacity: 0.9;
-  }
-  .btn {
-    margin-top: 50px;
-    padding: 18px 55px;
-    font-size: 22px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    color: white;
-    background: linear-gradient(90deg, #7a00ff, #ffbb00);
-  }
-  footer {
-    position: fixed;
-    bottom: 16px;
-    width: 100%;
-    font-size: 14px;
-    opacity: 0.6;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tranmarket — Web3 Gateway</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-image: url("assets/trm-logo-background.png");
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .lang-switch {
+      position: absolute;
+      top: 25px;
+      right: 30px;
+    }
+    .lang-switch button {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 0 6px;
+      opacity: 0.5;
+    }
+    .lang-switch button.active {
+      opacity: 1;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    .logo {
+      width: 25%;
+      max-width: 260px;
+      margin: 0 auto 20px auto;
+    }
+    h1 {
+      margin-top: 10px;
+      font-size: 34px;
+      font-weight: bold;
+    }
+    .sub {
+      font-size: 18px;
+      opacity: 0.9;
+      margin-top: 4px;
+    }
+    .powered {
+      margin-top: 18px;
+      font-size: 20px;
+      opacity: 0.9;
+    }
+    .btn {
+      margin-top: 40px;
+      padding: 18px 55px;
+      font-size: 22px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(90deg, #7a00ff, #ffbb00);
+    }
+    footer {
+      position: fixed;
+      bottom: 16px;
+      width: 100%;
+      font-size: 14px;
+      opacity: 0.6;
+      left: 0;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="lang-switch">
-  <button id="btn-en" onclick="switchLang('en')">EN</button>
-  <button id="btn-cz" onclick="switchLang('cz')">CZ</button>
-  <button id="btn-vi" onclick="switchLang('vi')">VN</button>
-</div>
+  <div class="lang-switch">
+    <button id="btn-en" onclick="switchLang('en')">EN</button>
+    <button id="btn-cz" onclick="switchLang('cz')">CZ</button>
+    <button id="btn-vi" onclick="switchLang('vi')">VN</button>
+  </div>
 
-<img src="assets/trm-logo-hero.png" class="logo" alt="Tranmarket Logo" />
+  <img src="assets/trm-logo-hero.png" class="logo" alt="Tranmarket Logo" />
 
-<h1 id="headline"></h1>
-<div class="sub" id="sub"></div>
-<div class="powered" id="powered"></div>
+  <h1 id="headline"></h1>
+  <div class="sub" id="sub"></div>
+  <div class="powered" id="powered"></div>
 
-<button class="btn" id="btn-connect" onclick="connectPiWallet()"></button>
+  <button class="btn" id="btn-connect" onclick="connectPiWallet()"></button>
 
-<footer id="copyright"></footer>
+  <footer id="copyright"></footer>
 
-<!-- Pi SDK -->
-<script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <script>
+    const langPack = {
+      en: {
+        headline: "Connect Wallet to Enter",
+        sub: "(Kết nối ví để truy cập)",
+        powered: "Powered by Pi Web3",
+        button: "Connect Pi Wallet",
+        copyright: "© 2025 Tranmarket Web3 Services — All rights reserved."
+      },
+      vi: {
+        headline: "Kết nối ví để truy cập",
+        sub: "(Connect Wallet to Enter)",
+        powered: "Vận hành bởi Pi Web3",
+        button: "Kết nối ví Pi",
+        copyright: "© 2025 Tranmarket Web3 Services — Bảo lưu mọi quyền."
+      },
+      cz: {
+        headline: "Připojte peněženku pro vstup",
+        sub: "(Connect Wallet to Enter)",
+        powered: "Poháněno technologií Pi Web3",
+        button: "Připojit Pi peněženku",
+        copyright: "© 2025 Tranmarket Web3 Services — Všechna práva vyhrazena."
+      }
+    };
 
-<script>
-const langPack = {
-  en: {
-    headline: "Connect Wallet to Enter",
-    sub: "(Kết nối ví để truy cập)",
-    powered: "Powered by Pi Web3",
-    button: "Connect Pi Wallet",
-    copyright: "© 2025 Tranmarket Web3 Services — All rights reserved."
-  },
-  vi: {
-    headline: "Kết nối ví để truy cập",
-    sub: "(Connect Wallet to Enter)",
-    powered: "Vận hành bởi Pi Web3",
-    button: "Kết nối ví Pi",
-    copyright: "© 2025 Tranmarket Web3 Services — Bảo lưu mọi quyền."
-  },
-  cz: {
-    headline: "Připojte peněženku pro vstup",
-    sub: "(Connect Wallet to Enter)",
-    powered: "Poháněno technologií Pi Web3",
-    button: "Připojit Pi peněženku",
-    copyright: "© 2025 Tranmarket Web3 Services — Všechna práva vyhrazena."
-  }
-};
+    async function connectPiWallet() {
+      // Nếu không có Pi SDK → không phải Pi Browser
+      if (!window.Pi) {
+        alert("Không tìm thấy Pi SDK.\nHãy mở trang này bên trong Pi Browser để kết nối ví Pi.");
+        return;
+      }
 
-async function connectPiWallet() {
-  if (!window.Pi) {
-    alert("⚠ Hãy mở trang này trong Pi Browser để kết nối ví.");
-    return;
-  }
+      // Khởi tạo Pi SDK
+      Pi.init({ version: "2.0", sandbox: true });
 
-  Pi.init({
-    version: "2.0",
-    appId: "THAY_APP_ID_TRANMARKET_VAO_DAY", // <<< ĐỔI LẠI APP ID
-    sandbox: true // LIVE MODE = false khi Open Mainnet
-  });
+      try {
+        const scopes = ["username", "payments"];
+        const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
 
-  try {
-    const scopes = ["username"]; // Phase 7 chỉ cần username
-    const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+        console.log("Auth OK:", auth);
+        alert("🎉 Kết nối thành công — User: " + auth.user.username);
 
-    alert("🎉 Kết nối thành công — User: " + auth.user.username);
-    console.log("Auth OK:", auth);
+        // Lưu token & username để sử dụng ở trang sau
+        sessionStorage.setItem("pi_auth_token", auth.accessToken);
+        sessionStorage.setItem("pi_username", auth.user.username);
 
-    // TODO: Phase 8 → chuyển sang tạo payment / backend
-  } catch (err) {
-    console.error(err);
-    alert("❌ Kết nối thất bại: " + (err?.message || "Lỗi không xác định"));
-  }
-}
+        // Chuyển sang trang Tranmarket chính
+        window.location.href = "providers/service-categories.html";
+      } catch (err) {
+        console.error("Auth Error:", err);
+        alert("Kết nối ví thất bại: " + (err?.message || "Lỗi không xác định"));
+      }
+    }
 
-function onIncompletePaymentFound(payment) {
-  console.log("⚠ Incomplete Payment:", payment);
-}
+    function onIncompletePaymentFound(payment) {
+      console.log("Incomplete Payment:", payment);
+    }
 
-function switchLang(l) {
-  window.trmCurrentLang = l;
+    function switchLang(l) {
+      document.getElementById("headline").innerText = langPack[l].headline;
+      document.getElementById("sub").innerText = langPack[l].sub;
+      document.getElementById("powered").innerText = langPack[l].powered;
+      document.getElementById("btn-connect").innerText = langPack[l].button;
+      document.getElementById("copyright").innerText = langPack[l].copyright;
 
-  document.getElementById("headline").innerText = langPack[l].headline;
-  document.getElementById("sub").innerText = langPack[l].sub;
-  document.getElementById("powered").innerText = langPack[l].powered;
-  document.getElementById("btn-connect").innerText = langPack[l].button;
-  document.getElementById("copyright").innerText = langPack[l].copyright;
+      document.querySelectorAll(".lang-switch button").forEach(btn => btn.classList.remove("active"));
+      document.getElementById("btn-" + l).classList.add("active");
+    }
 
-  document.querySelectorAll(".lang-switch button")
-    .forEach(btn => btn.classList.remove("active"));
-  document.getElementById("btn-" + l).classList.add("active");
-}
-
-// Ngôn ngữ mặc định
-switchLang("en");
-</script>
+    // Ngôn ngữ mặc định
+    switchLang("en");
+  </script>
 
 </body>
 </html>
