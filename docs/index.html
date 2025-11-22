@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tranmarket — Web3 Gateway</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-image: url("assets/trm-logo-background.png");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+  }
+  .lang-switch {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+  }
+  .lang-switch button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 0 6px;
+    opacity: 0.5;
+  }
+  .lang-switch button.active {
+    opacity: 1;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  .logo {
+    width: 25%;
+    margin-top: 90px;
+  }
+  h1 {
+    margin-top: 35px;
+    font-size: 34px;
+    font-weight: bold;
+  }
+  .sub {
+    font-size: 18px;
+    opacity: 0.9;
+    margin-top: 4px;
+  }
+  .powered {
+    margin-top: 18px;
+    font-size: 20px;
+    opacity: 0.9;
+  }
+  .btn {
+    margin-top: 50px;
+    padding: 18px 55px;
+    font-size: 22px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(90deg, #7a00ff, #ffbb00);
+  }
+  footer {
+    position: fixed;
+    bottom: 16px;
+    width: 100%;
+    font-size: 14px;
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="lang-switch">
+  <button id="btn-en" onclick="switchLang('en')">EN</button>
+  <button id="btn-cz" onclick="switchLang('cz')">CZ</button>
+  <button id="btn-vi" onclick="switchLang('vi')">VN</button>
+</div>
+
+<img src="assets/trm-logo-hero.png" class="logo" />
+
+<h1 id="headline"></h1>
+<div class="sub" id="sub"></div>
+<div class="powered" id="powered"></div>
+
+<button class="btn" id="btn-connect"></button>
+
+<footer id="copyright"></footer>
+
+<script>
+const langPack = {
+  en: {
+    headline: "Connect Wallet to Enter",
+    sub: "(Kết nối ví để truy cập)",
+    powered: "Powered by Pi Web3",
+    button: "Connect Pi Wallet",
+    copyright: "© 2025 Tranmarket Web3 Services — All rights reserved."
+  },
+  vi: {
+    headline: "Kết nối ví để truy cập",
+    sub: "(Connect Wallet to Enter)",
+    powered: "Vận hành bởi Pi Web3",
+    button: "Kết nối ví Pi",
+    copyright: "© 2025 Tranmarket Web3 Services — Bảo lưu mọi quyền."
+  },
+  cz: {
+    headline: "Připojte peněženku pro vstup",
+    sub: "(Connect Wallet to Enter)",
+    powered: "Poháněno technologií Pi Web3",
+    button: "Připojit Pi peněženku",
+    copyright: "© 2025 Tranmarket Web3 Services — Všechna práva vyhrazena."
+  }
+};
+
+function switchLang(l) {
+  document.getElementById("headline").innerText = langPack[l].headline;
+  document.getElementById("sub").innerText = langPack[l].sub;
+  document.getElementById("powered").innerText = langPack[l].powered;
+  document.getElementById("btn-connect").innerText = langPack[l].button;
+  document.getElementById("copyright").innerText = langPack[l].copyright;
+  document.querySelectorAll(".lang-switch button").forEach(btn => btn.classList.remove("active"));
+  document.getElementById("btn-" + l).classList.add("active");
+}
+
+switchLang("en");
+</script>
+
+</body>
+</html>
