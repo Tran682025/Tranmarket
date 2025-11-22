@@ -89,6 +89,9 @@
 
 <footer id="copyright"></footer>
 
+<!-- 1) LOAD PI SDK TRƯỚC KHI DÙNG window.Pi -->
+<script src="https://sdk.minepi.com/pi-sdk.js"></script>
+
 <script>
 const langPack = {
   en: {
@@ -115,19 +118,29 @@ const langPack = {
 };
 
 async function connectPiWallet() {
+  // Nếu không có Pi SDK → không phải Pi Browser
   if (!window.Pi) {
     alert("Không tìm thấy Pi SDK.\nHãy mở trang này bên trong Pi Browser để kết nối ví Pi.");
     return;
   }
 
-  Pi.init({ version: "2.0", sandbox: true });
+  // 2) KHỞI TẠO PI SDK – PHẢI CÓ appId
+  Pi.init({
+    version: "2.0",
+    appId: "THAY_APP_ID_TRANMARKET_VAO_DAY", // <<< SỬA LẠI THÀNH APP ID THẬT
+    sandbox: true                            // Testnet = true
+  });
 
   try {
-    const scopes = ["username", "payments"];
+    // Phase 7 chỉ cần username; payments để Phase 8 cũng được
+    const scopes = ["username"];
+
     const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
 
     console.log("Auth OK:", auth);
     alert("Kết nối ví thành công cho user: " + auth.user.username);
+
+    // TODO: giai đoạn tiếp theo sẽ gọi tạo payment + backend 8787
   } catch (err) {
     console.error("Auth Error:", err);
     alert("Kết nối ví thất bại: " + (err?.message || "Lỗi không xác định"));
@@ -139,6 +152,9 @@ function onIncompletePaymentFound(payment) {
 }
 
 function switchLang(l) {
+  // Lưu lại ngôn ngữ hiện tại cho Phase sau
+  window.trmCurrentLang = l;
+
   document.getElementById("headline").innerText   = langPack[l].headline;
   document.getElementById("sub").innerText        = langPack[l].sub;
   document.getElementById("powered").innerText    = langPack[l].powered;
@@ -150,6 +166,7 @@ function switchLang(l) {
   document.getElementById("btn-" + l).classList.add("active");
 }
 
+// Ngôn ngữ mặc định khi load trang
 switchLang("en");
 </script>
 
