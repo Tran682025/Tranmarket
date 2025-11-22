@@ -146,9 +146,10 @@ async function connectPiWallet() {
 }
 
 // Gọi backend 8787 để báo "user này đã login"
+
 async function notifyBackend(username) {
   try {
-    const res = await fetch("http://localhost:8787/api/demo-payment", {
+    const res = await fetch("http://localhost:8787/phase8", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username })
@@ -165,6 +166,8 @@ async function notifyBackend(username) {
     alert("Không gọi được backend 8787: " + (err?.message || "Network error"));
   }
 }
+
+
 
 function onIncompletePaymentFound(payment) {
   console.log("Incomplete Payment:", payment);
