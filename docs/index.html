@@ -1,17 +1,212 @@
-<!DOCTYPE html>
+<script>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Tranmarket</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tranmarket — Web3 Gateway</title>
 
-  <!-- Tự động chuyển sang portal.html -->
-  <meta http-equiv="refresh" content="0; url=portal.html" />
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-image: url("assets/trm-logo-background.png");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+  }
+
+  .lang-switch {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+  }
+  .lang-switch button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 0 6px;
+    opacity: 0.5;
+  }
+  .lang-switch button.active {
+    opacity: 1;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+  .logo {
+    width: 25%;
+    margin-top: 90px;
+  }
+
+  h1 {
+    margin-top: 35px;
+    font-size: 34px;
+    font-weight: bold;
+  }
+
+  .sub {
+    font-size: 18px;
+    opacity: 0.9;
+    margin-top: 4px;
+  }
+
+  .powered {
+    margin-top: 18px;
+    font-size: 20px;
+    opacity: 0.9;
+  }
+
+  .btn {
+    margin-top: 50px;
+    padding: 18px 55px;
+    font-size: 22px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(90deg, #7a00ff, #ffbb00);
+  }
+
+  .btn.disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  #status {
+    margin-top: 18px;
+    font-size: 16px;
+    opacity: 0.9;
+  }
+
+  footer {
+    position: fixed;
+    bottom: 16px;
+    width: 100%;
+    font-size: 14px;
+    opacity: 0.6;
+  }
+</style>
 </head>
+
 <body>
-  <p>
-    If you are not redirected automatically,
-    <a href="portal.html">open Tranmarket portal</a>.
-  </p>
+  <div class="lang-switch">
+    <button id="btn-en" onclick="switchLang('en')">EN</button>
+    <button id="btn-cz" onclick="switchLang('cz')">CZ</button>
+    <button id="btn-vi" onclick="switchLang('vi')">VN</button>
+  </div>
+
+  <img src="assets/trm-logo-hero.png" class="logo" alt="Tranmarket Logo" />
+
+  <h1 id="headline"></h1>
+  <div class="sub" id="sub"></div>
+  <div class="powered" id="powered"></div>
+
+  <button class="btn" id="btn-connect" onclick="connectPiWallet()"></button>
+
+  <div id="welcome" class="sub"></div>
+
+
+  <footer id="copyright"></footer>
+
+  <!-- Pi SDK phải load trước khi dùng window.Pi -->
+<!-- 1) LOAD PI SDK TRƯỚC KHI DÙNG window.Pi -->
+<script src="https://sdk.minepi.com/pi-sdk.js"></script>
+
+<script>
+  const langPack = {
+    en: {
+      headline: "Connect Wallet to Enter",
+      sub: "(Kết nối ví để truy cập)",
+      powered: "Powered by Pi Web3",
+      button: "Connect Pi Wallet v2",
+      copyright: "© 2025 Tranmarket Web3 Services – All rights reserved.",
+      welcome: (u) => `Welcome, ${u}! You can now enter Tranmarket.`,
+      waitingAuth: "Waiting for Pi Browser authorization..."
+    },
+    vi: {
+      headline: "Kết nối ví để truy cập",
+      sub: "(Connect Wallet to Enter)",
+      powered: "Vận hành bởi Pi Web3",
+      button: "Kết nối ví Pi v2",
+      copyright: "© 2025 Tranmarket Web3 Services – Bảo lưu mọi quyền.",
+      welcome: (u) => `Chào mừng, ${u}! Bạn có thể vào Tranmarket.`,
+      waitingAuth: "Đang chờ Pi Browser xác nhận..."
+    },
+    cz: {
+      headline: "Připojte peněženku pro vstup",
+      sub: "(Connect Wallet to Enter)",
+      powered: "Poháněno technologií Pi Web3",
+      button: "Připojit Pi peněženku v2",
+      copyright: "© 2025 Tranmarket Web3 Services – Všechna práva vyhrazena.",
+      welcome: (u) => `Vítej, ${u}! Můžeš vstoupit do Tranmarketu.`,
+      waitingAuth: "Čeká se na autorizaci v Pi Browseru..."
+    }
+  };
+
+  let currentLang = "en";
+
+  function applyLang(l) {
+    currentLang = l;
+    const t = langPack[l];
+
+    document.getElementById("headline").innerText = t.headline;
+    document.getElementById("sub").innerText = t.sub;
+    document.getElementById("powered").innerText = t.powered;
+    document.getElementById("btn-connect").innerText = t.button;
+    document.getElementById("copyright").innerText = t.copyright;
+
+    document.querySelectorAll(".lang-switch button")
+      .forEach((btn) => btn.classList.remove("active"));
+    document.getElementById("btn-" + l).classList.add("active");
+  }
+
+  applyLang("en");
+
+  function onIncompletePaymentFound(payment) {
+    console.log("Incomplete payment:", payment);
+  }
+
+  async function connectPiWallet() {
+    const btn = document.getElementById("btn-connect");
+    const welcome = document.getElementById("welcome");
+
+    try {
+      if (!window.Pi) {
+        alert("Pi SDK not found. Hãy mở trang này trong Pi Browser.");
+        return;
+      }
+
+      Pi.init({
+        version: "2.0",
+        sandbox: true
+      });
+
+      welcome.innerText = langPack[currentLang].waitingAuth;
+      btn.innerText = "Wallet Connected";
+
+      const scopes = ["username"];
+      const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+
+      const username = auth.user.username;
+      console.log("Auth success:", auth);
+
+      welcome.innerText = langPack[currentLang].welcome(username);
+
+      // PROD: không gọi backend local nữa
+      window.location.href = "portal.html";
+    } catch (err) {
+      console.error("Auth error:", err);
+      alert("Lỗi đăng nhập ví: " + (err?.message || "Unknown error"));
+
+      btn.innerText = langPack[currentLang].button;
+      welcome.innerText = "";
+    }
+  }
+</script>
+
 </body>
 </html>
