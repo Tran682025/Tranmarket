@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tranmarket — Web3 Gateway</title>
+
 <style>
   body {
     margin: 0;
@@ -14,6 +15,7 @@
     color: white;
     text-align: center;
   }
+
   .lang-switch {
     position: absolute;
     top: 25px;
@@ -33,25 +35,30 @@
     font-weight: bold;
     text-decoration: underline;
   }
+
   .logo {
     width: 25%;
     margin-top: 90px;
   }
+
   h1 {
     margin-top: 35px;
     font-size: 34px;
     font-weight: bold;
   }
+
   .sub {
     font-size: 18px;
     opacity: 0.9;
     margin-top: 4px;
   }
+
   .powered {
     margin-top: 18px;
     font-size: 20px;
     opacity: 0.9;
   }
+
   .btn {
     margin-top: 50px;
     padding: 18px 55px;
@@ -62,6 +69,18 @@
     color: white;
     background: linear-gradient(90deg, #7a00ff, #ffbb00);
   }
+
+  .btn.disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  #status {
+    margin-top: 18px;
+    font-size: 16px;
+    opacity: 0.9;
+  }
+
   footer {
     position: fixed;
     bottom: 16px;
@@ -71,124 +90,164 @@
   }
 </style>
 </head>
+
 <body>
+  <div class="lang-switch">
+    <button id="btn-en" onclick="switchLang('en')">EN</button>
+    <button id="btn-cz" onclick="switchLang('cz')">CZ</button>
+    <button id="btn-vi" onclick="switchLang('vi')">VN</button>
+  </div>
 
-<div class="lang-switch">
-  <button id="btn-en" onclick="switchLang('en')">EN</button>
-  <button id="btn-cz" onclick="switchLang('cz')">CZ</button>
-  <button id="btn-vi" onclick="switchLang('vi')">VN</button>
-</div>
+  <img src="assets/trm-logo-hero.png" class="logo" alt="Tranmarket Logo" />
 
-<img src="assets/trm-logo-hero.png" class="logo" />
+  <h1 id="headline"></h1>
+  <div class="sub" id="sub"></div>
+  <div class="powered" id="powered"></div>
 
-<h1 id="headline"></h1>
-<div class="sub" id="sub"></div>
-<div class="powered" id="powered"></div>
+  <button class="btn" id="btn-connect" onclick="connectPiWallet()"></button>
 
-<button class="btn" id="btn-connect" onclick="connectPiWallet()"></button>
+  <div id="status"></div>
 
-<footer id="copyright"></footer>
+  <footer id="copyright"></footer>
 
-<!-- 1) LOAD PI SDK TRƯỚC KHI DÙNG window.Pi -->
-<script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <!-- Pi SDK phải load trước khi dùng window.Pi -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 
-<script>
-const langPack = {
-  en: {
-    headline: "Connect Wallet to Enter",
-    sub: "(Kết nối ví để truy cập)",
-    powered: "Powered by Pi Web3",
-    button: "Connect Pi Wallet",
-    copyright: "© 2025 Tranmarket Web3 Services — All rights reserved."
-  },
-  vi: {
-    headline: "Kết nối ví để truy cập",
-    sub: "(Connect Wallet to Enter)",
-    powered: "Vận hành bởi Pi Web3",
-    button: "Kết nối ví Pi",
-    copyright: "© 2025 Tranmarket Web3 Services — Bảo lưu mọi quyền."
-  },
-  cz: {
-    headline: "Připojte peněženku pro vstup",
-    sub: "(Connect Wallet to Enter)",
-    powered: "Poháněno technologií Pi Web3",
-    button: "Připojit Pi peněženku",
-    copyright: "© 2025 Tranmarket Web3 Services — Všechna práva vyhrazena."
-  }
-};
+  <script>
+    const langPack = {
+      en: {
+        headline: "Connect Wallet to Enter",
+        sub: "(Kết nối ví để truy cập)",
+        powered: "Powered by Pi Web3",
+        button_connect: "Connect Pi Wallet",
+        button_connected: "Wallet Connected",
+        status_idle: "",
+        status_connecting: "Waiting for Pi Browser authorization...",
+        status_ok: username => "Welcome, " + username + "! You can now enter Tranmarket.",
+        status_error: msg => "Wallet connect failed: " + msg,
+        copyright: "© 2025 Tranmarket Web3 Services — All rights reserved."
+      },
+      vi: {
+        headline: "Kết nối ví để truy cập",
+        sub: "(Connect Wallet to Enter)",
+        powered: "Vận hành bởi Pi Web3",
+        button_connect: "Kết nối ví Pi",
+        button_connected: "Đã kết nối ví",
+        status_idle: "",
+        status_connecting: "Đang chờ Pi Browser xác nhận...",
+        status_ok: username => "Xin chào " + username + "! Bạn đã có thể vào Tranmarket.",
+        status_error: msg => "Kết nối ví thất bại: " + msg,
+        copyright: "© 2025 Tranmarket Web3 Services — Bảo lưu mọi quyền."
+      },
+      cz: {
+        headline: "Připojte peněženku pro vstup",
+        sub: "(Connect Wallet to Enter)",
+        powered: "Poháněno technologií Pi Web3",
+        button_connect: "Připojit Pi peněženku",
+        button_connected: "Peněženka připojena",
+        status_idle: "",
+        status_connecting: "Čeká se na autorizaci v Pi Browseru...",
+        status_ok: username => "Vítej, " + username + "! Můžeš vstoupit do Tranmarketu.",
+        status_error: msg => "Připojení peněženky selhalo: " + msg,
+        copyright: "© 2025 Tranmarket Web3 Services — Všechna práva vyhrazena."
+      }
+    };
 
-async function connectPiWallet() {
-  // 1) Kiểm tra có chạy trong Pi Browser không
-  if (!window.Pi) {
-    alert("Không tìm thấy Pi SDK.\nHãy mở trang này bên trong Pi Browser để kết nối ví Pi.");
-    return;
-  }
+    window.trmCurrentLang = "en";
+    window.trmUser = null;
 
-  // 2) Khởi tạo Pi SDK (sandbox / Testnet)
-  Pi.init({
-    version: "2.0",
-    sandbox: true
-  });
-
-  try {
-    const scopes = ["username"];
-    const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
-
-    console.log("Auth OK:", auth);
-    alert("Kết nối ví thành công cho user: " + auth.user.username);
-
-    // 3) Gọi backend Phase 8
-    await notifyBackend(auth.user.username);
-  } catch (err) {
-    console.error("Auth Error:", err);
-    alert("Kết nối ví thất bại: " + (err?.message || "Lỗi không xác định"));
-  }
-}
-
-// Gọi backend 8787 để báo "user này đã login"
-
-async function notifyBackend(username) {
-  try {
-const res = await fetch("http://10.0.0.51:8787/phase8", {
-
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username })
-    });
-
-    const data = await res.json();
-    if (data.ok) {
-      alert("Backend 8787 OK: " + (data.message || "Demo payment created."));
-    } else {
-      alert("Backend 8787 trả về lỗi: " + (data.message || "Unknown error"));
+    function setStatus(text) {
+      document.getElementById("status").innerText = text || "";
     }
-  } catch (err) {
-    console.error("Backend error:", err);
-    alert("Không gọi được backend 8787: " + (err?.message || "Network error"));
-  }
-}
 
+    function switchLang(l) {
+      window.trmCurrentLang = l;
 
+      const t = langPack[l];
+      document.getElementById("headline").innerText    = t.headline;
+      document.getElementById("sub").innerText         = t.sub;
+      document.getElementById("powered").innerText     = t.powered;
+      document.getElementById("copyright").innerText   = t.copyright;
 
-function onIncompletePaymentFound(payment) {
-  console.log("Incomplete Payment:", payment);
-}
+      const btn = document.getElementById("btn-connect");
+      if (window.trmUser) {
+        btn.innerText = t.button_connected;
+      } else {
+        btn.innerText = t.button_connect;
+      }
 
-function switchLang(l) {
-  window.trmCurrentLang = l;
+      if (!window.trmUser) {
+        setStatus(t.status_idle);
+      }
 
-  document.getElementById("headline").innerText    = langPack[l].headline;
-  document.getElementById("sub").innerText         = langPack[l].sub;
-  document.getElementById("powered").innerText     = langPack[l].powered;
-  document.getElementById("btn-connect").innerText = langPack[l].button;
-  document.getElementById("copyright").innerText   = langPack[l].copyright;
+      document.querySelectorAll(".lang-switch button")
+        .forEach(btn => btn.classList.remove("active"));
+      document.getElementById("btn-" + l).classList.add("active");
+    }
 
-  document.querySelectorAll(".lang-switch button")
-    .forEach(btn => btn.classList.remove("active"));
-  document.getElementById("btn-" + l).classList.add("active");
-}
+    async function connectPiWallet() {
+      const lang = window.trmCurrentLang;
+      const t = langPack[lang];
 
-// Mặc định EN khi vào trang
-switchLang("en");
-</script>
+      if (!window.Pi) {
+        alert("Pi SDK not found.\nPlease open this page inside Pi Browser.");
+        return;
+      }
 
+      const btn = document.getElementById("btn-connect");
+      btn.classList.add("disabled");
+
+      try {
+        Pi.init({
+          version: "2.0",
+          sandbox: true
+        });
+
+        setStatus(t.status_connecting);
+
+        const scopes = ["username"];
+        const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
+
+        console.log("Auth success:", auth);
+        window.trmUser = auth.user;
+
+        btn.innerText = t.button_connected;
+        setStatus(t.status_ok(auth.user.username));
+
+        // Nếu sau này muốn gọi backend, đưa URL HTTPS vào đây rồi mở comment:
+        // await notifyBackend(auth.user.username);
+
+      } catch (err) {
+        console.error("Auth error:", err);
+        const msg = err && err.message ? err.message : "Unknown error";
+        setStatus(t.status_error(msg));
+        alert(t.status_error(msg));
+      } finally {
+        btn.classList.remove("disabled");
+      }
+    }
+
+    function onIncompletePaymentFound(payment) {
+      console.log("Incomplete Payment:", payment);
+    }
+
+    // Placeholder cho backend, hiện tại chưa dùng vì GitHub là HTTPS còn backend là HTTP.
+    async function notifyBackend(username) {
+      try {
+        const res = await fetch("https://YOUR-BACKEND-URL/phase8", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username })
+        });
+        const data = await res.json();
+        console.log("Backend response:", data);
+      } catch (err) {
+        console.error("Backend error:", err);
+      }
+    }
+
+    // Khởi tạo EN khi load
+    switchLang("en");
+  </script>
+</body>
+</html>
