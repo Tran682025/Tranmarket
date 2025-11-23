@@ -166,30 +166,6 @@
 
   applyLang("en");
 
-  const USE_LOCAL_BACKEND = false; // true = đang test với server 8787, false = chạy production
-
-  async function notifyBackend(username) {
-    if (!USE_LOCAL_BACKEND) {
-      console.log("Backend disabled in production, username =", username);
-      return;
-    }
-
-    try {
-      const res = await fetch("http://10.0.0.51:8787/phase8", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username })
-      });
-
-      const data = await res.json();
-      if (!data.ok) {
-        alert("Backend 8787 trả về lỗi: " + (data.message || "Unknown error"));
-      }
-    } catch (err) {
-      alert("Không gọi được backend 8787: " + (err?.message || "Failed to fetch"));
-    }
-  }
-
   function onIncompletePaymentFound(payment) {
     console.log("Incomplete payment:", payment);
   }
@@ -215,17 +191,17 @@
       const scopes = ["username"];
       const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
 
-      console.log("Auth success:", auth);
       const username = auth.user.username;
+      console.log("Auth success:", auth);
 
       welcome.innerText = langPack[currentLang].welcome(username);
 
-      await notifyBackend(username);
-
+      // PROD: không gọi backend local nữa
       window.location.href = "portal.html";
     } catch (err) {
       console.error("Auth error:", err);
       alert("Lỗi đăng nhập ví: " + (err?.message || "Unknown error"));
+
       btn.innerText = langPack[currentLang].button;
       welcome.innerText = "";
     }
