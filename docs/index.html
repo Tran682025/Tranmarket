@@ -123,35 +123,35 @@
       sub: "(Kết nối ví để truy cập)",
       powered: "Powered by Pi Web3",
       button: "Connect Pi Wallet v2",
-      copyright: "© 2025 Tranmarket Web3 Services – All rights reserved.",
-      welcome: (u) => `Welcome, ${u}! You can now enter Tranmarket.`,
-      waitingAuth: "Waiting for Pi Browser authorization..."
+      statusWaiting: "Waiting for Pi Browser authorization...",
+      welcome: username => `Welcome, ${username}! You can now enter Tranmarket.`,
+      copyright: "© 2025 Tranmarket Web3 Services — All rights reserved."
     },
     vi: {
       headline: "Kết nối ví để truy cập",
       sub: "(Connect Wallet to Enter)",
       powered: "Vận hành bởi Pi Web3",
       button: "Kết nối ví Pi v2",
-      copyright: "© 2025 Tranmarket Web3 Services – Bảo lưu mọi quyền.",
-      welcome: (u) => `Chào mừng, ${u}! Bạn có thể vào Tranmarket.`,
-      waitingAuth: "Đang chờ Pi Browser xác nhận..."
+      statusWaiting: "Đang chờ Pi Browser xác nhận đăng nhập…",
+      welcome: username => `Chào mừng, ${username}! Bạn đã có thể vào cổng Tranmarket.`,
+      copyright: "© 2025 Tranmarket Web3 Services — Bảo lưu mọi quyền."
     },
     cz: {
       headline: "Připojte peněženku pro vstup",
       sub: "(Connect Wallet to Enter)",
       powered: "Poháněno technologií Pi Web3",
       button: "Připojit Pi peněženku v2",
-      copyright: "© 2025 Tranmarket Web3 Services – Všechna práva vyhrazena.",
-      welcome: (u) => `Vítej, ${u}! Můžeš vstoupit do Tranmarketu.`,
-      waitingAuth: "Čeká se na autorizaci v Pi Browseru..."
+      statusWaiting: "Čeká se na autorizaci v Pi Browseru…",
+      welcome: username => `Vítejte, ${username}! Nyní můžete vstoupit do Tranmarketu.`,
+      copyright: "© 2025 Tranmarket Web3 Services — Všechna práva vyhrazena."
     }
   };
 
   let currentLang = "en";
 
   function applyLang(l) {
-    currentLang = l;
     const t = langPack[l];
+    currentLang = l;
 
     document.getElementById("headline").innerText = t.headline;
     document.getElementById("sub").innerText = t.sub;
@@ -160,19 +160,25 @@
     document.getElementById("copyright").innerText = t.copyright;
 
     document.querySelectorAll(".lang-switch button")
-      .forEach((btn) => btn.classList.remove("active"));
-    document.getElementById("btn-" + l).classList.add("active");
+      .forEach(btn => btn.classList.remove("active"));
+    const activeBtn = document.getElementById("btn-" + l);
+    if (activeBtn) activeBtn.classList.add("active");
+  }
+
+  function switchLang(l) {
+    applyLang(l);
   }
 
   applyLang("en");
 
   function onIncompletePaymentFound(payment) {
-    console.log("Incomplete payment:", payment);
+    console.log("Incomplete payment found:", payment);
   }
 
   async function connectPiWallet() {
     const btn = document.getElementById("btn-connect");
-    const welcome = document.getElementById("welcome");
+    const statusEl = document.getElementById("status");
+    const welcomeEl = document.getElementById("welcome");
 
     try {
       if (!window.Pi) {
@@ -180,30 +186,38 @@
         return;
       }
 
+      const t = langPack[currentLang];
+      statusEl.innerText = t.statusWaiting;
+      welcomeEl.innerText = "";
+
+      btn.disabled = true;
+
       Pi.init({
         version: "2.0",
-        sandbox: true
+        sandbox: false
       });
 
-      welcome.innerText = langPack[currentLang].waitingAuth;
-      btn.innerText = "Wallet Connected";
-
-      const scopes = ["username"];
+      const scopes = ["username", "payments"];
       const auth = await Pi.authenticate(scopes, onIncompletePaymentFound);
 
-      const username = auth.user.username;
-      console.log("Auth success:", auth);
+      const username = auth?.user?.username || "Pioneer";
 
-      welcome.innerText = langPack[currentLang].welcome(username);
+      btn.innerText = "Wallet Connected";
+      statusEl.innerText = "";
+      welcomeEl.innerText = t.welcome(username);
 
-      // PROD: không gọi backend local nữa
-      window.location.href = "portal.html";
+      const portalUrl = "portal.html?user=" + encodeURIComponent(username);
+      setTimeout(() => {
+        window.location.href = portalUrl;
+      }, 800);
+
     } catch (err) {
-      console.error("Auth error:", err);
-      alert("Lỗi đăng nhập ví: " + (err?.message || "Unknown error"));
+      console.error("Pi auth error:", err);
+      const msg = err?.message || "Unknown error";
+      alert("Lỗi đăng nhập ví Pi: " + msg);
 
-      btn.innerText = langPack[currentLang].button;
-      welcome.innerText = "";
+      btn.disabled = false;
+      statusEl.innerText = "";
     }
   }
 </script>
