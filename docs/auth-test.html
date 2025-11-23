@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tranmarket – Wallet Auth Test</title>
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+</head>
+<body style="padding:40px; font-family: system-ui;">
+  <h2>🔗 Pi Wallet Authentication Test</h2>
+  <button id="btnAuth" style="padding:16px 28px; font-size:18px; border-radius:10px; background:#7d4eff; color:white;">
+    CONNECT PI WALLET
+  </button>
+
+  <pre id="log" style="margin-top:32px; white-space:pre-wrap; font-size:15px; background:#eee; padding:24px; border-radius:12px;"></pre>
+
+  <script>
+    Pi.init({ version: "2.0", sandbox: true });
+
+    document.getElementById("btnAuth").onclick = async () => {
+      document.getElementById("log").innerText = "Connecting…";
+
+      try {
+        const user = await Pi.authenticate(
+          ["username","payments","wallet_address"],
+          onIncomplete
+        );
+        document.getElementById("log").innerText =
+          "SUCCESS:\n\n" + JSON.stringify(user, null, 2);
+      } catch(err) {
+        document.getElementById("log").innerText =
+          "ERROR:\n\n" + JSON.stringify(err, null, 2);
+      }
+    };
+
+    function onIncomplete(payment) {
+      console.log("incomplete payment", payment);
+    }
+  </script>
+</body>
+</html>
