@@ -1,8 +1,31 @@
-// docs/auth/pi-auth.js – Tranmarket Pi Wallet auth (v3 – rõ trạng thái)
+// auth/pi-auth.js – Tranmarket Pi Wallet auth (v4 – auto Pi.init + sandbox)
 
 (function () {
   console.log("[Tranmarket] pi-auth.js loaded");
   window.TranPiAuthLoaded = true;
+
+  // Đảm bảo Pi SDK được init đúng (dev app → sandbox: true)
+  function ensurePiInit() {
+    if (typeof window.Pi === "undefined") {
+      console.warn("[Tranmarket] Pi SDK not found on window.Pi");
+      return false;
+    }
+    if (window.TrmPiInitialized) {
+      return true;
+    }
+    try {
+      window.Pi.init({
+        version: "2.0",
+        sandbox: true // đang là app DEV / TEST → phải bật sandbox
+      });
+      window.TrmPiInitialized = true;
+      console.log("[Tranmarket] Pi.init() done (sandbox: true)");
+      return true;
+    } catch (e) {
+      console.error("[Tranmarket] Pi.init() failed", e);
+      return false;
+    }
+  }
 
   function saveUser(profile) {
     try {
@@ -61,12 +84,18 @@
   async function loginWithPi(updateUI) {
     updateUI = updateUI || defaultUpdateUI;
 
-    if (typeof window.Pi === "undefined") {
-      alert("Không thấy Pi SDK. Vui lòng mở Tranmarket trong Pi Browser.");
+    // Đảm bảo đã init
+    if (!ensurePiInit()) {
+      alert(
+        "Không thấy hoặc không khởi tạo được Pi SDK.\n\n" +
+          "Hãy chắc chắn đang mở Tranmarket bên trong Pi Browser."
+      );
       return;
     }
 
     try {
+      console.log("[Tranmarket] Calling Pi.authenticate…");
+
       const scopes = ["username", "wallet_address", "platform"];
 
       const authResult = await window.Pi.authenticate(
@@ -102,7 +131,6 @@
       saveUser(profile);
       updateUI(profile);
 
-      // 👉 Hiện thông báo rõ ràng khi login OK
       alert(
         "Đăng nhập ví Pi thành công.\n\nTài khoản: @" +
           (profile.username || "unknown")
@@ -125,15 +153,15 @@
 
       if (isUserCancel) {
         alert(
-          "Bạn vừa HUỶ đăng nhập với ví Pi trên Pi Browser.\n\n" +
-            "Nếu chắc chắn đã bấm Allow mà vẫn hiện thông báo này,\n" +
-            "thì đây là lỗi phía Pi SDK / Pi Browser, không phải lỗi Tranmarket."
+          "Pi Browser báo: bạn đã HUỶ đăng nhập với ví Pi.\n\n" +
+            "Nếu Trẫm chắc chắn đã bấm Allow mà vẫn hiện thông báo này,\n" +
+            "thì đây là vấn đề phía Pi SDK / cấu hình app, không phải lỗi giao diện Tranmarket."
         );
         return;
       }
 
       alert("Đăng nhập với ví Pi thất bại.\n\nChi tiết: " + msg);
-      updateUI(null);
+      defaultUpdateUI(null);
     }
   }
 
@@ -142,6 +170,10 @@
   window.initPiLogin = function (updateUI) {
     console.log("[Tranmarket] initPiLogin() called");
     const fn = updateUI || defaultUpdateUI;
+
+    // có thể init SDK luôn ở đây để chuẩn bị
+    ensurePiInit();
+
     const stored = loadUser();
     fn(stored || null);
   };
