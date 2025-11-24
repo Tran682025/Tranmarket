@@ -1,4 +1,4 @@
-<!-- docs/direct.html – Tranmarket Web3 Overview (Pi login + i18n fixed) -->
+<!-- docs/direct.html – Tranmarket Web3 Overview (Pi login + i18n + Pi Auth) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -382,7 +382,6 @@
 
         <!-- Placeholder – sẽ được pi-auth.js thay bằng nút Login / Logged-in -->
         <div id="pi-login"></div>
-
       </div>
     </header>
 
@@ -447,8 +446,11 @@
     <footer id="copyright"></footer>
   </div>
 
-  <!-- I18n pack + language switch -->
+  <!-- Pi Auth + I18n -->
+  <script src="auth/pi-auth.js"></script>
   <script>
+    const STORAGE_LANG_KEY = "trm_lang";
+
     const langPack = {
       en: {
         brandSub: "Web3 Services for Vietnamese in CZ & EU",
@@ -543,57 +545,71 @@
       }
     };
 
-    function switchLang(l) {
-      const p = langPack[l];
+    function switchLang(lang) {
+      const pack = langPack[lang] || langPack.en;
 
-      document.getElementById("brand-sub").innerText = p.brandSub;
+      // Lưu ngôn ngữ đang chọn
+      try {
+        localStorage.setItem(STORAGE_LANG_KEY, lang);
+      } catch (e) {
+        console.warn("[Tranmarket] Cannot save lang to localStorage", e);
+      }
 
-      document.getElementById("hero-title").innerText = p.heroTitle;
-      document.getElementById("hero-sub").innerText = p.heroSub;
-      document.getElementById("hero-desc").innerText = p.heroDesc;
-      document.getElementById("hero-tagline").innerText = p.heroTagline;
-      document.getElementById("hero-note").innerText = p.heroNote;
+      document.getElementById("brand-sub").innerText = pack.brandSub;
 
-      document.getElementById("sec1-title").innerText = p.sec1Title;
-      document.getElementById("sec1-body-1").innerText = p.sec1Body1;
-      document.getElementById("sec1-body-2").innerText = p.sec1Body2;
+      document.getElementById("hero-title").innerText = pack.heroTitle;
+      document.getElementById("hero-sub").innerText = pack.heroSub;
+      document.getElementById("hero-desc").innerText = pack.heroDesc;
+      document.getElementById("hero-tagline").innerText = pack.heroTagline;
+      document.getElementById("hero-note").innerText = pack.heroNote;
 
-      document.getElementById("sec2-title").innerText = p.sec2Title;
-      document.getElementById("sec2-body-1").innerText = p.sec2Body1;
-      document.getElementById("sec2-body-2").innerText = p.sec2Body2;
+      document.getElementById("sec1-title").innerText = pack.sec1Title;
+      document.getElementById("sec1-body-1").innerText = pack.sec1Body1;
+      document.getElementById("sec1-body-2").innerText = pack.sec1Body2;
 
-      document.getElementById("sec3-title").innerText = p.sec3Title;
-      document.getElementById("sec3-body-1").innerText = p.sec3Body1;
-      document.getElementById("sec3-body-2").innerText = p.sec3Body2;
+      document.getElementById("sec2-title").innerText = pack.sec2Title;
+      document.getElementById("sec2-body-1").innerText = pack.sec2Body1;
+      document.getElementById("sec2-body-2").innerText = pack.sec2Body2;
 
-      document.getElementById("cta-dir-text").innerText = p.ctaDirText;
-      document.getElementById("cta-kyb-text").innerText = p.ctaKybText;
+      document.getElementById("sec3-title").innerText = pack.sec3Title;
+      document.getElementById("sec3-body-1").innerText = pack.sec3Body1;
+      document.getElementById("sec3-body-2").innerText = pack.sec3Body2;
 
-      document.getElementById("copyright").innerText = p.copyright;
+      document.getElementById("cta-dir-text").innerText = pack.ctaDirText;
+      document.getElementById("cta-kyb-text").innerText = pack.ctaKybText;
 
+      document.getElementById("copyright").innerText = pack.copyright;
+
+      // Active state cho nút ngôn ngữ
       document
         .querySelectorAll(".lang-switch button")
         .forEach(btn => btn.classList.remove("active"));
-      document.getElementById("btn-" + l).classList.add("active");
+      const activeBtn = document.getElementById("btn-" + lang);
+      if (activeBtn) activeBtn.classList.add("active");
+
+      // Cập nhật thuộc tính lang trên <html> cho chuẩn SEO / a11y
+      document.documentElement.setAttribute("lang", lang === "vi" ? "vi" : lang);
     }
-<script>
-  // Default language = English
-  switchLang("en");
-</script>
 
-<div id="pi-login"></div>
-<script src="auth/pi-auth.js"></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    if (typeof initPiLogin === "function") {
-      initPiLogin(); // vẽ nút “Login with Pi Wallet” / hoặc @username · ví
-    }
-  });
-</script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Chọn ngôn ngữ mặc định (ưu tiên localStorage)
+      let initialLang = "en";
+      try {
+        const storedLang = localStorage.getItem(STORAGE_LANG_KEY);
+        if (storedLang && langPack[storedLang]) {
+          initialLang = storedLang;
+        }
+      } catch (e) {
+        console.warn("[Tranmarket] Cannot read lang from localStorage", e);
+      }
 
-</body>
-</html>
+      switchLang(initialLang);
 
-
+      // Khởi tạo trạng thái Pi login (nếu SDK & pi-auth đã load)
+      if (typeof initPiLogin === "function") {
+        initPiLogin(); // vẽ nút CONNECT PI WALLET hoặc @username · ví
+      }
+    });
+  </script>
 </body>
 </html>
