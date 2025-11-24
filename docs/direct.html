@@ -7,9 +7,13 @@
 
   <title>TRANMARKET – Web3 Overview</title>
 
-  <meta name="description"
-        content="Giới thiệu Tranmarket Web3 – sứ mệnh, tầm nhìn với Pi Network và cách nền tảng kết nối cộng đồng người Việt tại Séc & EU với dịch vụ uy tín." />
-<script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <meta
+    name="description"
+    content="Giới thiệu Tranmarket Web3 – sứ mệnh, tầm nhìn với Pi Network và cách nền tảng kết nối cộng đồng người Việt tại Séc & EU với dịch vụ uy tín."
+  />
+
+  <!-- Pi Web3 SDK -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 
   <style>
     :root {
@@ -46,8 +50,16 @@
     .overlay {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at top, rgba(159, 123, 255, 0.22), transparent 55%),
-                  radial-gradient(circle at bottom, rgba(255, 80, 170, 0.18), transparent 55%);
+      background: radial-gradient(
+          circle at top,
+          rgba(159, 123, 255, 0.22),
+          transparent 55%
+        ),
+        radial-gradient(
+          circle at bottom,
+          rgba(255, 80, 170, 0.18),
+          transparent 55%
+        );
       pointer-events: none;
       z-index: 0;
     }
@@ -83,7 +95,7 @@
       height: 40px;
       border-radius: 999px;
       background: radial-gradient(circle at 30% 20%, #fff2, transparent 50%),
-                  #1b1029;
+        #1b1029;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -106,6 +118,12 @@
     .brand-text-sub {
       font-size: 12px;
       color: var(--text-muted);
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .lang-switch {
@@ -131,12 +149,23 @@
       font-weight: 600;
     }
 
+    #pi-login {
+      font-size: 12px;
+      color: var(--text-muted);
+      min-width: 120px;
+      text-align: right;
+    }
+
     /* Hero */
     .hero {
       margin-top: 4px;
       padding: 26px 22px 24px;
       border-radius: var(--radius-xl);
-      background: linear-gradient(135deg, rgba(7, 0, 40, 0.9), rgba(10, 0, 50, 0.96));
+      background: linear-gradient(
+        135deg,
+        rgba(7, 0, 40, 0.9),
+        rgba(10, 0, 50, 0.96)
+      );
       box-shadow: var(--shadow-soft);
       display: grid;
       grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
@@ -181,7 +210,7 @@
       margin: 4px auto 8px;
       border-radius: 999px;
       background: radial-gradient(circle at 30% 20%, #fff3, transparent 55%),
-                  #20142f;
+        #20142f;
       box-shadow: 0 0 38px rgba(0, 0, 0, 0.9);
       display: flex;
       align-items: center;
@@ -215,7 +244,11 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at top left, rgba(159, 123, 255, 0.16), transparent 55%);
+      background: radial-gradient(
+        circle at top left,
+        rgba(159, 123, 255, 0.16),
+        transparent 55%
+      );
       opacity: 0.7;
       pointer-events: none;
     }
@@ -315,248 +348,268 @@
       .brand-text-sub {
         display: none;
       }
+      .top-right {
+        gap: 8px;
+      }
+      #pi-login {
+        min-width: auto;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="overlay"></div>
 
-<div class="overlay"></div>
-
-<div class="page">
-  <!-- Top bar -->
-  <header class="top-bar">
-  <div class="brand">
-    ...
-  </div>
-
-  <div class="lang-switch">
-    <button id="btn-en" onclick="switchLang('en')">EN</button>
-    <button id="btn-cz" onclick="switchLang('cz')">CZ</button>
-    <button id="btn-vi" onclick="switchLang('vi')">VN</button>
-  </div>
-
-  <!-- Cọc mốc test login -->
-  <div id="pi-login" style="color:#fff; font-size:12px;">
-    [pi-login placeholder]
-  </div>
-</header>
-
-
-  <!-- Hero -->
-  <section class="hero">
-    <div>
-      <div class="hero-main-title" id="hero-title"></div>
-      <div class="hero-main-sub" id="hero-sub"></div>
-      <div class="hero-main-desc" id="hero-desc"></div>
-      <div class="hero-tagline" id="hero-tagline"></div>
-    </div>
-
-    <div class="hero-logo-wrap">
-      <div class="hero-logo">
-        <img src="assets/trm-logo-hero.png" alt="TRANMARKET hero logo" />
+  <div class="page">
+    <!-- Top bar -->
+    <header class="top-bar">
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="assets/trm-logo-nav.png" alt="TRANMARKET logo" />
+        </div>
+        <div>
+          <div class="brand-text-main">TRANMARKET</div>
+          <div class="brand-text-sub" id="brand-sub"></div>
+        </div>
       </div>
-      <div class="hero-note" id="hero-note"></div>
-    </div>
-  </section>
 
-  <!-- Section 1 -->
-  <section class="section-card">
-    <div class="section-inner">
-      <div class="section-title" id="sec1-title"></div>
-      <p class="section-body" id="sec1-body-1"></p>
-      <p class="section-body" id="sec1-body-2"></p>
-    </div>
-  </section>
+      <div class="top-right">
+        <div class="lang-switch">
+          <button id="btn-en" onclick="switchLang('en')">EN</button>
+          <button id="btn-cz" onclick="switchLang('cz')">CZ</button>
+          <button id="btn-vi" onclick="switchLang('vi')">VN</button>
+        </div>
 
-  <!-- Section 2 -->
-  <section class="section-card">
-    <div class="section-inner">
-      <div class="section-title" id="sec2-title"></div>
-      <p class="section-body" id="sec2-body-1"></p>
-      <p class="section-body" id="sec2-body-2"></p>
-    </div>
-  </section>
+        <!-- Placeholder – sẽ được pi-auth.js thay bằng nút Login / Logged-in -->
+        <div id="pi-login">[pi-login placeholder]</div>
+      </div>
+    </header>
 
-  <!-- Section 3 + CTA -->
-  <section class="section-card">
-    <div class="section-inner">
-      <div class="section-title" id="sec3-title"></div>
-      <p class="section-body" id="sec3-body-1"></p>
-      <p class="section-body" id="sec3-body-2"></p>
+    <!-- Hero -->
+    <section class="hero">
+      <div>
+        <div class="hero-main-title" id="hero-title"></div>
+        <div class="hero-main-sub" id="hero-sub"></div>
+        <div class="hero-main-desc" id="hero-desc"></div>
+        <div class="hero-tagline" id="hero-tagline"></div>
+      </div>
 
-      <div class="cta-row">
-    <div class="cta-row">
+      <div class="hero-logo-wrap">
+        <div class="hero-logo">
+          <img src="assets/trm-logo-hero.png" alt="TRANMARKET hero logo" />
+        </div>
+        <div class="hero-note" id="hero-note"></div>
+      </div>
+    </section>
 
-  <!-- Browse Service Directory -->
-  <a href="day5-category-b.html" class="btn-primary" id="cta-dir">
-    <span id="cta-dir-text"></span>
-    <span class="arrow">›</span>
-  </a>
+    <!-- Section 1 -->
+    <section class="section-card">
+      <div class="section-inner">
+        <div class="section-title" id="sec1-title"></div>
+        <p class="section-body" id="sec1-body-1"></p>
+        <p class="section-body" id="sec1-body-2"></p>
+      </div>
+    </section>
 
-  <!-- Register Service (KYB) -->
-  <a href="kyb.html" class="btn-secondary" id="cta-kyb">
-    <span id="cta-kyb-text"></span>
-    <span class="arrow">›</span>
-  </a>
+    <!-- Section 2 -->
+    <section class="section-card">
+      <div class="section-inner">
+        <div class="section-title" id="sec2-title"></div>
+        <p class="section-body" id="sec2-body-1"></p>
+        <p class="section-body" id="sec2-body-2"></p>
+      </div>
+    </section>
 
-</div>
+    <!-- Section 3 + CTA -->
+    <section class="section-card">
+      <div class="section-inner">
+        <div class="section-title" id="sec3-title"></div>
+        <p class="section-body" id="sec3-body-1"></p>
+        <p class="section-body" id="sec3-body-2"></p>
 
-    </div>
-  </section>
+        <div class="cta-row">
+          <!-- Browse Service Directory -->
+          <a href="day5-category-b.html" class="btn-primary" id="cta-dir">
+            <span id="cta-dir-text"></span>
+            <span class="arrow">›</span>
+          </a>
 
-  <footer id="copyright"></footer>
-</div>
+          <!-- Register Service (KYB) -->
+          <a href="kyb.html" class="btn-secondary" id="cta-kyb">
+            <span id="cta-kyb-text"></span>
+            <span class="arrow">›</span>
+          </a>
+        </div>
+      </div>
+    </section>
 
-<script>
-  const langPack = {
-    en: {
-      brandSub: "Web3 Services for Vietnamese in CZ & EU",
+    <footer id="copyright"></footer>
+  </div>
 
-      heroTitle: "Why Tranmarket was created",
-      heroSub: "Connecting real-life services with trusted Web3 identity",
-      heroDesc:
-        "Tranmarket is a neutral service portal. It does not sell products or speculate with tokens. Its only purpose is to help the Vietnamese community in Czechia & the EU find trustworthy services — and gently prepare for Web3 payments with Pi.",
-      heroTagline: "Community first · Web3 second",
+  <!-- I18n pack + language switch -->
+  <script>
+    const langPack = {
+      en: {
+        brandSub: "Web3 Services for Vietnamese in CZ & EU",
 
-      heroNote:
-        "Pi Web3 is used here as infrastructure, not as a get-rich-quick scheme. Businesses stay in full control of their prices, invoices and compliance. Tranmarket is simply the bridge.",
+        heroTitle: "Why Tranmarket was created",
+        heroSub: "Connecting real-life services with trusted Web3 identity",
+        heroDesc:
+          "Tranmarket is a neutral service portal. It does not sell products or speculate with tokens. Its only purpose is to help the Vietnamese community in Czechia & the EU find trustworthy services — and gently prepare for Web3 payments with Pi.",
+        heroTagline: "Community first · Web3 second",
 
-      sec1Title: "Mission – serve the community, not the hype",
-      sec1Body1:
-        "Many Vietnamese still rely on word of mouth or Facebook groups to find services such as transport, legal help, real estate or car repair. Information is fragmented and trust is often based on rumors.",
-      sec1Body2:
-        "Tranmarket’s mission is to build a curated directory where each provider has a clear profile, simple rating signal and transparent contact. The goal is to save time, reduce misunderstandings and protect people from scams.",
+        heroNote:
+          "Pi Web3 is used here as infrastructure, not as a get-rich-quick scheme. Businesses stay in full control of their prices, invoices and compliance. Tranmarket is simply the bridge.",
 
-      sec2Title: "Vision – Web3 & Pi as invisible infrastructure",
-      sec2Body1:
-        "In the background, Tranmarket is being designed for Pi Web3. That means: one day businesses can optionally accept Pi payments, log receipts on-chain and prove that they are real, compliant entities.",
-      sec2Body2:
-        "However, Pi is never forced. A business can join Tranmarket using fiat only, then later enable Pi payments when they are ready. Web3 is an upgrade path, not an obligation.",
+        sec1Title: "Mission – serve the community, not the hype",
+        sec1Body1:
+          "Many Vietnamese still rely on word of mouth or Facebook groups to find services such as transport, legal help, real estate or car repair. Information is fragmented and trust is often based on rumors.",
+        sec1Body2:
+          "Tranmarket’s mission is to build a curated directory where each provider has a clear profile, simple rating signal and transparent contact. The goal is to save time, reduce misunderstandings and protect people from scams.",
 
-      sec3Title: "Trust & KYB – how services are verified",
-      sec3Body1:
-        "Before a provider receives the KYB VERIFIED badge, Tranmarket checks basic business information such as legal name, registration number and contact consistency. This is not a legal license, but an honest attempt to protect the community.",
-      sec3Body2:
-        "If a service abuses customers, the community and Tranmarket can review the case and remove the badge or profile. The platform always stands on the side of transparent, lawful business.",
-      ctaDirText: "Browse service directory",
-      ctaKybText: "Register your service (KYB)",
+        sec2Title: "Vision – Web3 & Pi as invisible infrastructure",
+        sec2Body1:
+          "In the background, Tranmarket is being designed for Pi Web3. That means: one day businesses can optionally accept Pi payments, log receipts on-chain and prove that they are real, compliant entities.",
+        sec2Body2:
+          "However, Pi is never forced. A business can join Tranmarket using fiat only, then later enable Pi payments when they are ready. Web3 is an upgrade path, not an obligation.",
 
-      copyright:
-        "© 2025 TRANMARKET Web3 Services — All rights reserved."
-    },
+        sec3Title: "Trust & KYB – how services are verified",
+        sec3Body1:
+          "Before a provider receives the KYB VERIFIED badge, Tranmarket checks basic business information such as legal name, registration number and contact consistency. This is not a legal license, but an honest attempt to protect the community.",
+        sec3Body2:
+          "If a service abuses customers, the community and Tranmarket can review the case and remove the badge or profile. The platform always stands on the side of transparent, lawful business.",
+        ctaDirText: "Browse service directory",
+        ctaKybText: "Register your service (KYB)",
 
-    vi: {
-      brandSub: "Nền tảng dịch vụ Web3 cho người Việt tại Séc & EU",
+        copyright:
+          "© 2025 TRANMARKET Web3 Services — All rights reserved."
+      },
 
-      heroTitle: "Vì sao Tranmarket được xây dựng",
-      heroSub: "Kết nối dịch vụ đời sống với danh tính Web3 đáng tin cậy",
-      heroDesc:
-        "Tranmarket là một cổng dịch vụ trung lập, không bán hàng, không đầu cơ token. Mục tiêu duy nhất: giúp cộng đồng người Việt tại Séc & EU tìm được dịch vụ uy tín – đồng thời chuẩn bị nhẹ nhàng cho thanh toán Web3 bằng Pi.",
-      heroTagline: "Cộng đồng trước · Web3 sau",
+      vi: {
+        brandSub:
+          "Nền tảng dịch vụ Web3 cho người Việt tại Séc & EU",
 
-      heroNote:
-        "Pi Web3 ở đây chỉ đóng vai trò hạ tầng, không phải chiêu làm giàu nhanh. Doanh nghiệp vẫn tự quyết giá, hợp đồng và tuân thủ pháp lý. Tranmarket chỉ là chiếc cầu nối.",
+        heroTitle: "Vì sao Tranmarket được xây dựng",
+        heroSub:
+          "Kết nối dịch vụ đời sống với danh tính Web3 đáng tin cậy",
+        heroDesc:
+          "Tranmarket là một cổng dịch vụ trung lập, không bán hàng, không đầu cơ token. Mục tiêu duy nhất: giúp cộng đồng người Việt tại Séc & EU tìm được dịch vụ uy tín – đồng thời chuẩn bị nhẹ nhàng cho thanh toán Web3 bằng Pi.",
+        heroTagline: "Cộng đồng trước · Web3 sau",
 
-      sec1Title: "Sứ mệnh – phục vụ cộng đồng, không chạy theo phong trào",
-      sec1Body1:
-        "Ngày nay nhiều người Việt vẫn phải hỏi bạn bè, lục nhóm Facebook để tìm dịch vụ như taxi, luật sư, bất động sản, sửa xe… Thông tin rời rạc, uy tín phụ thuộc vào lời đồn.",
-      sec1Body2:
-        "Tranmarket muốn xây dựng một danh mục được chọn lọc, mỗi nhà cung cấp có hồ sơ rõ ràng, mô tả dễ hiểu và tín hiệu đánh giá đơn giản. Mục tiêu là tiết kiệm thời gian, giảm hiểu lầm và hạn chế lừa đảo.",
+        heroNote:
+          "Pi Web3 ở đây chỉ đóng vai trò hạ tầng, không phải chiêu làm giàu nhanh. Doanh nghiệp vẫn tự quyết giá, hợp đồng và tuân thủ pháp lý. Tranmarket chỉ là chiếc cầu nối.",
 
-      sec2Title: "Tầm nhìn – dùng Web3 & Pi như hạ tầng ẩn phía sau",
-      sec2Body1:
-        "Ở tầng kỹ thuật, Tranmarket được thiết kế sẵn cho Pi Web3. Tương lai, doanh nghiệp có thể chọn nhận thanh toán bằng Pi, ghi nhận giao dịch on-chain và chứng minh mình là đơn vị thật, tuân thủ.",
-      sec2Body2:
-        "Tuy nhiên, việc dùng Pi là hoàn toàn tự nguyện. Doanh nghiệp có thể chỉ dùng tiền fiat khi mới tham gia, sau đó bật chức năng thanh toán Pi khi đã sẵn sàng. Web3 là con đường nâng cấp, không phải nghĩa vụ.",
+        sec1Title:
+          "Sứ mệnh – phục vụ cộng đồng, không chạy theo phong trào",
+        sec1Body1:
+          "Ngày nay nhiều người Việt vẫn phải hỏi bạn bè, lục nhóm Facebook để tìm dịch vụ như taxi, luật sư, bất động sản, sửa xe… Thông tin rời rạc, uy tín phụ thuộc vào lời đồn.",
+        sec1Body2:
+          "Tranmarket muốn xây dựng một danh mục được chọn lọc, mỗi nhà cung cấp có hồ sơ rõ ràng, mô tả dễ hiểu và tín hiệu đánh giá đơn giản. Mục tiêu là tiết kiệm thời gian, giảm hiểu lầm và hạn chế lừa đảo.",
 
-      sec3Title: "Niềm tin & KYB – Tranmarket kiểm tra như thế nào",
-      sec3Body1:
-        "Trước khi một dịch vụ được gắn huy hiệu KYB VERIFIED, Tranmarket sẽ kiểm tra các thông tin cơ bản như tên pháp lý, mã đăng ký, kênh liên hệ. Đây không phải giấy phép nhà nước, mà là nỗ lực chân thành để bảo vệ cộng đồng.",
-      sec3Body2:
-        "Nếu dịch vụ có dấu hiệu lạm dụng khách hàng, cộng đồng và Tranmarket có thể xem xét lại, gỡ huy hiệu hoặc ẩn hồ sơ. Nền tảng luôn đứng về phía minh bạch và tuân thủ pháp luật.",
-      ctaDirText: "Xem danh mục dịch vụ",
-      ctaKybText: "Đăng ký dịch vụ (KYB)",
+        sec2Title:
+          "Tầm nhìn – dùng Web3 & Pi như hạ tầng ẩn phía sau",
+        sec2Body1:
+          "Ở tầng kỹ thuật, Tranmarket được thiết kế sẵn cho Pi Web3. Tương lai, doanh nghiệp có thể chọn nhận thanh toán bằng Pi, ghi nhận giao dịch on-chain và chứng minh mình là đơn vị thật, tuân thủ.",
+        sec2Body2:
+          "Tuy nhiên, việc dùng Pi là hoàn toàn tự nguyện. Doanh nghiệp có thể chỉ dùng tiền fiat khi mới tham gia, sau đó bật chức năng thanh toán Pi khi đã sẵn sàng. Web3 là con đường nâng cấp, không phải nghĩa vụ.",
 
-      copyright:
-        "© 2025 TRANMARKET Web3 Services — Bảo lưu mọi quyền."
-    },
+        sec3Title:
+          "Niềm tin & KYB – Tranmarket kiểm tra như thế nào",
+        sec3Body1:
+          "Trước khi một dịch vụ được gắn huy hiệu KYB VERIFIED, Tranmarket sẽ kiểm tra các thông tin cơ bản như tên pháp lý, mã đăng ký, kênh liên hệ. Đây không phải giấy phép nhà nước, mà là nỗ lực chân thành để bảo vệ cộng đồng.",
+        sec3Body2:
+          "Nếu dịch vụ có dấu hiệu lạm dụng khách hàng, cộng đồng và Tranmarket có thể xem xét lại, gỡ huy hiệu hoặc ẩn hồ sơ. Nền tảng luôn đứng về phía minh bạch và tuân thủ pháp luật.",
+        ctaDirText: "Xem danh mục dịch vụ",
+        ctaKybText: "Đăng ký dịch vụ (KYB)",
 
-    cz: {
-      brandSub: "Web3 platforma služeb pro Vietnamce v ČR a EU",
+        copyright:
+          "© 2025 TRANMARKET Web3 Services — Bảo lưu mọi quyền."
+      },
 
-      heroTitle: "Proč vznikl Tranmarket",
-      heroSub: "Propojení reálných služeb s důvěryhodní Web3 identitou",
-      heroDesc:
-        "Tranmarket je neutrální portál služeb. Neprodává zboží a nespekuluje s tokeny. Cílem je pomoci vietnamské komunitě v ČR a EU najít ověřené služby – a postupně se připravit na Web3 platby v Pi.",
-      heroTagline: "Komunita na prvním místě",
+      cz: {
+        brandSub:
+          "Web3 platforma služeb pro Vietnamce v ČR a EU",
 
-      heroNote:
-        "Pi Web3 zde slouží jako infrastruktura, nikoli jako schéma rychlého zbohatnutí. Podnikatelé mají plnou kontrolu nad cenami, fakturací i právní shodou. Tranmarket je pouze most.",
+        heroTitle: "Proč vznikl Tranmarket",
+        heroSub:
+          "Propojení reálných služeb s důvěryhodní Web3 identitou",
+        heroDesc:
+          "Tranmarket je neutrální portál služeb. Neprodává zboží a nespekuluje s tokeny. Cílem je pomoci vietnamské komunitě v ČR a EU najít ověřené služby – a postupně se připravit na Web3 platby v Pi.",
+        heroTagline: "Komunita na prvním místě",
 
-      sec1Title: "Mise – sloužit komunitě, ne módním vlnám",
-      sec1Body1:
-        "Mnoho Vietnamců stále hledá služby přes známé nebo ve Facebook skupinách. Informace jsou roztříštěné a důvěra stojí často jen na doporučení.",
-      sec1Body2:
-        "Cílem Tranmarketu je vytvořit kurátorovaný adresář, kde má každý poskytovatel přehledný profil, stručné hodnocení a jasný kontakt. To šetří čas, omezuje nedorozumění a chrání před podvody.",
+        heroNote:
+          "Pi Web3 zde slouží jako infrastruktura, nikoli jako schéma rychlého zbohatnutí. Podnikatelé mají plnou kontrolu nad cenami, fakturací i právní shodou. Tranmarket je pouze most.",
 
-      sec2Title: "Vize – Web3 a Pi jako neviditelná vrstva",
-      sec2Body1:
-        "Na pozadí je Tranmarket navržen pro Pi Web3. Do budoucna mohou podniky dobrovolně přijímat platby v Pi, zapisovat účtenky on-chain a prokazovat, že jsou skutečné a v souladu s předpisy.",
-      sec2Body2:
-        "Použití Pi však není povinné. Poskytovatel se může připojit pouze s fiat měnou a teprve později, až bude připraven, zapnout platby v Pi. Web3 je cesta upgradu, nikoli povinnost.",
+        sec1Title:
+          "Mise – sloužit komunitě, ne módním vlnám",
+        sec1Body1:
+          "Mnoho Vietnamců stále hledá služby přes známé nebo ve Facebook skupinách. Informace jsou roztříštěné a důvěra stojí často jen na doporučení.",
+        sec1Body2:
+          "Cílem Tranmarketu je vytvořit kurátorovaný adresář, kde má každý poskytovatel přehledný profil, stručné hodnocení a jasný kontakt. To šetří čas, omezuje nedorozumění a chrání před podvody.",
 
-      sec3Title: "Důvěra a KYB – jak ověřujeme služby",
-      sec3Body1:
-        "Než služba získá odznak KYB VERIFIED, Tranmarket prověří základní údaje – právní název, IČO a kontaktní informace. Nejde o státní licenci, ale o poctivý pokus chránit komunitu.",
-      sec3Body2:
-        "Pokud poskytovatel zneužívá klienty, může komunita spolu s Tranmarketem případ přezkoumat a odznak nebo profil odebrat. Platforma stojí vždy na straně transparentního a zákonného podnikání.",
-      ctaDirText: "Otevřít adresář služeb",
-      ctaKybText: "Registrovat službu (KYB)",
+        sec2Title:
+          "Vize – Web3 a Pi jako neviditelná vrstva",
+        sec2Body1:
+          "Na pozadí je Tranmarket navržen pro Pi Web3. Do budoucna mohou podniky dobrovolně přijímat platby v Pi, zapisovat účtenky on-chain a prokazovat, že jsou skutečné a v souladu s předpisy.",
+        sec2Body2:
+          "Použití Pi však není povinné. Poskytovatel se může připojit pouze s fiat měnou a teprve později, až bude připraven, zapnout platby v Pi. Web3 je cesta upgradu, nikoli povinnost.",
 
-      copyright:
-        "© 2025 TRANMARKET Web3 Services — Všechna práva vyhrazena."
+        sec3Title:
+          "Důvěra a KYB – jak ověřujeme služby",
+        sec3Body1:
+          "Než služba získá odznak KYB VERIFIED, Tranmarket prověří základní údaje – právní název, IČO a kontaktní informace. Nejde o státní licenci, ale o poctivý pokus chránit komunitu.",
+        sec3Body2:
+          "Pokud poskytovatel zneužívá klienty, může komunita spolu s Tranmarketem případ přezkoumat a odznak nebo profil odebrat. Platforma stojí vždy na straně transparentního a zákonného podnikání.",
+        ctaDirText: "Otevřít adresář služeb",
+        ctaKybText: "Registrovat službu (KYB)",
+
+        copyright:
+          "© 2025 TRANMARKET Web3 Services — Všechna práva vyhrazena."
+      }
+    };
+
+    function switchLang(l) {
+      const p = langPack[l];
+
+      document.getElementById("brand-sub").innerText = p.brandSub;
+
+      document.getElementById("hero-title").innerText = p.heroTitle;
+      document.getElementById("hero-sub").innerText = p.heroSub;
+      document.getElementById("hero-desc").innerText = p.heroDesc;
+      document.getElementById("hero-tagline").innerText = p.heroTagline;
+      document.getElementById("hero-note").innerText = p.heroNote;
+
+      document.getElementById("sec1-title").innerText = p.sec1Title;
+      document.getElementById("sec1-body-1").innerText = p.sec1Body1;
+      document.getElementById("sec1-body-2").innerText = p.sec1Body2;
+
+      document.getElementById("sec2-title").innerText = p.sec2Title;
+      document.getElementById("sec2-body-1").innerText = p.sec2Body1;
+      document.getElementById("sec2-body-2").innerText = p.sec2Body2;
+
+      document.getElementById("sec3-title").innerText = p.sec3Title;
+      document.getElementById("sec3-body-1").innerText = p.sec3Body1;
+      document.getElementById("sec3-body-2").innerText = p.sec3Body2;
+
+      document.getElementById("cta-dir-text").innerText = p.ctaDirText;
+      document.getElementById("cta-kyb-text").innerText = p.ctaKybText;
+
+      document.getElementById("copyright").innerText = p.copyright;
+
+      document
+        .querySelectorAll(".lang-switch button")
+        .forEach(btn => btn.classList.remove("active"));
+      document.getElementById("btn-" + l).classList.add("active");
     }
-  };
 
-  function switchLang(l) {
-    const p = langPack[l];
+    // Default language = English
+    switchLang("en");
+  </script>
 
-    document.getElementById("brand-sub").innerText = p.brandSub;
-
-    document.getElementById("hero-title").innerText = p.heroTitle;
-    document.getElementById("hero-sub").innerText = p.heroSub;
-    document.getElementById("hero-desc").innerText = p.heroDesc;
-    document.getElementById("hero-tagline").innerText = p.heroTagline;
-    document.getElementById("hero-note").innerText = p.heroNote;
-
-    document.getElementById("sec1-title").innerText = p.sec1Title;
-    document.getElementById("sec1-body-1").innerText = p.sec1Body1;
-    document.getElementById("sec1-body-2").innerText = p.sec1Body2;
-
-    document.getElementById("sec2-title").innerText = p.sec2Title;
-    document.getElementById("sec2-body-1").innerText = p.sec2Body1;
-    document.getElementById("sec2-body-2").innerText = p.sec2Body2;
-
-    document.getElementById("sec3-title").innerText = p.sec3Title;
-    document.getElementById("sec3-body-1").innerText = p.sec3Body1;
-    document.getElementById("sec3-body-2").innerText = p.sec3Body2;
-
-    document.getElementById("cta-dir-text").innerText = p.ctaDirText;
-    document.getElementById("cta-kyb-text").innerText = p.ctaKybText;
-
-    document.getElementById("copyright").innerText = p.copyright;
-
-    document.querySelectorAll(".lang-switch button").forEach(btn =>
-      btn.classList.remove("active")
-    );
-    document.getElementById("btn-" + l).classList.add("active");
-  }
-
-  // Default language = English
-  switchLang("en");
-</script>
-<script src="auth/pi-auth.js"></script>
-<script>initPiLogin();</script>
-
+  <!-- Pi login component -->
+  <script src="auth/pi-auth.js"></script>
+  <script>
+    initPiLogin();
+  </script>
 </body>
 </html>
