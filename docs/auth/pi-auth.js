@@ -176,11 +176,14 @@
 
       saveUser(profile);
       updateUI(profile);
-    } catch (err) {
-      console.error("Tranmarket – Pi login error:", err);
-      alert("Đăng nhập với ví Pi thất bại. Thử lại sau ít phút nhé.");
-    }
-  }
+  } catch (err) {
+  console.error("[Tranmarket Pi Auth Error]", err);
+  alert(
+    "Đăng nhập với ví Pi thất bại.\n\nChi tiết: " +
+      (err && err.message ? err.message : JSON.stringify(err))
+  );
+}
+
 
   function doLogout(updateUI) {
     clearUser();
