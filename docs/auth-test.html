@@ -1,3 +1,4 @@
+<!-- docs/auth-test.html – Pi Wallet Auth · Test (v2 – dùng chung pi-auth.js + sandbox) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,23 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pi Wallet Auth · Test</title>
 
-  <!-- Pi Web3 SDK -->
+  <!-- CHỈ load Pi SDK, KHÔNG tự Pi.init ở đây.
+       Pi.init (sandbox: true) đã được xử lý trong auth/pi-auth.js -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-  <script>
-    // Khởi tạo Pi SDK (chỉ chạy khi có Pi – tức là trong Pi Browser)
-    if (typeof window.Pi !== "undefined") {
-      window.Pi.init({
-        version: "2.0",
-        sandbox: false
-      });
-      console.log("[Auth Test] Pi SDK initialized");
-    } else {
-      console.warn("[Auth Test] Pi SDK NOT found. Hãy mở trang trong Pi Browser.");
-    }
-  </script>
-
-  <!-- Dùng chung helper auth/pi-auth.js với Tranmarket -->
-  <script src="auth/pi-auth.js"></script>
 
   <style>
     body {
@@ -40,7 +27,7 @@
       padding: 24px 20px;
       border-radius: 16px;
       background: #000024;
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
     }
     h1 {
       margin: 0 0 8px;
@@ -51,18 +38,10 @@
       font-size: 14px;
       color: #b0b7ff;
     }
-    code {
-      font-family: Consolas, Menlo, Monaco, monospace;
-      background: #050533;
-      padding: 2px 4px;
-      border-radius: 4px;
-      font-size: 12px;
-    }
     #test-status {
       margin: 8px 0 16px;
       font-size: 14px;
       color: #ffd966;
-      white-space: pre-wrap;
     }
     #test-login-btn {
       padding: 12px 22px;
@@ -74,10 +53,6 @@
       font-size: 15px;
       cursor: pointer;
       display: inline-block;
-    }
-    #test-login-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
     }
     pre {
       margin-top: 16px;
@@ -93,17 +68,20 @@
 <body>
   <div class="box">
     <h1>Pi Wallet Auth · Test</h1>
-    <p>
-      Trang này dùng chung file <code>auth/pi-auth.js</code> của Tranmarket để test
-      đăng nhập ví Pi và xem <code>profile</code> lưu vào <code>localStorage["trm_user"]</code>.
-    </p>
+    <p>Trang này dùng chung file <code>auth/pi-auth.js</code> để test đăng nhập ví Pi (sandbox).</p>
 
-    <div id="test-status">[INIT] Đang kiểm tra Pi SDK & pi-auth.js…</div>
+    <div id="test-status">[TEST] Sẵn sàng, bấm CONNECT PI WALLET để thử.</div>
 
     <button id="test-login-btn">CONNECT PI WALLET</button>
 
     <pre id="test-result"></pre>
   </div>
+
+  <!-- Dùng chung helper auth/pi-auth.js của Tranmarket.
+       BÊN TRONG file này cần đảm bảo:
+       - có hàm ensurePiInit()
+       - Pi.init({ version: "2.0", sandbox: true }) trong môi trường hiện tại -->
+  <script src="auth/pi-auth.js"></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -111,68 +89,21 @@
       const resultEl = document.getElementById("test-result");
       const btn = document.getElementById("test-login-btn");
 
-      // Kiểm tra SDK + helper
-      const hasPi = typeof window.Pi !== "undefined";
-      const hasLoginWithPi = typeof window.loginWithPi === "function";
-      const hasInitPiLogin = typeof window.initPiLogin === "function";
-      const hasHelperLoaded = !!window.TranPiAuthLoaded;
-
-      let statusLines = [];
-
-      statusLines.push(
-        "[CHECK] Pi SDK: " + (hasPi ? "OK" : "NOT FOUND – hãy mở trong Pi Browser.")
-      );
-      statusLines.push(
-        "[CHECK] auth/pi-auth.js loaded: " + (hasHelperLoaded ? "OK" : "chưa xác nhận.")
-      );
-      statusLines.push(
-        "[CHECK] loginWithPi(): " + (hasLoginWithPi ? "OK" : "NOT FOUND.")
-      );
-      statusLines.push(
-        "[CHECK] initPiLogin(): " + (hasInitPiLogin ? "OK" : "NOT FOUND.")
-      );
-
-      statusEl.textContent = statusLines.join("\n");
-
-      if (!hasPi || !hasLoginWithPi) {
-        btn.disabled = true;
-      }
-
-      // Thử đọc profile đã lưu sẵn bằng initPiLogin (nếu có)
-      if (hasInitPiLogin) {
-        window.initPiLogin(function (profile) {
-          if (profile) {
-            statusEl.textContent +=
-              "\n[INIT] Tìm thấy profile trong localStorage (trm_user).";
-            resultEl.textContent = JSON.stringify(profile, null, 2);
-          } else {
-            statusEl.textContent +=
-              "\n[INIT] Không có profile lưu sẵn. Bấm CONNECT PI WALLET để đăng nhập.";
-          }
-        });
-      } else {
-        statusEl.textContent +=
-          "\n[INFO] Không dùng initPiLogin. Chỉ test loginWithPi khi bấm nút.";
-      }
-
-      // Bắt sự kiện nút test login
       btn.addEventListener("click", function () {
-        if (typeof window.loginWithPi !== "function") {
+        if (typeof loginWithPi !== "function") {
           alert("loginWithPi() not found. Kiểm tra lại file auth/pi-auth.js");
           return;
         }
 
-        statusEl.textContent =
-          "[ACTION] Gọi loginWithPi()…\nVui lòng xử lý popup Allow / Decline trong Pi Browser.";
-        resultEl.textContent = "";
+        statusEl.textContent = "[TEST] Đang gọi Pi.authenticate…";
 
-        window.loginWithPi(function (profile) {
+        // dùng loginWithPi từ pi-auth.js, truyền callback riêng cho trang test
+        loginWithPi(function (profile) {
           if (profile) {
-            statusEl.textContent = "[RESULT] LOGIN SUCCESS – profile đã được lưu vào localStorage (trm_user).";
+            statusEl.textContent = "LOGIN SUCCESS (nhận được profile từ Pi)";
             resultEl.textContent = JSON.stringify(profile, null, 2);
           } else {
-            statusEl.textContent =
-              "[RESULT] NOT LOGGED IN – không nhận được profile.\nCó thể bạn đã hủy (cancel) hoặc Pi SDK không trả user.";
+            statusEl.textContent = "NOT LOGGED IN (không có profile trả về)";
             resultEl.textContent = "";
           }
         });
