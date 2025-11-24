@@ -3,104 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pi Wallet Auth · Test</title>
 
-  <title>Tranmarket · Pi Auth Test</title>
-
-  <!-- Pi Web3 SDK -->
+  <!-- Pi SDK -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 
   <style>
     body {
       margin: 0;
-      min-height: 100vh;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      background: #020018;
+      color: #f5f6ff;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #020018;
-      color: #f5f6ff;
     }
-    .card {
+    .box {
+      max-width: 480px;
       width: 100%;
-      max-width: 420px;
-      padding: 24px 20px 20px;
-      border-radius: 18px;
-      background: #090020;
-      box-shadow: 0 18px 45px rgba(0,0,0,0.75);
+      padding: 24px 20px;
+      border-radius: 16px;
+      background: #080024;
     }
     h1 {
-      margin: 0 0 6px;
-      font-size: 18px;
+      margin: 0 0 8px;
+      font-size: 22px;
     }
     p {
-      margin: 0 0 14px;
-      font-size: 13px;
+      margin: 0 0 16px;
+      font-size: 14px;
       color: #b7bce6;
     }
     #pi-login {
-      margin-top: 10px;
-    }
-    button {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 999px;
-      border: none;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      background: linear-gradient(90deg, #7a00ff, #ffbb00);
-      color: #ffffff;
-    }
-    .log {
-      margin-top: 16px;
-      padding: 10px;
-      border-radius: 12px;
-      background: #12042c;
-      font-size: 11px;
-      max-height: 220px;
-      overflow: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
+      margin-top: 12px;
     }
   </style>
 </head>
 <body>
+  <div class="box">
+    <h1>Pi Wallet Auth · Test</h1>
+    <p>Trang này dùng chung file <code>auth/pi-auth.js</code> để test đăng nhập ví Pi.</p>
+    <div id="pi-login">[Pi login component loading…]</div>
+  </div>
 
-<div class="card">
-  <h1>Pi Wallet Auth · Test</h1>
-  <p>Trang này dùng chung file <code>auth/pi-auth.js</code> để test đăng nhập ví Pi.</p>
-
-  <div id="pi-login">[Pi login placeholder]</div>
-
-  <div class="log" id="log-box">Waiting for login…</div>
-</div>
-
-<!-- Dùng chung pi-auth.js -->
-<script src="auth/pi-auth.js"></script>
-
-<script>
-  function log(msg, data) {
-    const box = document.getElementById("log-box");
-    if (!box) return;
-    const t = typeof data !== "undefined"
-      ? msg + "\n" + JSON.stringify(data, null, 2)
-      : msg;
-    box.textContent = t;
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    if (typeof initPiLogin === "function") {
-      log("initPiLogin() found. Ready.");
-      initPiLogin(function (profile) {
-        log("Login success:", profile);
-      });
-    } else {
-      const c = document.getElementById("pi-login");
-      if (c) c.textContent = "[Pi login script not loaded]";
-      log("ERROR: initPiLogin() was not found on window. Check script path auth/pi-auth.js");
-    }
-  });
-</script>
-
+  <!-- Gắn script auth -->
+  <script src="auth/pi-auth.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (typeof initPiLogin === "function") {
+        console.log("[Tranmarket TEST] calling initPiLogin from auth-test.html");
+        initPiLogin();
+      } else {
+        console.error("initPiLogin() not found on window");
+        document.getElementById("pi-login").textContent =
+          "[ERROR] initPiLogin() not found. Check auth/pi-auth.js";
+      }
+    });
+  </script>
 </body>
 </html>
