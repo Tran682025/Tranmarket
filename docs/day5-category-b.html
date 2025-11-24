@@ -87,8 +87,9 @@
     }
 
     main {
-      background: radial-gradient(circle at top left, rgba(159, 123, 255, 0.15), transparent 55%),
-                  radial-gradient(circle at top right, rgba(255, 176, 0, 0.12), transparent 55%);
+      background:
+        radial-gradient(circle at top left, rgba(159, 123, 255, 0.15), transparent 55%),
+        radial-gradient(circle at top right, rgba(255, 176, 0, 0.12), transparent 55%);
       border-radius: 28px;
       padding: 24px 18px 28px;
       box-shadow: var(--shadow-soft);
@@ -117,6 +118,11 @@
       gap: 14px;
     }
 
+    .service-card-link {
+      text-decoration: none;
+      color: inherit;
+    }
+
     .service-card {
       background: rgba(10, 6, 50, 0.96);
       border-radius: 18px;
@@ -126,6 +132,14 @@
       flex-direction: column;
       justify-content: space-between;
       min-height: 110px;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.8);
+      border-color: var(--accent-strong);
+      background: rgba(12, 7, 60, 0.98);
     }
 
     .service-title {
@@ -191,229 +205,560 @@
 
     <main>
       <section class="hero-text">
-        <h1 id="page-title">Chọn hạng mục dịch vụ bạn cần</h1>
-        <p id="page-intro">
-          Dưới đây là 18 hạng mục dịch vụ phổ biến cho người Việt tại Séc &amp; EU...
-        </p>
+        <h1 id="page-title"></h1>
+        <p id="page-intro"></p>
       </section>
 
-  <section class="services-grid">
+      <section class="services-grid">
+        <!-- 18 categories – all text will be filled by JS -->
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="logistics">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-  <a href="providers/directory-tranmarket.html" class="service-card-link">
-    <article class="service-card">
-      <div>
-        <div class="service-title">Logistics · Gửi hàng · Vận chuyển</div>
-        <div class="service-sub">Quốc tế, EU nội địa, container, kho bãi, chuyển phát nhanh...</div>
-      </div>
-      <div class="badge">DÀNH CHO KHÁCH HÀNG</div>
-    </article>
-  </a>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="documents">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-  <a href="providers/directory-tranmarket.html" class="service-card-link">
-    <article class="service-card">
-      <div>
-        <div class="service-title">Giấy tờ · Dịch thuật · Hồ sơ</div>
-        <div class="service-sub">Công chứng, hồ sơ pháp lý, GPLX, dịch thuật công chứng...</div>
-      </div>
-      <div class="badge">DÀNH CHO KHÁCH HÀNG</div>
-    </article>
-  </a>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="housing">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-  <!-- Các category tiếp theo làm tương tự, tạm thời đều href="providers/directory-tranmarket.html" -->
-</section>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="car">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="taxi">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-        <article class="service-card">
-          <div>
-            <div class="service-title">Dọn nhà · Nội thất · Xây dựng</div>
-            <div class="service-sub">Dọn nhà, sửa nhà, cải tạo, vệ sinh, sửa chữa nhỏ…</div>
-          </div>
-          <div class="badge">Dành cho khách hàng</div>
-        </article>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="education">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-        <article class="service-card">
-          <div>
-            <div class="service-title">Car &amp; Garage · Sửa xe</div>
-            <div class="service-sub">Sửa chữa, bảo dưỡng, đăng kiểm, detailing…</div>
-          </div>
-          <div class="badge">Dành cho khách hàng</div>
-        </article>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="beauty">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-        <article class="service-card">
-          <div>
-            <div class="service-title">Taxi · Vận chuyển cá nhân</div>
-            <div class="service-sub">Taxi sân bay, đi làm, đưa đón cá nhân, nhóm nhỏ…</div>
-          </div>
-          <div class="badge" id="taxi-badge">Ví dụ: Taxi Tranmarket – Liberec</div>
-        </article>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="health">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-        <article class="service-card">
-          <div>
-            <div class="service-title">Education · Giáo dục · Nghề nghiệp</div>
-            <div class="service-sub">Gia sư, khóa học, nghề tay trái, định hướng nghề nghiệp…</div>
-          </div>
-          <div class="badge">Dành cho khách hàng</div>
-        </article>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="food">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-        <article class="service-card">
-          <div>
-            <div class="service-title">Beauty · Spa · Hair · Nail</div>
-            <div class="service-sub">Tóc, nail, spa, massage, chăm sóc da, makeup…</div>
-          </div>
-          <div class="badge">Dành cho khách hàng</div>
-        </article>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="travel">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-        <article class="service-card">
-          <div>
-            <div class="service-title">Health · Dinh dưỡng · Thể thao</div>
-            <div class="service-sub">Tư vấn sức khỏe, PT cá nhân, dinh dưỡng, phục hồi…</div>
-          </div>
-          <div class="badge">Dành cho khách hàng</div>
-        </article>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="rent">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-        <article class="service-card">
-          <div>
-            <div class="service-title">Food · Ẩm thực · Đặt món</div>
-            <div class="service-sub">Quán Việt, đặt tiệc, ship đồ ăn, catering…</div>
-          </div>
-          <div class="badge">Dành cho khách hàng</div>
-        </article>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="business">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-        <article class="service-card">
-          <div>
-            <div class="service-title">Travel · Du lịch · Tour</div>
-            <div class="service-sub">Tour Séc, EU, hành hương, nghỉ dưỡng, lịch trình cá nhân…</div>
-          </div>
-          <div class="badge">Dành cho khách hàng</div>
-        </article>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="experience">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-        <article class="service-card">
-          <div>
-            <div class="service-title">Rent · Thuê nhà · Phòng · Ký túc</div>
-            <div class="service-sub">Ngắn hạn, dài hạn, share phòng, housing linh hoạt…</div>
-          </div>
-          <div class="badge">Dành cho khách hàng</div>
-        </article>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="real_estate">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-        <article class="service-card">
-          <div>
-            <div class="service-title">Business · Luật · Doanh nghiệp</div>
-            <div class="service-sub">Thành lập công ty, dịch vụ KZP, kế toán, luật sư…</div>
-          </div>
-          <div class="badge">Dành cho khách hàng &amp; doanh nghiệp</div>
-        </article>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="bazaar">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-        <article class="service-card">
-          <div>
-            <div class="service-title">Experience · Giải trí · Trải nghiệm</div>
-            <div class="service-sub">Workshop, teambuilding, sự kiện, CLB, lớp thú vị…</div>
-          </div>
-          <div class="badge">Mở rộng &amp; đặc biệt</div>
-        </article>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="pets">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-        <article class="service-card">
-          <div>
-            <div class="service-title">Real Estate · Mua bán nhà đất</div>
-            <div class="service-sub">Nhà, căn hộ, đất, tư vấn pháp lý &amp; tài chính…</div>
-          </div>
-          <div class="badge">Dành cho khách hàng</div>
-        </article>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="ceremony">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
 
-        <article class="service-card">
-          <div>
-            <div class="service-title">Bazaars · Đồ cũ · Second-hand</div>
-            <div class="service-sub">Thanh lý đồ, ký gửi, chợ đồ cũ online &amp; offline…</div>
-          </div>
-          <div class="badge">Dành cho khách hàng</div>
-        </article>
-
-        <article class="service-card">
-          <div>
-            <div class="service-title">Pets · Thú cưng</div>
-            <div class="service-sub">Chăm sóc thú cưng, gửi trông, dịch vụ di chuyển thú cưng…</div>
-          </div>
-          <div class="badge">Dành cho khách hàng</div>
-        </article>
-
-        <article class="service-card">
-          <div>
-            <div class="service-title">Ceremony · Cưới · Lễ · Tang</div>
-            <div class="service-sub">Tổ chức cưới hỏi, lễ nhà thờ, ma chay, hỗ trợ tang lễ…</div>
-          </div>
-          <div class="badge">Mở rộng &amp; đặc biệt</div>
-        </article>
-
-        <article class="service-card">
-          <div>
-            <div class="service-title">Other · Dịch vụ khác / mở rộng</div>
-            <div class="service-sub">Các dịch vụ thực tế mới mà hệ thống chưa có danh mục riêng.</div>
-          </div>
-          <div class="badge">Mở rộng &amp; đặc biệt</div>
-        </article>
+        <a href="providers/directory-tranmarket.html" class="service-card-link">
+          <article class="service-card" data-cat="other">
+            <div>
+              <div class="service-title" data-role="title"></div>
+              <div class="service-sub" data-role="sub"></div>
+            </div>
+            <div class="badge" data-role="badge"></div>
+          </article>
+        </a>
       </section>
 
       <p class="taxi-note">
-        <strong id="taxi-note-prefix">Note:</strong>
-        <span id="taxi-badge">Ví dụ: Taxi Tranmarket – Liberec</span>
+        <strong id="taxi-note-prefix"></strong>
+        <span id="taxi-note-body"></span>
       </p>
 
-      <footer id="copyright">
-        © 2025 TRANMARKET Web3 Services — Bảo lưu mọi quyền.
-      </footer>
+      <footer id="copyright"></footer>
     </main>
   </div>
 
   <script>
+    const STORAGE_LANG_KEY = "trm_lang";
+
     const langPack = {
       vi: {
         pageTitle: "Chọn hạng mục dịch vụ bạn cần",
         pageIntro:
           "Dưới đây là 18 hạng mục dịch vụ phổ biến cho người Việt tại Séc & EU. Hãy chọn hạng mục phù hợp với nhu cầu của bạn. Sau đó trang chi tiết (Day 6) sẽ mở ra với nhà cung cấp đã được Tranmarket kiểm tra & KYB.",
-        taxiBadge: "Ví dụ: Taxi Tranmarket – Liberec",
+        taxiNotePrefix: "Gợi ý:",
+        taxiNoteBody: "Trang này chỉ là định hướng nhóm dịch vụ. Ở bước tiếp theo (Day 6), bạn sẽ thấy danh sách nhà cung cấp thật để liên hệ.",
         copyright:
-          "© 2025 TRANMARKET Web3 Services — Bảo lưu mọi quyền."
+          "© 2025 TRANMARKET Web3 Services — Bảo lưu mọi quyền.",
+        categories: {
+          logistics: {
+            title: "Logistics · Gửi hàng · Vận chuyển",
+            sub: "Quốc tế, EU nội địa, container, kho bãi, chuyển phát nhanh…",
+            badge: "DÀNH CHO KHÁCH HÀNG"
+          },
+          documents: {
+            title: "Giấy tờ · Dịch thuật · Hồ sơ",
+            sub: "Công chứng, hồ sơ pháp lý, GPLX, dịch thuật công chứng…",
+            badge: "DÀNH CHO KHÁCH HÀNG"
+          },
+          housing: {
+            title: "Dọn nhà · Nội thất · Xây dựng",
+            sub: "Dọn nhà, sửa nhà, cải tạo, vệ sinh, sửa chữa nhỏ…",
+            badge: "DÀNH CHO KHÁCH HÀNG"
+          },
+          car: {
+            title: "Car & Garage · Sửa xe",
+            sub: "Sửa chữa, bảo dưỡng, đăng kiểm, detailing…",
+            badge: "DÀNH CHO KHÁCH HÀNG"
+          },
+          taxi: {
+            title: "Taxi · Vận chuyển cá nhân",
+            sub: "Taxi sân bay, đi làm, đưa đón cá nhân, nhóm nhỏ…",
+            badge: "Ví dụ: Taxi Tranmarket – Liberec"
+          },
+          education: {
+            title: "Education · Giáo dục · Nghề nghiệp",
+            sub: "Gia sư, khóa học, nghề tay trái, định hướng nghề nghiệp…",
+            badge: "DÀNH CHO KHÁCH HÀNG"
+          },
+          beauty: {
+            title: "Beauty · Spa · Hair · Nail",
+            sub: "Tóc, nail, spa, massage, chăm sóc da, makeup…",
+            badge: "DÀNH CHO KHÁCH HÀNG"
+          },
+          health: {
+            title: "Health · Dinh dưỡng · Thể thao",
+            sub: "Tư vấn sức khỏe, PT cá nhân, dinh dưỡng, phục hồi…",
+            badge: "DÀNH CHO KHÁCH HÀNG"
+          },
+          food: {
+            title: "Food · Ẩm thực · Đặt món",
+            sub: "Quán Việt, đặt tiệc, ship đồ ăn, catering…",
+            badge: "DÀNH CHO KHÁCH HÀNG"
+          },
+          travel: {
+            title: "Travel · Du lịch · Tour",
+            sub: "Tour Séc, EU, hành hương, nghỉ dưỡng, lịch trình cá nhân…",
+            badge: "DÀNH CHO KHÁCH HÀNG"
+          },
+          rent: {
+            title: "Rent · Thuê nhà · Phòng · Ký túc",
+            sub: "Ngắn hạn, dài hạn, share phòng, housing linh hoạt…",
+            badge: "DÀNH CHO KHÁCH HÀNG"
+          },
+          business: {
+            title: "Business · Luật · Doanh nghiệp",
+            sub: "Thành lập công ty, dịch vụ KZP, kế toán, luật sư…",
+            badge: "KHÁCH HÀNG & DOANH NGHIỆP"
+          },
+          experience: {
+            title: "Experience · Giải trí · Trải nghiệm",
+            sub: "Workshop, teambuilding, sự kiện, CLB, lớp thú vị…",
+            badge: "MỞ RỘNG & ĐẶC BIỆT"
+          },
+          real_estate: {
+            title: "Real Estate · Mua bán nhà đất",
+            sub: "Nhà, căn hộ, đất, tư vấn pháp lý & tài chính…",
+            badge: "DÀNH CHO KHÁCH HÀNG"
+          },
+          bazaar: {
+            title: "Bazaars · Đồ cũ · Second-hand",
+            sub: "Thanh lý đồ, ký gửi, chợ đồ cũ online & offline…",
+            badge: "DÀNH CHO KHÁCH HÀNG"
+          },
+          pets: {
+            title: "Pets · Thú cưng",
+            sub: "Chăm sóc, spa, gửi trông, dịch vụ di chuyển thú cưng…",
+            badge: "DÀNH CHO KHÁCH HÀNG"
+          },
+          ceremony: {
+            title: "Ceremony · Cưới · Lễ · Tang",
+            sub: "Tổ chức cưới hỏi, lễ nhà thờ, ma chay, hỗ trợ tang lễ…",
+            badge: "MỞ RỘNG & ĐẶC BIỆT"
+          },
+          other: {
+            title: "Other · Dịch vụ khác / mở rộng",
+            sub: "Các dịch vụ mới, thực tế mà hệ thống chưa có danh mục riêng.",
+            badge: "MỞ RỘNG & ĐẶC BIỆT"
+          }
+        }
       },
-      cz: {
-        pageTitle: "Vyberte kategorii služby",
-        pageIntro:
-          "Níže je 18 kategorií služeb oblíbených mezi vietnamskou komunitou v ČR a EU. Vyberte kategorii, která nejlépe odpovídá vašim potřebám. Poté se otevře detail (Day 6) s poskytovateli ověřenými Tranmarketem a KYB.",
-        taxiBadge: "Příklad: Taxi Tranmarket – Liberec",
-        copyright:
-          "© 2025 TRANMARKET Web3 Services — Všechna práva vyhrazena."
-      },
+
       en: {
         pageTitle: "Choose the service category you need",
         pageIntro:
           "Below are 18 service categories commonly used by Vietnamese in Czechia & the EU. Pick the category that fits your needs. Then a detailed page (Day 6) will open with providers verified by Tranmarket & KYB.",
-        taxiBadge: "Example: Taxi Tranmarket – Liberec",
+        taxiNotePrefix: "Note:",
+        taxiNoteBody: "This page groups services by theme. On the next step (Day 6) you will see real providers you can contact directly.",
         copyright:
-          "© 2025 TRANMARKET Web3 Services — All rights reserved."
+          "© 2025 TRANMARKET Web3 Services — All rights reserved.",
+        categories: {
+          logistics: {
+            title: "Logistics · Parcels · Transport",
+            sub: "International lines, EU transport, containers, warehouses, express shipping…",
+            badge: "FOR CUSTOMERS"
+          },
+          documents: {
+            title: "Documents · Translation · Papers",
+            sub: "Notary, legal documents, driving licence, certified translation…",
+            badge: "FOR CUSTOMERS"
+          },
+          housing: {
+            title: "Moving · Interior · Construction",
+            sub: "House moving, repairs, renovation, cleaning, small construction…",
+            badge: "FOR CUSTOMERS"
+          },
+          car: {
+            title: "Car & Garage · Repair",
+            sub: "Mechanical repair, service, inspection, detailing…",
+            badge: "FOR CUSTOMERS"
+          },
+          taxi: {
+            title: "Taxi · Personal transport",
+            sub: "Airport taxi, work commute, personal and small group rides…",
+            badge: "EXAMPLE: TAXI TRANMARKET – LIBEREC"
+          },
+          education: {
+            title: "Education · Courses · Career",
+            sub: "Tutoring, short courses, side skills, career orientation…",
+            badge: "FOR CUSTOMERS"
+          },
+          beauty: {
+            title: "Beauty · Spa · Hair · Nail",
+            sub: "Hair salons, nails, spa, massage, skincare, makeup…",
+            badge: "FOR CUSTOMERS"
+          },
+          health: {
+            title: "Health · Nutrition · Sport",
+            sub: "Health consulting, personal trainers, nutrition, recovery…",
+            badge: "FOR CUSTOMERS"
+          },
+          food: {
+            title: "Food · Restaurants · Catering",
+            sub: "Vietnamese food, party catering, food delivery…",
+            badge: "FOR CUSTOMERS"
+          },
+          travel: {
+            title: "Travel · Tours · Trips",
+            sub: "Trips in CZ, EU tours, pilgrimage, holidays, custom itineraries…",
+            badge: "FOR CUSTOMERS"
+          },
+          rent: {
+            title: "Rent · Rooms · Housing",
+            sub: "Short and long-term rent, shared rooms, flexible housing…",
+            badge: "FOR CUSTOMERS"
+          },
+          business: {
+            title: "Business · Law · Company services",
+            sub: "Company setup, compliance, accounting, legal advisory…",
+            badge: "FOR CUSTOMERS & BUSINESSES"
+          },
+          experience: {
+            title: "Experience · Events · Leisure",
+            sub: "Workshops, teambuilding, clubs, creative classes…",
+            badge: "SPECIAL & EXTENDED"
+          },
+          real_estate: {
+            title: "Real Estate · Buy & Sell",
+            sub: "Flats, houses, land, legal and financial advisory…",
+            badge: "FOR CUSTOMERS"
+          },
+          bazaar: {
+            title: "Bazaars · Second-hand",
+            sub: "Used goods, consignment, online & offline flea markets…",
+            badge: "FOR CUSTOMERS"
+          },
+          pets: {
+            title: "Pets · Pet services",
+            sub: "Pet care, grooming, pet sitting, pet transport…",
+            badge: "FOR CUSTOMERS"
+          },
+          ceremony: {
+            title: "Ceremony · Weddings · Funerals",
+            sub: "Wedding planning, church services, funeral support…",
+            badge: "SPECIAL & EXTENDED"
+          },
+          other: {
+            title: "Other · Emerging services",
+            sub: "New real-life services that do not yet have their own category.",
+            badge: "SPECIAL & EXTENDED"
+          }
+        }
+      },
+
+      cz: {
+        pageTitle: "Vyberte kategorii služby",
+        pageIntro:
+          "Níže je 18 kategorií služeb oblíbených mezi vietnamskou komunitou v ČR a EU. Vyberte kategorii, která nejlépe odpovídá vašim potřebám. Poté se otevře detail (Day 6) s poskytovateli ověřenými Tranmarketem a KYB.",
+        taxiNotePrefix: "Poznámka:",
+        taxiNoteBody: "Tato stránka pouze rozděluje služby podle témat. V dalším kroku (Day 6) uvidíte konkrétní poskytovatele, na které se můžete obrátit.",
+        copyright:
+          "© 2025 TRANMARKET Web3 Services — Všechna práva vyhrazena.",
+        categories: {
+          logistics: {
+            title: "Logistika · Zásilky · Doprava",
+            sub: "Mezinárodní linky, doprava v EU, kontejnery, sklady, expresní služby…",
+            badge: "PRO ZÁKAZNÍKY"
+          },
+          documents: {
+            title: "Doklady · Překlady · Dokumenty",
+            sub: "Notář, právní dokumenty, řidičský průkaz, soudní překlady…",
+            badge: "PRO ZÁKAZNÍKY"
+          },
+          housing: {
+            title: "Stěhování · Interiér · Stavba",
+            sub: "Stěhování domácností, opravy, rekonstrukce, úklid, drobné práce…",
+            badge: "PRO ZÁKAZNÍKY"
+          },
+          car: {
+            title: "Auto & Servis · Opravy",
+            sub: "Mechanické opravy, servis, STK, detailing…",
+            badge: "PRO ZÁKAZNÍKY"
+          },
+          taxi: {
+            title: "Taxi · Osobní přeprava",
+            sub: "Taxi na letiště, do práce, přeprava jednotlivců i malých skupin…",
+            badge: "PŘÍKLAD: TAXI TRANMARKET – LIBEREC"
+          },
+          education: {
+            title: "Vzdělávání · Kurzy · Kariéra",
+            sub: "Doučování, krátké kurzy, vedlejší dovednosti, kariérní poradenství…",
+            badge: "PRO ZÁKAZNÍKY"
+          },
+          beauty: {
+            title: "Krása · Spa · Vlasy · Nehty",
+            sub: "Kadeřnictví, nehty, spa, masáže, péče o pleť, líčení…",
+            badge: "PRO ZÁKAZNÍKY"
+          },
+          health: {
+            title: "Zdraví · Výživa · Sport",
+            sub: "Poradenství, osobní trenéři, výživa, regenerace…",
+            badge: "PRO ZÁKAZNÍKY"
+          },
+          food: {
+            title: "Jídlo · Restaurace · Catering",
+            sub: "Vietnamská kuchyně, catering na akce, rozvoz jídel…",
+            badge: "PRO ZÁKAZNÍKY"
+          },
+          travel: {
+            title: "Cestování · Zájezdy · Výlety",
+            sub: "Výlety po ČR, zájezdy po EU, poutě, dovolené, individuální plány…",
+            badge: "PRO ZÁKAZNÍKY"
+          },
+          rent: {
+            title: "Pronájem · Byty · Pokoje",
+            sub: "Krátkodobý i dlouhodobý pronájem, spolubydlení, flexibilní bydlení…",
+            badge: "PRO ZÁKAZNÍKY"
+          },
+          business: {
+            title: "Byznys · Právo · Firmy",
+            sub: "Založení firmy, compliance, účetnictví, právní služby…",
+            badge: "PRO ZÁKAZNÍKY I FIRMY"
+          },
+          experience: {
+            title: "Zážitky · Akce · Volný čas",
+            sub: "Workshopy, teambuilding, kluby, kreativní kurzy…",
+            badge: "ROZŠÍŘENÉ & SPECIÁLNÍ"
+          },
+          real_estate: {
+            title: "Reality · Nákup a prodej",
+            sub: "Byty, domy, pozemky, právní a finanční poradenství…",
+            badge: "PRO ZÁKAZNÍKY"
+          },
+          bazaar: {
+            title: "Bazar · Second-hand",
+            sub: "Použité zboží, komisní prodej, online i offline trhy…",
+            badge: "PRO ZÁKAZNÍKY"
+          },
+          pets: {
+            title: "Mazlíčci · Služby pro zvířata",
+            sub: "Péče, grooming, hlídání, přeprava domácích mazlíčků…",
+            badge: "PRO ZÁKAZNÍKY"
+          },
+          ceremony: {
+            title: "Obřady · Svatby · Pohřby",
+            sub: "Svatby, církevní obřady, podpora při pohřbech…",
+            badge: "ROZŠÍŘENÉ & SPECIÁLNÍ"
+          },
+          other: {
+            title: "Ostatní · Nové služby",
+            sub: "Nové reálné služby, které zatím nemají vlastní kategorii.",
+            badge: "ROZŠÍŘENÉ & SPECIÁLNÍ"
+          }
+        }
       }
     };
 
-    function switchLang(lang) {
-      const p = langPack[lang] || langPack.vi;
-      const map = {
-        "page-title": p.pageTitle,
-        "page-intro": p.pageIntro,
-        "taxi-badge": p.taxiBadge,
-        "copyright": p.copyright
-      };
+    function applyLang(lang) {
+      const pack = langPack[lang] || langPack.vi;
 
-      for (const id in map) {
-        const el = document.getElementById(id);
-        if (el) el.innerText = map[id];
-      }
+      document.getElementById("page-title").innerText = pack.pageTitle;
+      document.getElementById("page-intro").innerText = pack.pageIntro;
+      document.getElementById("taxi-note-prefix").innerText = pack.taxiNotePrefix + " ";
+      document.getElementById("taxi-note-body").innerText = pack.taxiNoteBody;
+      document.getElementById("copyright").innerText = pack.copyright;
+
+      const cats = pack.categories;
+      document.querySelectorAll(".service-card").forEach(card => {
+        const key = card.getAttribute("data-cat");
+        const cfg = cats[key];
+        if (!cfg) return;
+        card.querySelector('[data-role="title"]').innerText = cfg.title;
+        card.querySelector('[data-role="sub"]').innerText = cfg.sub;
+        card.querySelector('[data-role="badge"]').innerText = cfg.badge;
+      });
 
       document.querySelectorAll(".lang-switch button").forEach(btn =>
         btn.classList.remove("active")
       );
       const activeBtn = document.getElementById("btn-" + lang);
       if (activeBtn) activeBtn.classList.add("active");
+
+      try {
+        localStorage.setItem(STORAGE_LANG_KEY, lang);
+      } catch (e) {
+        console.warn("[Tranmarket] Cannot save lang", e);
+      }
+
+      document.documentElement.setAttribute("lang", lang === "vi" ? "vi" : lang);
+    }
+
+    function switchLang(lang) {
+      applyLang(lang);
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      switchLang("vi");
+      let initialLang = "vi";
+      try {
+        const stored = localStorage.getItem(STORAGE_LANG_KEY);
+        if (stored && langPack[stored]) initialLang = stored;
+      } catch (e) {
+        console.warn("[Tranmarket] Cannot read lang", e);
+      }
+      applyLang(initialLang);
     });
   </script>
 </body>
