@@ -2,15 +2,176 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>TRANMARKET · Loading…</title>
-  <meta http-equiv="refresh" content="0; url=portal.html" />
+  <title>TRANMARKET · Vietnamese Services in CZ & EU</title>
+  <meta
+    name="description"
+    content="Tranmarket – danh mục 18 dịch vụ đời sống dành cho người Việt tại Séc & EU, chuẩn bị sẵn sàng cho Web3 và Pi Network."
+  />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head>
-<body style="background:#020018; color:#fff; font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; text-align:center; padding:40px 16px;">
-  <p>Redirecting to Tranmarket portal…</p>
-  <p>
-    Nếu trình duyệt không tự chuyển, bấm vào đây:
-    <a href="portal.html" style="color:#d0a6ff; text-decoration:underline;">mở Tranmarket Portal</a>
-  </p>
-</body>
-</html>
+
+  <!-- Pi Web3 SDK -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <script>
+    if (typeof window.Pi !== "undefined") {
+      window.Pi.init({
+        version: "2.0",
+        sandbox: false
+      });
+      console.log("[Index] Pi SDK initialized");
+    } else {
+      console.warn("[Index] Pi SDK NOT found. Hãy mở trong Pi Browser.");
+    }
+  </script>
+
+  <!-- Pi Auth helper (dùng chung với direct.html & auth-test.html) -->
+  <script src="auth/pi-auth.js"></script>
+
+  <style>
+    :root {
+      --bg-main: #020018;
+      --card-bg: rgba(8, 0, 40, 0.95);
+      --accent: #9f7bff;
+      --accent-soft: rgba(159, 123, 255, 0.25);
+      --accent-strong: #ffbb00;
+      --text-main: #f5f6ff;
+      --text-muted: #b7bce6;
+      --radius-xl: 24px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.75);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      min-height: 100vh;
+      background-color: var(--bg-main);
+      background-image: url("assets/trm-logo-background.png");
+      background-size: cover;
+      background-position: center;
+      color: var(--text-main);
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(
+          circle at top,
+          rgba(159, 123, 255, 0.22),
+          transparent 55%
+        ),
+        radial-gradient(
+          circle at bottom,
+          rgba(255, 80, 170, 0.18),
+          transparent 55%
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1120px;
+      padding: 32px 20px 44px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Top bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #fff2, transparent 50%),
+        #1b1029;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 0 24px rgba(0, 0, 0, 0.9);
+    }
+
+    .brand-logo img {
+      width: 120%;
+      height: auto;
+    }
+
+    .brand-text-main {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .brand-text-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .lang-switch button {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 13px;
+      cursor: pointer;
+      padding: 4px 10px;
+      border-radius: 999px;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .lang-switch button.active {
+      background: var(--accent-soft);
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    #pi-login {
+      font-size: 12px;
+      color: var(--text-muted);
+      min-width: 120px;
+      text-align: right;
+    }
+
+    /* Hero */
+    .hero {
+      margin-top: 6px;
+      padding: 24px 22px 22px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(
+        135deg,
+        rgba(7,
