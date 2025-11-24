@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <title>TRANMARKET · Vietnamese Services in CZ & EU</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta
     name="description"
-    content="Tranmarket – danh mục 18 dịch vụ đời sống dành cho người Việt tại Séc & EU, chuẩn bị sẵn sàng cho Web3 và Pi Network."
+    content="Tranmarket – danh mục 18 nhóm dịch vụ dành cho cộng đồng người Việt tại Séc & EU, có chuẩn bị cho Web3 & Pi Wallet."
   />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Pi Web3 SDK -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
   <script>
+    // Khởi tạo Pi SDK – nếu đang mở trong Pi Browser
     if (typeof window.Pi !== "undefined") {
       window.Pi.init({
         version: "2.0",
@@ -19,24 +20,25 @@
       });
       console.log("[Index] Pi SDK initialized");
     } else {
-      console.warn("[Index] Pi SDK NOT found. Hãy mở trong Pi Browser.");
+      console.warn("[Index] Pi SDK NOT found. Hãy mở trong Pi Browser để test ví Pi.");
     }
   </script>
 
-  <!-- Pi Auth helper (dùng chung với direct.html & auth-test.html) -->
+  <!-- Pi Auth helper dùng chung -->
   <script src="auth/pi-auth.js"></script>
 
   <style>
     :root {
       --bg-main: #020018;
-      --card-bg: rgba(8, 0, 40, 0.95);
+      --card-bg: rgba(8, 0, 40, 0.96);
+      --card-soft: rgba(12, 0, 50, 0.92);
       --accent: #9f7bff;
       --accent-soft: rgba(159, 123, 255, 0.25);
       --accent-strong: #ffbb00;
       --text-main: #f5f6ff;
       --text-muted: #b7bce6;
       --radius-xl: 24px;
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.75);
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.7);
     }
 
     * {
@@ -79,12 +81,12 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 1120px;
-      padding: 32px 20px 44px;
+      max-width: 1040px;
+      padding: 32px 20px 40px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 22px;
     }
 
     /* Top bar */
@@ -111,7 +113,7 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      box-shadow: 0 0 24px rgba(0, 0, 0, 0.9);
+      box-shadow: 0 0 24px rgba(0, 0, 0, 0.8);
     }
 
     .brand-logo img {
@@ -169,9 +171,841 @@
 
     /* Hero */
     .hero {
-      margin-top: 6px;
-      padding: 24px 22px 22px;
+      margin-top: 4px;
+      padding: 22px 20px 20px;
       border-radius: var(--radius-xl);
       background: linear-gradient(
         135deg,
-        rgba(7,
+        rgba(7, 0, 40, 0.96),
+        rgba(10, 0, 50, 0.98)
+      );
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+      gap: 24px;
+      align-items: center;
+    }
+
+    .hero-main-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .hero-main-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .hero-main-desc {
+      font-size: 14px;
+      color: var(--text-main);
+      opacity: 0.94;
+      line-height: 1.5;
+    }
+
+    .hero-tagline {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--accent-strong);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero-logo-wrap {
+      text-align: center;
+    }
+
+    .hero-logo {
+      width: 120px;
+      height: 120px;
+      margin: 4px auto 8px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #fff3, transparent 55%),
+        #20142f;
+      box-shadow: 0 0 32px rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-logo img {
+      width: 120%;
+      height: auto;
+    }
+
+    .hero-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .hero-links {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .hero-link {
+      font-size: 11px;
+      color: var(--accent);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    /* Services grid */
+    .section-header {
+      margin-top: 8px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .section-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .services-grid {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 10px 11px;
+      border: 1px solid rgba(159, 123, 255, 0.42);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.65);
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+      text-align: left;
+      transition: transform 0.12s ease, box-shadow 0.12s ease,
+        border-color 0.12s ease, background 0.12s ease;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .service-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.8);
+      border-color: var(--accent-strong);
+      background: var(--card-soft);
+    }
+
+    .service-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #fff2, transparent 52%),
+        #24173a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .service-text {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .service-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .service-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* Bottom row: CTAs */
+    .cta-row {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      color: #ffffff;
+      background: linear-gradient(90deg, #7a00ff, #ffbb00);
+      box-shadow: 0 0 16px rgba(0, 0, 0, 0.7);
+    }
+
+    .btn-secondary {
+      color: var(--text-main);
+      background: rgba(22, 10, 60, 0.9);
+      border: 1px solid rgba(159, 123, 255, 0.6);
+    }
+
+    .btn-primary span,
+    .btn-secondary span {
+      margin-left: 6px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.8;
+    }
+
+    footer {
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding-inline: 14px;
+      }
+      .hero {
+        padding: 18px 14px 16px;
+      }
+      .brand-text-main {
+        font-size: 13px;
+      }
+      .brand-text-sub {
+        display: none;
+      }
+      .top-right {
+        gap: 8px;
+      }
+      .services-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      #pi-login {
+        min-width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <div class="page">
+    <!-- Top bar -->
+    <header class="top-bar">
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="assets/trm-logo-nav.png" alt="TRANMARKET logo" />
+        </div>
+        <div>
+          <div class="brand-text-main">TRANMARKET</div>
+          <div class="brand-text-sub" id="brand-sub"></div>
+        </div>
+      </div>
+
+      <div class="top-right">
+        <div class="lang-switch">
+          <button id="btn-en" onclick="switchLang('en')">EN</button>
+          <button id="btn-cz" onclick="switchLang('cz')">CZ</button>
+          <button id="btn-vi" onclick="switchLang('vi')">VN</button>
+        </div>
+
+        <!-- Sẽ được pi-auth.js thay bằng nút CONNECT PI WALLET / Logged-in -->
+        <div id="pi-login"></div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div>
+        <div class="hero-main-title" id="hero-title"></div>
+        <div class="hero-main-sub" id="hero-sub"></div>
+        <div class="hero-main-desc" id="hero-desc"></div>
+        <div class="hero-tagline" id="hero-tagline"></div>
+      </div>
+
+      <div class="hero-logo-wrap">
+        <div class="hero-logo">
+          <img src="assets/trm-logo-hero.png" alt="TRANMARKET hero logo" />
+        </div>
+        <div class="hero-note" id="hero-note"></div>
+        <div class="hero-links">
+          <a href="direct.html" class="hero-link" id="hero-link-direct"></a>
+          <a href="kyb.html" class="hero-link" id="hero-link-kyb"></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18 categories -->
+    <section>
+      <div class="section-header">
+        <div class="section-title" id="services-title"></div>
+        <div class="section-sub" id="services-sub"></div>
+      </div>
+
+      <div class="services-grid">
+        <!-- 18 nghề nghiệp / nhóm dịch vụ -->
+        <button class="service-card" onclick="openCategory('transport')" data-cat="transport">
+          <div class="service-icon">🚐</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="transport"></div>
+            <div class="service-desc" data-cat-desc="transport"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('shipping')" data-cat="shipping">
+          <div class="service-icon">📦</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="shipping"></div>
+            <div class="service-desc" data-cat-desc="shipping"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('money')" data-cat="money">
+          <div class="service-icon">💱</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="money"></div>
+            <div class="service-desc" data-cat-desc="money"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('legal')" data-cat="legal">
+          <div class="service-icon">⚖️</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="legal"></div>
+            <div class="service-desc" data-cat-desc="legal"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('tax')" data-cat="tax">
+          <div class="service-icon">📑</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="tax"></div>
+            <div class="service-desc" data-cat-desc="tax"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('real_estate')" data-cat="real_estate">
+          <div class="service-icon">🏠</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="real_estate"></div>
+            <div class="service-desc" data-cat-desc="real_estate"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('car')" data-cat="car">
+          <div class="service-icon">🚗</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="car"></div>
+            <div class="service-desc" data-cat-desc="car"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('translation')" data-cat="translation">
+          <div class="service-icon">🗣️</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="translation"></div>
+            <div class="service-desc" data-cat-desc="translation"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('education')" data-cat="education">
+          <div class="service-icon">📚</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="education"></div>
+            <div class="service-desc" data-cat-desc="education"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('it_repair')" data-cat="it_repair">
+          <div class="service-icon">💻</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="it_repair"></div>
+            <div class="service-desc" data-cat-desc="it_repair"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('phone_internet')" data-cat="phone_internet">
+          <div class="service-icon">📶</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="phone_internet"></div>
+            <div class="service-desc" data-cat-desc="phone_internet"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('health_beauty')" data-cat="health_beauty">
+          <div class="service-icon">💆‍♂️</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="health_beauty"></div>
+            <div class="service-desc" data-cat-desc="health_beauty"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('restaurant')" data-cat="restaurant">
+          <div class="service-icon">🍜</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="restaurant"></div>
+            <div class="service-desc" data-cat-desc="restaurant"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('grocery')" data-cat="grocery">
+          <div class="service-icon">🛒</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="grocery"></div>
+            <div class="service-desc" data-cat-desc="grocery"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('cleaning')" data-cat="cleaning">
+          <div class="service-icon">🧹</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="cleaning"></div>
+            <div class="service-desc" data-cat-desc="cleaning"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('printing')" data-cat="printing">
+          <div class="service-icon">🖨️</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="printing"></div>
+            <div class="service-desc" data-cat-desc="printing"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('events')" data-cat="events">
+          <div class="service-icon">🎉</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="events"></div>
+            <div class="service-desc" data-cat-desc="events"></div>
+          </div>
+        </button>
+
+        <button class="service-card" onclick="openCategory('jobs')" data-cat="jobs">
+          <div class="service-icon">🧑‍🔧</div>
+          <div class="service-text">
+            <div class="service-title" data-cat-title="jobs"></div>
+            <div class="service-desc" data-cat-desc="jobs"></div>
+          </div>
+        </button>
+      </div>
+
+      <div class="cta-row">
+        <a href="direct.html" class="btn-primary" id="cta-direct">
+          <span id="cta-direct-text"></span>
+          <span>›</span>
+        </a>
+        <a href="kyb.html" class="btn-secondary" id="cta-kyb">
+          <span id="cta-kyb-text"></span>
+          <span>›</span>
+        </a>
+      </div>
+    </section>
+
+    <footer id="copyright"></footer>
+  </div>
+
+  <script>
+    const STORAGE_LANG_KEY = "trm_lang";
+
+    const langPack = {
+      en: {
+        brandSub: "Web3 Services for Vietnamese in CZ & EU",
+        heroTitle: "Find trusted services – in one place",
+        heroSub: "18 categories · Vietnamese speaking providers · Web3-ready",
+        heroDesc:
+          "Tranmarket helps the Vietnamese community in Czechia & the EU find real, verified services: from transport and money transfer to legal help, car repair and more. No token hype – just a clean directory that can later connect to Pi Web3.",
+        heroTagline: "Community first · Web3 second",
+        heroNote:
+          "Pi Wallet can be used here as an optional identity and payment layer. Businesses stay in full control of their prices and contracts.",
+        heroLinkDirect: "Read the Web3 vision",
+        heroLinkKyb: "How verification (KYB) works",
+        servicesTitle: "Service categories on Tranmarket",
+        servicesSub:
+          "Click on a category to open the detailed directory (Day 5 – Category B).",
+        ctaDirectText: "See Web3 overview (direct.html)",
+        ctaKybText: "Register your service (KYB form)",
+        copyright:
+          "© 2025 TRANMARKET Web3 Services — All rights reserved.",
+        categories: {
+          transport: {
+            title: "Transport & taxi",
+            desc: "Airport pickup, long-distance rides, moving services for families and shops."
+          },
+          shipping: {
+            title: "CZ–VN parcel & cargo",
+            desc: "Fast shipping between Czechia and Vietnam, customs support and warehouses."
+          },
+          money: {
+            title: "Money transfer & payments",
+            desc: "Remittance, exchange, bill payments and trusted money agents."
+          },
+          legal: {
+            title: "Legal & documents",
+            desc: "Residence permits, contracts, disputes and official documents support."
+          },
+          tax: {
+            title: "Accounting & tax",
+            desc: "Bookkeeping, tax returns, payroll, business registration and consulting."
+          },
+          real_estate: {
+            title: "Real estate & rentals",
+            desc: "Short and long-term rent, buying and selling flats, offices and shops."
+          },
+          car: {
+            title: "Car service & inspection",
+            desc: "Repair, maintenance, tyres, MOT/technical checks and car trading."
+          },
+          translation: {
+            title: "Translation & interpreting",
+            desc: "CZ–VN–EN translation for offices, hospitals, schools and courts."
+          },
+          education: {
+            title: "Education & tutoring",
+            desc: "Courses for kids and adults, language classes, driving school and skills."
+          },
+          it_repair: {
+            title: "IT & electronics repair",
+            desc: "Phone, laptop, PC, POS systems, shop hardware setup and troubleshooting."
+          },
+          phone_internet: {
+            title: "Mobile, internet & TV",
+            desc: "SIM cards, tariffs, internet setup at home or shop, IPTV solutions."
+          },
+          health_beauty: {
+            title: "Health, beauty & spa",
+            desc: "Hair salons, nails, massage, wellness and other personal care."
+          },
+          restaurant: {
+            title: "Restaurants & catering",
+            desc: "Pho, bun cha, banh mi, buffet, event catering and party food."
+          },
+          grocery: {
+            title: "Markets & grocery",
+            desc: "Vietnamese supermarkets, wholesale food, drink and snack suppliers."
+          },
+          cleaning: {
+            title: "Cleaning & housekeeping",
+            desc: "Home, office, warehouse cleaning and regular housekeeping services."
+          },
+          printing: {
+            title: "Print, design & marketing",
+            desc: "Business cards, menus, banners, logo design and online promotion."
+          },
+          events: {
+            title: "Events & photo / video",
+            desc: "Wedding, birthday, church events, MC, photography and filming."
+          },
+          jobs: {
+            title: "Jobs & HR services",
+            desc: "Job offers, recruitment agencies and HR consulting for businesses."
+          }
+        }
+      },
+
+      vi: {
+        brandSub: "Danh mục dịch vụ cho người Việt tại Séc & EU",
+        heroTitle: "Tìm dịch vụ uy tín – đúng nhu cầu",
+        heroSub: "18 nhóm dịch vụ · nói tiếng Việt · sẵn sàng cho Web3",
+        heroDesc:
+          "Tranmarket giúp cộng đồng người Việt tại Séc & EU tìm dịch vụ thật, có kiểm chứng: từ vận chuyển, gửi hàng, chuyển tiền đến giấy tờ, thuế, sửa xe… Không chạy theo token, chỉ là danh mục rõ ràng – có thể kết nối với Pi Web3 sau này.",
+        heroTagline: "Cộng đồng trước · Web3 sau",
+        heroNote:
+          "Ví Pi có thể dùng như một lớp danh tính và thanh toán tùy chọn. Doanh nghiệp vẫn tự quyết giá cả và hợp đồng.",
+        heroLinkDirect: "Đọc tầm nhìn Web3 (direct.html)",
+        heroLinkKyb: "Xem Tranmarket kiểm tra KYB ra sao",
+        servicesTitle: "18 nhóm dịch vụ trên Tranmarket",
+        servicesSub:
+          "Bấm vào từng nhóm để mở danh sách chi tiết (Day 5 – Category B).",
+        ctaDirectText: "Xem giới thiệu Web3 (direct.html)",
+        ctaKybText: "Đăng ký dịch vụ (form KYB)",
+        copyright:
+          "© 2025 TRANMARKET Web3 Services — Bảo lưu mọi quyền.",
+        categories: {
+          transport: {
+            title: "Vận chuyển & taxi",
+            desc: "Đưa đón sân bay, đi tỉnh, chuyển nhà cho gia đình và cửa hàng."
+          },
+          shipping: {
+            title: "Gửi hàng Séc – Việt Nam",
+            desc: "Chuyển phát nhanh, hàng container, hỗ trợ hải quan và kho bãi."
+          },
+          money: {
+            title: "Chuyển tiền & thanh toán",
+            desc: "Gửi tiền về Việt Nam, đổi tiền, đóng hóa đơn và đại lý uy tín."
+          },
+          legal: {
+            title: "Luật sư & giấy tờ",
+            desc: "Thẻ cư trú, hợp đồng, tranh chấp, hồ sơ cho công ty và cá nhân."
+          },
+          tax: {
+            title: "Kế toán & thuế",
+            desc: "Ghi sổ, quyết toán, lương nhân viên, đăng ký doanh nghiệp."
+          },
+          real_estate: {
+            title: "Nhà cửa & mặt bằng",
+            desc: "Thuê – mua bán căn hộ, nhà ở, ki-ốt, nhà hàng, kho xưởng."
+          },
+          car: {
+            title: "Gara & kiểm định xe",
+            desc: "Sửa chữa, bảo dưỡng, lốp, đăng kiểm kỹ thuật, mua bán xe."
+          },
+          translation: {
+            title: "Phiên dịch & dịch thuật",
+            desc: "Dịch CZ–VN–EN tại công sở, bệnh viện, trường học, tòa án."
+          },
+          education: {
+            title: "Học tập & gia sư",
+            desc: "Lớp cho trẻ em – người lớn, tiếng Séc, tiếng Anh, bằng lái, kỹ năng."
+          },
+          it_repair: {
+            title: "Sửa IT & điện tử",
+            desc: "Điện thoại, laptop, máy tính, máy in, hệ thống bán hàng POS."
+          },
+          phone_internet: {
+            title: "Điện thoại, internet & TV",
+            desc: "Sim – gói cước, lắp mạng tại nhà/cửa hàng, truyền hình & IPTV."
+          },
+          health_beauty: {
+            title: "Sức khỏe, làm đẹp & spa",
+            desc: "Cắt tóc, nail, massage, spa và các dịch vụ chăm sóc cá nhân."
+          },
+          restaurant: {
+            title: "Nhà hàng & nấu tiệc",
+            desc: "Phở, bún chả, cơm suất, đặt tiệc cưới hỏi, sinh nhật, hội thánh."
+          },
+          grocery: {
+            title: "Chợ & siêu thị Việt",
+            desc: "Cửa hàng thực phẩm, đại lý sỉ, đồ khô, đồ đông lạnh, đồ uống."
+          },
+          cleaning: {
+            title: "Dọn dẹp & giúp việc",
+            desc: "Vệ sinh nhà ở, văn phòng, kho bãi, giúp việc theo giờ hoặc định kỳ."
+          },
+          printing: {
+            title: "In ấn, thiết kế & quảng cáo",
+            desc: "Namecard, menu, biển bảng, thiết kế logo và quảng bá online."
+          },
+          events: {
+            title: "Sự kiện & chụp hình",
+            desc: "Tổ chức sự kiện, MC, chụp ảnh – quay phim cưới hỏi, hội nghị."
+          },
+          jobs: {
+            title: "Việc làm & nhân sự",
+            desc: "Tuyển dụng, giới thiệu việc làm, dịch vụ nhân sự cho doanh nghiệp."
+          }
+        }
+      },
+
+      cz: {
+        brandSub: "Služby pro vietnamskou komunitu v ČR a EU",
+        heroTitle: "Najděte ověřené služby na jednom místě",
+        heroSub: "18 kategorií · vietnamština · připravené na Web3",
+        heroDesc:
+          "Tranmarket pomáhá vietnamské komunitě v ČR a EU najít skutečné a ověřené služby: doprava, balíky, převody peněz, právní pomoc, autoservis a další. Bez tokenové horečky – jen přehledný adresář, který lze později napojit na Pi Web3.",
+        heroTagline: "Nejprve komunita, potom Web3",
+        heroNote:
+          "Pi peněženka zde může sloužit jako volitelná vrstva identity a plateb. Podnikatelé mají plnou kontrolu nad cenami i smlouvami.",
+        heroLinkDirect: "Přečíst vizi Web3 (direct.html)",
+        heroLinkKyb: "Jak funguje ověření služeb (KYB)",
+        servicesTitle: "18 kategorií služeb v Tranmarketu",
+        servicesSub:
+          "Klikněte na kategorii a otevřete detailní adresář (Day 5 – Category B).",
+        ctaDirectText: "Zobrazit přehled Web3 (direct.html)",
+        ctaKybText: "Registrovat službu (KYB formulář)",
+        copyright:
+          "© 2025 TRANMARKET Web3 Services — Všechna práva vyhrazena.",
+        categories: {
+          transport: {
+            title: "Doprava a taxi",
+            desc: "Odvoz na letiště, dálkové jízdy, stěhování rodin a obchodů."
+          },
+          shipping: {
+            title: "Balíky ČR – Vietnam",
+            desc: "Rychlé zásilky, námořní kontejnery, podpora celního řízení."
+          },
+          money: {
+            title: "Převody peněz a platby",
+            desc: "Posílání peněz do Vietnamu, směnárny, platby účtů, spolehliví zprostředkovatelé."
+          },
+          legal: {
+            title: "Právo a dokumenty",
+            desc: "Pobyt, smlouvy, spory, podpora při jednání s úřady a soudy."
+          },
+          tax: {
+            title: "Účetnictví a daně",
+            desc: "Vedení účetnictví, daňová přiznání, mzdy, registrace firem."
+          },
+          real_estate: {
+            title: "Nemovitosti a pronájem",
+            desc: "Krátkodobé i dlouhodobé pronájmy, koupě a prodej bytů, domů a provozoven."
+          },
+          car: {
+            title: "Autoservis a STK",
+            desc: "Opravy, údržba, pneumatiky, technické kontroly a prodej vozidel."
+          },
+          translation: {
+            title: "Překlady a tlumočení",
+            desc: "Překlady CZ–VN–EN pro úřady, nemocnice, školy a soudy."
+          },
+          education: {
+            title: "Vzdělávání a kurzy",
+            desc: "Kurzy pro děti i dospělé, čeština, angličtina, autoškola a další dovednosti."
+          },
+          it_repair: {
+            title: "IT a opravy elektroniky",
+            desc: "Servis telefonů, notebooků, počítačů a pokladních systémů."
+          },
+          phone_internet: {
+            title: "Mobil, internet a TV",
+            desc: "SIM karty, tarify, instalace internetu doma i v obchodě, IPTV řešení."
+          },
+          health_beauty: {
+            title: "Zdraví, krása a spa",
+            desc: "Kadeřnictví, nehty, masáže, wellness a osobní péče."
+          },
+          restaurant: {
+            title: "Restaurace a catering",
+            desc: "Pho, bun cha, bistro, catering na svatby, oslavy a komunitní akce."
+          },
+          grocery: {
+            title: "Obchody a potraviny",
+            desc: "Vietnamské supermarkety, velkoobchod s potravinami a nápoji."
+          },
+          cleaning: {
+            title: "Úklid a domácí pomoc",
+            desc: "Úklid bytů, kanceláří, skladů i pravidelná domácí výpomoc."
+          },
+          printing: {
+            title: "Tisk, design a reklama",
+            desc: "Vizitky, jídelní lístky, bannery, logo a online propagace."
+          },
+          events: {
+            title: "Akce, foto a video",
+            desc: "Svatby, narozeniny, komunitní akce, moderování, foto a video."
+          },
+          jobs: {
+            title: "Práce a personální služby",
+            desc: "Nabídky práce, zprostředkování zaměstnání a HR poradenství."
+          }
+        }
+      }
+    };
+
+    function switchLang(lang) {
+      const pack = langPack[lang] || langPack.en;
+
+      // Lưu ngôn ngữ
+      try {
+        localStorage.setItem(STORAGE_LANG_KEY, lang);
+      } catch (e) {
+        console.warn("[Tranmarket] Cannot save lang", e);
+      }
+
+      document.getElementById("brand-sub").innerText = pack.brandSub;
+
+      document.getElementById("hero-title").innerText = pack.heroTitle;
+      document.getElementById("hero-sub").innerText = pack.heroSub;
+      document.getElementById("hero-desc").innerText = pack.heroDesc;
+      document.getElementById("hero-tagline").innerText = pack.heroTagline;
+      document.getElementById("hero-note").innerText = pack.heroNote;
+      document.getElementById("hero-link-direct").innerText =
+        pack.heroLinkDirect;
+      document.getElementById("hero-link-kyb").innerText = pack.heroLinkKyb;
+
+      document.getElementById("services-title").innerText =
+        pack.servicesTitle;
+      document.getElementById("services-sub").innerText = pack.servicesSub;
+
+      document.getElementById("cta-direct-text").innerText =
+        pack.ctaDirectText;
+      document.getElementById("cta-kyb-text").innerText = pack.ctaKybText;
+
+      document.getElementById("copyright").innerText = pack.copyright;
+
+      // Cập nhật nội dung 18 danh mục
+      const cats = pack.categories;
+      Object.keys(cats).forEach(key => {
+        document
+          .querySelectorAll('[data-cat-title="' + key + '"]')
+          .forEach(el => (el.innerText = cats[key].title));
+        document
+          .querySelectorAll('[data-cat-desc="' + key + '"]')
+          .forEach(el => (el.innerText = cats[key].desc));
+      });
+
+      // Active state cho nút ngôn ngữ
+      document
+        .querySelectorAll(".lang-switch button")
+        .forEach(btn => btn.classList.remove("active"));
+      const activeBtn = document.getElementById("btn-" + lang);
+      if (activeBtn) activeBtn.classList.add("active");
+
+      // Lang attribute cho <html>
+      document.documentElement.setAttribute("lang", lang === "vi" ? "vi" : lang);
+    }
+
+    function openCategory(catKey) {
+      // Điều hướng sang Day 5 – Category B, kèm tham số cat
+      window.location.href =
+        "day5-category-b.html?cat=" + encodeURIComponent(catKey);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      // Ngôn ngữ mặc định (ưu tiên cái đã lưu)
+      let initialLang = "en";
+      try {
+        const storedLang = localStorage.getItem(STORAGE_LANG_KEY);
+        if (storedLang && langPack[storedLang]) {
+          initialLang = storedLang;
+        }
+      } catch (e) {
+        console.warn("[Tranmarket] Cannot read lang", e);
+      }
+
+      switchLang(initialLang);
+
+      // Khởi tạo trạng thái Pi login (nếu helper đã load)
+      if (typeof initPiLogin === "function") {
+        initPiLogin(); // vẽ CONNECT PI WALLET hoặc @username · ví
+      }
+    });
+  </script>
+</body>
+</html>
