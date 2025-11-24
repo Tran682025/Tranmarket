@@ -581,16 +581,16 @@
   switchLang("en");
 </script>
 
-<!-- Pi login component -->
-...
-<!-- Other scripts last here -->
-
+<div id="pi-login"></div>
 <script src="auth/pi-auth.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    initPiLogin();
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof initPiLogin === "function") {
+      initPiLogin(); // vẽ nút “Login with Pi Wallet” / hoặc @username · ví
+    }
   });
 </script>
+
 </body>
 </html>
 
