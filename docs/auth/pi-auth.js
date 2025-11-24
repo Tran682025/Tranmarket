@@ -1,10 +1,9 @@
-// docs/auth/pi-auth.js – Tranmarket minimal Pi Wallet auth (v2 – handle cancel cleanly)
+// docs/auth/pi-auth.js – Tranmarket Pi Wallet auth (v3 – rõ trạng thái)
 
 (function () {
   console.log("[Tranmarket] pi-auth.js loaded");
   window.TranPiAuthLoaded = true;
 
-  // Lưu profile vào localStorage (cho direct.html, portal, v.v.)
   function saveUser(profile) {
     try {
       localStorage.setItem("trm_user", JSON.stringify(profile));
@@ -13,7 +12,6 @@
     }
   }
 
-  // Đọc profile đã lưu (nếu có)
   function loadUser() {
     try {
       const raw = localStorage.getItem("trm_user");
@@ -25,7 +23,6 @@
     }
   }
 
-  // UI mặc định: vẽ nút login / trạng thái đã login vào #pi-login
   function defaultUpdateUI(profile) {
     const c = document.getElementById("pi-login");
     if (!c) {
@@ -61,7 +58,6 @@
     }
   }
 
-  // Hàm gọi Pi.authenticate
   async function loginWithPi(updateUI) {
     updateUI = updateUI || defaultUpdateUI;
 
@@ -105,10 +101,15 @@
 
       saveUser(profile);
       updateUI(profile);
+
+      // 👉 Hiện thông báo rõ ràng khi login OK
+      alert(
+        "Đăng nhập ví Pi thành công.\n\nTài khoản: @" +
+          (profile.username || "unknown")
+      );
     } catch (err) {
       console.error("[Tranmarket] Pi Auth Error", err);
 
-      // Tách riêng TH user tự bấm Cancel / đóng popup
       const msg =
         (err && err.message) ||
         (typeof err === "string" ? err : JSON.stringify(err) || "");
@@ -123,8 +124,11 @@
         (err && err.code === "USER_CANCELLED");
 
       if (isUserCancel) {
-        // Không coi là lỗi “hỏng auth”, chỉ log lại, giữ UI như cũ
-        console.log("[Tranmarket] User cancelled Pi auth.");
+        alert(
+          "Bạn vừa HUỶ đăng nhập với ví Pi trên Pi Browser.\n\n" +
+            "Nếu chắc chắn đã bấm Allow mà vẫn hiện thông báo này,\n" +
+            "thì đây là lỗi phía Pi SDK / Pi Browser, không phải lỗi Tranmarket."
+        );
         return;
       }
 
@@ -133,10 +137,8 @@
     }
   }
 
-  // Expose ra global cho HTML gọi
   window.loginWithPi = loginWithPi;
 
-  // Khởi động UI login từ profile đã lưu
   window.initPiLogin = function (updateUI) {
     console.log("[Tranmarket] initPiLogin() called");
     const fn = updateUI || defaultUpdateUI;
