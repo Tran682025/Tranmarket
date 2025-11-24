@@ -13,19 +13,36 @@
     if (window.TrmPiInitialized) {
       return true;
     }
+
+    // Chọn sandbox tùy theo môi trường:
+    // - localhost, 127.*, 10.* → sandbox: true (dev)
+    // - github.io (Tranmarket) → sandbox: false (testnet public)
+    const host = (window.location && window.location.hostname) || "";
+    const isLocal =
+      host === "localhost" ||
+      host === "127.0.0.1" ||
+      host.startsWith("10.") ||
+      host.startsWith("192.168.");
+
+    const useSandbox = isLocal ? true : false;
+
     try {
       window.Pi.init({
         version: "2.0",
-        sandbox: true // đang là app DEV / TEST → phải bật sandbox
+        sandbox: useSandbox
       });
       window.TrmPiInitialized = true;
-      console.log("[Tranmarket] Pi.init() done (sandbox: true)");
+      console.log(
+        "[Tranmarket] Pi.init() done (sandbox: " + useSandbox + ") on host:",
+        host
+      );
       return true;
     } catch (e) {
       console.error("[Tranmarket] Pi.init() failed", e);
       return false;
     }
   }
+
 
   function saveUser(profile) {
     try {
