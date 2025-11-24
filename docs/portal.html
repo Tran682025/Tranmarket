@@ -532,20 +532,26 @@
     document.getElementById("btn-" + l).classList.add("active");
   }
 
-  // Mặc định mở ra = tiếng Anh
-  switchLang("en");
-</script>
-<script src="portal-i18n.js"></script>
-<script>
-  switchLang('cz');
-</script>
+    // Mặc định mở ra = tiếng Anh (hoặc lấy từ localStorage)
+    const savedLang = localStorage.getItem("trm_lang") || "en";
+    switchLang(savedLang);
+  </script>
 
-<script src="auth/pi-auth.js"></script>
-<script>
-  initPiLogin();
-</script>
+  <!-- Pi Web3 SDK + Tranmarket auth helper -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+  <script src="auth/pi-auth.js?v=4"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Khởi động lại ngôn ngữ theo lựa chọn đã lưu (nếu có)
+      const savedLang = localStorage.getItem("trm_lang") || "en";
+      switchLang(savedLang);
+
+      // Vẽ nút CONNECT PI WALLET / @username · ví
+      if (typeof initPiLogin === "function") {
+        initPiLogin();
+      }
+    });
+  </script>
 </body>
 </html>
 
-</body>
-</html>
