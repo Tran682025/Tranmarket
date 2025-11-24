@@ -1,101 +1,126 @@
-<!-- docs/auth/pi-auth.js – Tranmarket Pi login helper -->
+// docs/auth/pi-auth.js
+// Simple Pi login helper for Tranmarket (direct.html + future pages)
 
-// Khóa lưu user trong localStorage
-const TRM_PI_USER_KEY = "trm-pi-user-v1";
+const STORAGE_KEY = "tranmarket_pi_user";
+let currentUser = null;
 
-// ===== Helpers lưu / đọc user =====
+// -------------------- Storage helpers --------------------
+
 function saveUser(profile) {
   try {
-    localStorage.setItem(TRM_PI_USER_KEY, JSON.stringify(profile));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
   } catch (e) {
-    console.warn("Tranmarket – cannot save user to localStorage:", e);
+    console.warn("[Tranmarket] Cannot save user to localStorage:", e);
   }
 }
 
-function getStoredUser() {
+function loadUser() {
   try {
-    const raw = localStorage.getItem(TRM_PI_USER_KEY);
+    const raw = localStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : null;
   } catch (e) {
-    console.warn("Tranmarket – cannot read user from localStorage:", e);
+    console.warn("[Tranmarket] Cannot read user from localStorage:", e);
     return null;
   }
 }
 
 function clearUser() {
   try {
-    localStorage.removeItem(TRM_PI_USER_KEY);
+    localStorage.removeItem(STORAGE_KEY);
   } catch (e) {
-    console.warn("Tranmarket – cannot clear user from localStorage:", e);
+    console.warn("[Tranmarket] Cannot clear user from localStorage:", e);
   }
 }
 
-// ===== Render UI trong <div id="pi-login"> =====
-function renderLoggedOut(container, onLogin) {
-  container.innerHTML = `
-    <button id="trm-pi-login-btn"
-            style="
-              padding:6px 14px;
-              border-radius:999px;
-              border:none;
-              cursor:pointer;
-              font-size:12px;
-              font-weight:600;
-              color:#fff;
-              background:linear-gradient(90deg,#7a00ff,#ffbb00);
-              box-shadow:0 0 10px rgba(0,0,0,0.6);
-              white-space:nowrap;">
-      Login with Pi Wallet
-    </button>
-  `;
+// -------------------- UI helper --------------------
 
-  const btn = container.querySelector("#trm-pi-login-btn");
-  if (btn) {
-    btn.addEventListener("click", onLogin);
-  }
+function shortAddress(addr) {
+  if (!addr || typeof addr !== "string") return "";
+  if (addr.length <= 12) return addr;
+  return addr.slice(0, 6) + "…" + addr.slice(-4);
 }
 
-function renderLoggedIn(container, profile, onLogout) {
-  const username = profile.username || "Pi user";
-  const wallet = profile.wallet_address || "";
-  const shortWallet = wallet
-    ? wallet.slice(0, 6) + "..." + wallet.slice(-4)
-    : "no wallet";
-
-  container.innerHTML = `
-    <div style="display:flex;align-items:center;gap:8px;font-size:11px;">
-      <span>✅ ${username}</span>
-      <span style="opacity:0.75;">(${shortWallet})</span>
-      <button id="trm-pi-logout-btn"
-              style="
-                padding:2px 8px;
-                border-radius:999px;
-                border:1px solid rgba(255,255,255,0.3);
-                background:transparent;
-                color:#fff;
-                font-size:10px;
-                cursor:pointer;">
-        Logout
-      </button>
-    </div>
-  `;
-
-  const btn = container.querySelector("#trm-pi-logout-btn");
-  if (btn) {
-    btn.addEventListener("click", onLogout);
+function updateUI(profile) {
+  const container = document.getElementById("pi-login");
+  if (!container) {
+    console.warn("[Tranmarket] updateUI: div#pi-login not found on this page.");
+    return;
   }
+
+  container.innerHTML = "";
+
+  const wrapper = document.createElement("div");
+  wrapper.style.display = "flex";
+  wrapper.style.alignItems = "center";
+  wrapper.style.gap = "8px";
+
+  // NOT logged in -> show big gradient button
+  if (!profile || !profile.username) {
+    const btn = document.createElement("button");
+    btn.textContent = "Login with Pi Wallet";
+    btn.style.border = "none";
+    btn.style.borderRadius = "999px";
+    btn.style.padding = "8px 18px";
+    btn.style.cursor = "pointer";
+    btn.style.fontSize = "13px";
+    btn.style.fontWeight = "600";
+    btn.style.color = "#fff";
+    btn.style.backgroundImage = "linear-gradient(90deg,#7a00ff,#ffbb00)";
+    btn.style.boxShadow = "0 0 18px rgba(0,0,0,0.6)";
+    btn.onclick = handleLoginClick;
+
+    wrapper.appendChild(btn);
+  } else {
+    // Logged in -> show username + short address + logout
+    const info = document.createElement("div");
+    info.style.fontSize = "12px";
+    info.style.color = "#f5f6ff";
+
+    const nameSpan = document.createElement("span");
+    nameSpan.textContent = profile.username;
+
+    const sep = document.createElement("span");
+    sep.textContent = " · ";
+    sep.style.opacity = "0.7";
+
+    const addrSpan = document.createElement("span");
+    addrSpan.textContent = shortAddress(profile.wallet_address);
+    addrSpan.style.opacity = "0.8";
+
+    info.appendChild(nameSpan);
+    info.appendChild(sep);
+    info.appendChild(addrSpan);
+
+    const logoutBtn = document.createElement("button");
+    logoutBtn.textContent = "Logout";
+    logoutBtn.style.marginLeft = "10px";
+    logoutBtn.style.border = "1px solid rgba(159,123,255,0.7)";
+    logoutBtn.style.borderRadius = "999px";
+    logoutBtn.style.padding = "4px 10px";
+    logoutBtn.style.cursor = "pointer";
+    logoutBtn.style.fontSize = "11px";
+    logoutBtn.style.background = "rgba(8,0,40,0.9)";
+    logoutBtn.style.color = "#f5f6ff";
+    logoutBtn.onclick = doLogout;
+
+    wrapper.appendChild(info);
+    wrapper.appendChild(logoutBtn);
+  }
+
+  container.appendChild(wrapper);
 }
 
-// ===== Hàm login chính =====
-async function loginWithPi(updateUI) {
+// -------------------- Pi SDK login core --------------------
+
+async function loginWithPi() {
   if (typeof window.Pi === "undefined") {
-    throw new Error("Pi SDK is not available yet.");
+    throw new Error("Pi SDK not found – hãy mở Tranmarket trong Pi Browser.");
   }
 
-  // Production: sandbox = false
+  // Init Pi SDK (sandbox=true cho test; sau này mainnet thì đổi sang false)
   window.Pi.init({
     version: "2.0",
-    sandbox: false
+    sandbox: true
   });
 
   const scopes = ["username", "wallet_address", "platform"];
@@ -104,22 +129,23 @@ async function loginWithPi(updateUI) {
     scopes,
     function onIncompletePaymentFound(payment) {
       console.log("[Tranmarket] onIncompletePaymentFound:", payment);
+      // Phase sau nếu có thanh toán thì xử lý tiếp ở đây
     }
   );
 
-  const user = authResult && authResult.user ? authResult.user : {};
-
+  const user = (authResult && authResult.user) ? authResult.user : {};
   const walletAddress =
     user.wallet_address ||
     (user.credentials && user.credentials.wallet_address) ||
     "";
 
   const platform =
-    (authResult && authResult.app && authResult.app.platform) ||
-    "pi-browser";
+    user.platform ||
+    authResult.platform ||
+    "";
 
   const validUntil =
-    (authResult && authResult.accessToken && authResult.accessToken.expiresAt) ||
+    (authResult.accessToken && authResult.accessToken.expiresAt) ||
     null;
 
   const profile = {
@@ -131,78 +157,51 @@ async function loginWithPi(updateUI) {
   };
 
   saveUser(profile);
-  updateUI(profile);
+  currentUser = profile;
+  return profile;
 }
 
-// ===== Logout =====
-function doLogout(updateUI) {
-  clearUser();
-  updateUI(null);
-}
+// -------------------- Public handlers --------------------
 
-// ===== Khởi động trên từng trang =====
-window.initPiLogin = function () {
-  const container = document.getElementById("pi-login");
-  if (!container) {
-    console.warn(
-      "Tranmarket – initPiLogin: không tìm thấy <div id='pi-login'></div> trong trang."
-    );
-    return;
-  }
-
-  let tries = 0;
-  const maxTries = 12; // ~6–8 giây là đủ
-
-  function updateUI(profile) {
-    if (profile) {
-      renderLoggedIn(container, profile, () => doLogout(updateUI));
-    } else {
-      renderLoggedOut(container, handleLoginClick);
-    }
-  }
-
- async function handleLoginClick() {
+async function handleLoginClick() {
   try {
-    const profile = await loginWithPi(updateUI);
-
-    // nếu login thành công → cập nhật UI ngay
-    if (profile) {
-      updateUI(profile);
-    }
+    const profile = await loginWithPi();
+    updateUI(profile);
   } catch (err) {
-    const msg = (err && err.message) ? err.message.toLowerCase() : "";
+    const rawMsg = err && err.message ? String(err.message) : "";
+    const msg = rawMsg.toLowerCase();
 
+    // User bấm Cancel / đóng popup → không coi là lỗi
     if (msg.includes("cancel") || msg.includes("decline")) {
-      console.log("[Tranmarket] User cancelled login.");
+      console.log("[Tranmarket] User cancelled Pi login:", rawMsg);
       return;
     }
 
     console.error("[Tranmarket Pi Auth Error]", err);
     alert(
       "Đăng nhập với ví Pi thất bại.\n\nChi tiết: " +
-      (err && err.message ? err.message : JSON.stringify(err))
+      (rawMsg || JSON.stringify(err))
     );
   }
 }
 
+function doLogout() {
+  clearUser();
+  currentUser = null;
+  updateUI(null);
+}
 
-  function waitForPi() {
-    if (typeof window.Pi !== "undefined") {
-      const existing = getStoredUser();
-      updateUI(existing);
-      return;
-    }
+// -------------------- Init entry for pages --------------------
 
-    if (tries >= maxTries) {
-      container.innerText =
-        "[Pi Web3 không khả dụng. Hãy mở Tranmarket trong Pi Browser để đăng nhập.]";
-      return;
-    }
-
-    tries++;
-    container.innerText = "[Đang tải Pi Web3…]";
-    setTimeout(waitForPi, 600);
+window.initPiLogin = function () {
+  const container = document.getElementById("pi-login");
+  if (!container) {
+    console.warn(
+      "[Tranmarket] initPiLogin: không tìm thấy <div id=\"pi-login\"></div> trên trang."
+    );
+    return;
   }
 
-  waitForPi();
+  currentUser = loadUser();
+  updateUI(currentUser);
 };
