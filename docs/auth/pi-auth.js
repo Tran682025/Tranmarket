@@ -161,17 +161,30 @@ window.initPiLogin = function () {
     }
   }
 
-  async function handleLoginClick() {
-    try {
-      await loginWithPi(updateUI);
-    } catch (err) {
-      console.error("[Tranmarket Pi Auth Error]", err);
-      alert(
-        "Đăng nhập với ví Pi thất bại.\n\nChi tiết: " +
-          (err && err.message ? err.message : JSON.stringify(err))
-      );
+ async function handleLoginClick() {
+  try {
+    const profile = await loginWithPi(updateUI);
+
+    // nếu login thành công → cập nhật UI ngay
+    if (profile) {
+      updateUI(profile);
     }
+  } catch (err) {
+    const msg = (err && err.message) ? err.message.toLowerCase() : "";
+
+    if (msg.includes("cancel") || msg.includes("decline")) {
+      console.log("[Tranmarket] User cancelled login.");
+      return;
+    }
+
+    console.error("[Tranmarket Pi Auth Error]", err);
+    alert(
+      "Đăng nhập với ví Pi thất bại.\n\nChi tiết: " +
+      (err && err.message ? err.message : JSON.stringify(err))
+    );
   }
+}
+
 
   function waitForPi() {
     if (typeof window.Pi !== "undefined") {
