@@ -382,6 +382,7 @@
 
         <!-- Placeholder – sẽ được pi-auth.js thay bằng nút Login / Logged-in -->
         <div id="pi-login"></div>
+
       </div>
     </header>
 
@@ -581,18 +582,18 @@
 </script>
 
 <!-- Pi login component -->
+...
+<!-- Other scripts last here -->
+
 <script src="auth/pi-auth.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    if (typeof initPiLogin === "function") {
-      initPiLogin();
-    } else {
-      console.warn("initPiLogin not found.");
-      const c = document.getElementById("pi-login");
-      if (c) c.textContent = "[Pi login script not loaded]";
-    }
+  document.addEventListener("DOMContentLoaded", () => {
+    initPiLogin();
   });
 </script>
+</body>
+</html>
+
 
 </body>
 </html>
