@@ -14,7 +14,7 @@
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       min-height: 100vh;
       background: #020018;
-      color: #f5f6ff;
+      color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -24,7 +24,7 @@
       width: 100%;
       padding: 24px 20px;
       border-radius: 16px;
-      background: #080024;
+      background: #000024;
     }
     h1 {
       margin: 0 0 8px;
@@ -33,10 +33,32 @@
     p {
       margin: 0 0 16px;
       font-size: 14px;
-      color: #b7bce6;
+      color: #b0b7ff;
     }
-    #pi-login {
-      margin-top: 12px;
+    #test-status {
+      margin: 8px 0 16px;
+      font-size: 14px;
+      color: #ffd966;
+    }
+    #test-login-btn {
+      padding: 12px 22px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(90deg, #7a00ff, #ffbb00);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      display: inline-block;
+    }
+    pre {
+      margin-top: 16px;
+      padding: 12px;
+      background: #050533;
+      border-radius: 12px;
+      font-size: 12px;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
   </style>
 </head>
@@ -44,21 +66,39 @@
   <div class="box">
     <h1>Pi Wallet Auth · Test</h1>
     <p>Trang này dùng chung file <code>auth/pi-auth.js</code> để test đăng nhập ví Pi.</p>
-    <div id="pi-login">[Pi login component loading…]</div>
+
+    <div id="test-status">[TEST] initPiLogin is working</div>
+
+    <button id="test-login-btn">CONNECT PI WALLET</button>
+
+    <pre id="test-result"></pre>
   </div>
 
-  <!-- Gắn script auth -->
+  <!-- Pi auth helper -->
   <script src="auth/pi-auth.js"></script>
+
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      if (typeof initPiLogin === "function") {
-        console.log("[Tranmarket TEST] calling initPiLogin from auth-test.html");
-        initPiLogin();
-      } else {
-        console.error("initPiLogin() not found on window");
-        document.getElementById("pi-login").textContent =
-          "[ERROR] initPiLogin() not found. Check auth/pi-auth.js";
-      }
+      const statusEl = document.getElementById("test-status");
+      const resultEl = document.getElementById("test-result");
+      const btn = document.getElementById("test-login-btn");
+
+      btn.addEventListener("click", function () {
+        if (typeof loginWithPi !== "function") {
+          alert("loginWithPi() not found. Kiểm tra lại file auth/pi-auth.js");
+          return;
+        }
+
+        loginWithPi(function (profile) {
+          if (profile) {
+            statusEl.textContent = "LOGIN SUCCESS";
+            resultEl.textContent = JSON.stringify(profile, null, 2);
+          } else {
+            statusEl.textContent = "NOT LOGGED IN";
+            resultEl.textContent = "";
+          }
+        });
+      });
     });
   </script>
 </body>
