@@ -24,12 +24,12 @@
       host.startsWith("10.") ||
       host.startsWith("192.168.");
 
-    const useSandbox = isLocal ? true : false;
+    const useSandbox = true;
 
     try {
       window.Pi.init({
         version: "2.0",
-        sandbox: useSandbox
+        sandbox: true
       });
       window.TrmPiInitialized = true;
       console.log(
