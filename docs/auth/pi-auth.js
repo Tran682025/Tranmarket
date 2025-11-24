@@ -125,7 +125,7 @@
       // Khởi tạo Pi SDK – giữ giống auth-test hôm qua (mainnet)
       window.Pi.init({
         version: "2.0",
-        network: "mainnet"
+        sandbox: true
         // Nếu sau này test sandbox thì đổi network ở đây
       });
 
