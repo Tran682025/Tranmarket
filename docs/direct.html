@@ -575,27 +575,24 @@
         .forEach(btn => btn.classList.remove("active"));
       document.getElementById("btn-" + l).classList.add("active");
     }
-
-    // Default language = English
-    switchLang("en");
-  </script>
-
-  <!-- Pi login component -->
-  <script src="auth/pi-auth.js"></script>
-  <script>
-  document.addEventListener("DOMContentLoaded", initPiLogin);
+<script>
+  // Default language = English
+  switchLang("en");
 </script>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      if (typeof initPiLogin === "function") {
-        initPiLogin();
-      } else {
-        console.warn("initPiLogin() not found.");
-        const c = document.getElementById("pi-login");
-        if (c) c.textContent = "[Pi login script not loaded]";
-      }
-    });
-  </script>
+<!-- Pi login component -->
+<script src="auth/pi-auth.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof initPiLogin === "function") {
+      initPiLogin();
+    } else {
+      console.warn("initPiLogin not found.");
+      const c = document.getElementById("pi-login");
+      if (c) c.textContent = "[Pi login script not loaded]";
+    }
+  });
+</script>
+
 </body>
 </html>
