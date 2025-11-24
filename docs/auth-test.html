@@ -84,29 +84,30 @@
   <!-- Pi auth helper -->
   <script src="auth/pi-auth.js"></script>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const statusEl = document.getElementById("test-status");
-      const resultEl = document.getElementById("test-result");
-      const btn = document.getElementById("test-login-btn");
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const statusEl = document.getElementById("test-status");
+    const resultEl = document.getElementById("test-result");
+    const btn = document.getElementById("test-login-btn");
 
-      btn.addEventListener("click", function () {
-        if (typeof loginWithPi !== "function") {
-          alert("loginWithPi() not found. Kiểm tra lại file auth/pi-auth.js");
-          return;
+    btn.addEventListener("click", function () {
+      if (typeof loginWithPi !== "function") {
+        alert("loginWithPi() not found. Kiểm tra lại file auth/pi-auth.js");
+        return;
+      }
+
+      loginWithPi(function (profile) {
+        if (profile) {
+          statusEl.textContent = "LOGIN SUCCESS";
+          resultEl.textContent = JSON.stringify(profile, null, 2);
+        } else {
+          statusEl.textContent = "NOT LOGGED IN (no profile)";
+          resultEl.textContent = "";
         }
-
-        loginWithPi(function (profile) {
-          if (profile) {
-            statusEl.textContent = "LOGIN SUCCESS";
-            resultEl.textContent = JSON.stringify(profile, null, 2);
-          } else {
-            statusEl.textContent = "NOT LOGGED IN";
-            resultEl.textContent = "";
-          }
-        });
       });
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
