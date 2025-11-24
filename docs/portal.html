@@ -319,23 +319,18 @@
 <div class="page">
 
   <!-- Top bar -->
-  <header class="top-bar">
-    <div class="brand">
-      <div class="brand-logo">
-        <img src="assets/trm-logo-nav.png" alt="TRANMARKET logo">
-      </div>
-      <div>
-        <div class="brand-text-main">TRANMARKET</div>
-        <div class="brand-text-sub" id="brand-sub"></div>
-      </div>
-    </div>
+<header class="top-bar">
+  ...
+  <div class="lang-switch">
+    <button id="btn-vi" onclick="switchLang('vi')">VI</button>
+    <button id="btn-en" onclick="switchLang('en')">EN</button>
+    <button id="btn-cz" onclick="switchLang('cz')">CZ</button>
 
-    <div class="lang-switch">
-      <button id="btn-en" onclick="switchLang('en')">EN</button>
-      <button id="btn-cz" onclick="switchLang('cz')">CZ</button>
-      <button id="btn-vi" onclick="switchLang('vi')">VN</button>
-    </div>
-  </header>
+    <div id="pi-login"></div> <!-- Tranmarket Pi login -->
+  </div>
+  ...
+</header>
+
 
   <!-- Hero -->
   <section class="hero">
@@ -540,6 +535,17 @@
   // Mặc định mở ra = tiếng Anh
   switchLang("en");
 </script>
+<script src="portal-i18n.js"></script>
+<script>
+  switchLang('cz');
+</script>
+
+<script src="auth/pi-auth.js"></script>
+<script>
+  initPiLogin();
+</script>
+</body>
+</html>
 
 </body>
 </html>
