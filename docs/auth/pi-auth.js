@@ -147,31 +147,28 @@
         (user.credentials && user.credentials.wallet_address) ||
         "";
 
-      const profile = {
-        username: user.username || "",
-        uid: user.uid || "",
-        wallet_address: walletAddress,
-        platform: authResult.platform || "",
-        valid_until: authResult.accessToken && authResult.accessToken.lifetime
+          const profile = {
+      username: user.username || "",
+      uid: user.uid || "",
+      wallet_address: walletAddress,
+      platform: authResult.platform || platform,
+      valid_until:
+        authResult.accessToken && authResult.accessToken.lifetime
           ? authResult.accessToken.lifetime
           : null
-      };
+    };
 
-      console.log("[Tranmarket] Pi auth profile:", profile);
+    console.log("[Tranmarket] Pi auth profile:", profile);
 
-      saveUser(profile);
-      updateUI(profile);
-    } catch (err) {
-      console.error("[Tranmarket Pi Auth Error]", err);
-      const msg =
-        err && err.message
-          ? err.message
-          : typeof err === "string"
-          ? err
-          : JSON.stringify(err);
-      alert("Đăng nhập với ví Pi thất bại.\n\nChi tiết: " + msg);
+    // lưu vào localStorage & cập nhật UI dùng chung cho mọi trang
+    saveUser(profile);
+    updateUI(profile);
+
+    // gửi luôn kết quả auth cho direct.html (nếu có đăng ký callback)
+    if (window.onPiAuthenticated) {
+      window.onPiAuthenticated(authResult);
     }
-  }
+
 
   // ===== Hàm global để direct.html gọi =====
 
