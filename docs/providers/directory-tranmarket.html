@@ -1,406 +1,772 @@
-<script>
-  // ----------------------------
-  // TEXT & LABELS
-  // ----------------------------
-  const TEXT = {
-    vi: {
-      title: 'Danh sách doanh nghiệp đã đăng ký',
-      subtitle:
-        'Các đơn vị dưới đây đã gửi form KYB cho Tranmarket và được kiểm tra thủ công. Badge Pi cho biết mức độ sẵn sàng nhận thanh toán bằng Pi.',
-      filterAllCategories: 'Tất cả danh mục',
-      filterAllPi: 'Tất cả mức Pi-ready',
-      filterPiBasic: 'Basic – Pi-ready (Basic)',
-      filterPiStandard: 'Standard – Pi-ready (Standard)',
-      filterPiFull: 'Full – Pi-ready (Full)',
-      filterPiOnly: 'PiOnly – Chỉ nhận thanh toán Pi',
-      searchPlaceholder: 'Tìm theo tên, khu vực, ngành nghề...',
-      loading: 'Đang tải dữ liệu...',
-      empty: 'Chưa có doanh nghiệp phù hợp với bộ lọc hiện tại.',
-      error: 'Không tải được danh sách doanh nghiệp. Vui lòng thử lại sau.',
-      summary: (shown, total, piReady) =>
-        `${shown} doanh nghiệp hiển thị · ${piReady}/${total} sẵn sàng nhận Pi`,
-    },
-    en: {
-      title: 'Directory of registered businesses',
-      subtitle:
-        'These providers have submitted KYB forms and were manually reviewed by Tranmarket. The Pi badge indicates the level of readiness to accept Pi payments.',
-      filterAllCategories: 'All categories',
-      filterAllPi: 'All Pi-ready levels',
-      filterPiBasic: 'Basic – Pi-ready (Basic)',
-      filterPiStandard: 'Standard – Pi-ready (Standard)',
-      filterPiFull: 'Full – Pi-ready (Full)',
-      filterPiOnly: 'PiOnly – Pi-only payments',
-      searchPlaceholder: 'Search by name, region, industry...',
-      loading: 'Loading data...',
-      empty: 'No businesses match the current filters.',
-      error: 'Unable to load the business directory. Please try again later.',
-      summary: (shown, total, piReady) =>
-        `${shown} businesses shown · ${piReady}/${total} Pi-ready`,
-    },
-    cz: {
-      title: 'Seznam registrovaných podniků',
-      subtitle:
-        'Tito poskytovatelé podali KYB formulář a byli ručně ověřeni Tranmarketem. Odznak Pi označuje úroveň připravenosti přijímat platby v Pi.',
-      filterAllCategories: 'Všechny kategorie',
-      filterAllPi: 'Všechny úrovně Pi-ready',
-      filterPiBasic: 'Basic – Pi-ready (Basic)',
-      filterPiStandard: 'Standard – Pi-ready (Standard)',
-      filterPiFull: 'Full – Pi-ready (Full)',
-      filterPiOnly: 'PiOnly – Platby pouze v Pi',
-      searchPlaceholder: 'Hledat podle názvu, oblasti, oboru...',
-      loading: 'Načítání dat...',
-      empty: 'Žádný podnik neodpovídá zvoleným filtrům.',
-      error: 'Seznam podniků se nepodařilo načíst. Zkuste to prosím znovu.',
-      summary: (shown, total, piReady) =>
-        `${shown} podniků zobrazeno · ${piReady}/${total} připraveno přijímat Pi`,
-    },
-  };
-
-  // Map category text (VN trong JSON) → label đa ngữ
-  const CATEGORY_LABELS = {
-    'Gửi hàng – Chuyển phát': {
-      vi: 'Gửi hàng – Chuyển phát',
-      en: 'CZ–VN parcel & cargo',
-      cz: 'CZ–VN zásilky & cargo',
-    },
-    'Làm đẹp – Nails – Salon': {
-      vi: 'Làm đẹp – Nails – Salon',
-      en: 'Beauty – Nails – Salon',
-      cz: 'Beauty – Nehty – Salon',
-    },
-    'Oto – Sửa chữa – Bảo dưỡng': {
-      vi: 'Oto – Sửa chữa – Bảo dưỡng',
-      en: 'Auto service & repairs',
-      cz: 'Auto servis & opravy',
-    },
-  };
-
-  // Mô tả đa ngữ theo id trong kyb-text.json
-  const DESCRIPTION_LABELS = {
-    'garage-tran-auto': {
-      vi: 'Chuyên bảo dưỡng, sửa chữa ô tô châu Âu, kiểm tra xe trước khi mua, hỗ trợ đăng kiểm.',
-      en: 'Maintenance and repair of European cars, pre-purchase inspections and technical check support.',
-      cz: 'Údržba a opravy osobních vozů, předkupní prohlídky a podpora při STK.',
-    },
-    'beauty-karlovy': {
-      vi: 'Studio nails – spa chăm sóc da, phục vụ cộng đồng người Việt và khách bản địa.',
-      en: 'Nail studio and skin-care spa serving the Vietnamese community and local clients.',
-      cz: 'Nehtové studio a spa péče o pleť pro vietnamskou komunitu i místní klienty.',
-    },
-    'ship-vn-cz': {
-      vi: 'Chuyển phát nhanh CZ–VN hai chiều, nhận hàng tại cửa, hỗ trợ khai hải quan.',
-      en: 'Express shipping between CZ and VN, door pick-up and customs support.',
-      cz: 'Expresní přeprava mezi ČR a VN, vyzvednutí u dveří a podpora s celním řízením.',
-    },
-  };
-
-  // ----------------------------
-  // CONFIG & STATE
-  // ----------------------------
-  const DATA_URL = 'kyb-text.json'; // /providers/kyb-text.json
-  let allProviders = [];
-  let currentLanguage = 'vi';
-
-  document.addEventListener('DOMContentLoaded', () => {
-    setupLangSwitch();
-    renderStaticText();      // set VN mặc định
-    setupFilters();
-    loadProviders();
-  });
-
-  // ----------------------------
-  // LOAD DATA
-  // ----------------------------
-  function loadProviders() {
-    const container = document.getElementById('directory-list');
-    const t = TEXT[currentLanguage];
-
-    if (container) {
-      container.innerHTML = `<p class="tm-loading">${t.loading}</p>`;
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tranmarket – Danh sách doanh nghiệp Pi-ready</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --tm-bg: #050310;
+      --tm-panel: #120c28;
+      --tm-border: #2a1f52;
+      --tm-accent: #a855f7;
+      --tm-accent-soft: rgba(168, 85, 247, 0.12);
+      --tm-text: #f9fafb;
+      --tm-muted: #9ca3af;
+      --tm-badge-basic: #4ade80;
+      --tm-badge-standard: #38bdf8;
+      --tm-badge-full: #facc15;
     }
 
-    fetch(DATA_URL)
-      .then((res) => res.json())
-      .then((data) => {
-        if (!Array.isArray(data)) {
-          console.error('Providers JSON is not an array:', data);
-          allProviders = [];
-        } else {
-          allProviders = data;
-        }
-
-        renderCategoryFilterOptions();
-        renderPiFilterOptions();
-        applyCategoryFromQuery();
-        applyFilters();
-      })
-      .catch((err) => {
-        console.error('Error loading providers:', err);
-        if (container) {
-          container.innerHTML = `<p class="tm-error">${t.error}</p>`;
-        }
-      });
-  }
-
-  // ----------------------------
-  // FILTER SELECT OPTIONS
-  // ----------------------------
-  function renderCategoryFilterOptions() {
-    const select = document.getElementById('filter-category');
-    if (!select) return;
-
-    const t = TEXT[currentLanguage];
-    const current = select.value || 'all';
-
-    select.innerHTML = '';
-
-    const optAll = document.createElement('option');
-    optAll.value = 'all';
-    optAll.textContent = t.filterAllCategories;
-    select.appendChild(optAll);
-
-    const categories = new Set();
-    allProviders.forEach((p) => {
-      if (p.category) categories.add(p.category);
-    });
-
-    Array.from(categories)
-      .sort()
-      .forEach((cat) => {
-        const opt = document.createElement('option');
-        opt.value = cat;
-        const labels = CATEGORY_LABELS[cat];
-        opt.textContent = labels ? labels[currentLanguage] : cat;
-        if (cat === current) opt.selected = true;
-        select.appendChild(opt);
-      });
-  }
-
-  function renderPiFilterOptions() {
-    const select = document.getElementById('filter-pi');
-    if (!select) return;
-
-    const t = TEXT[currentLanguage];
-    const current = select.value || 'all';
-
-    const options = [
-      { value: 'all', label: t.filterAllPi },
-      { value: 'Basic', label: t.filterPiBasic },
-      { value: 'Standard', label: t.filterPiStandard },
-      { value: 'Full', label: t.filterPiFull },
-      { value: 'PiOnly', label: t.filterPiOnly },
-    ];
-
-    select.innerHTML = '';
-    options.forEach((o) => {
-      const opt = document.createElement('option');
-      opt.value = o.value;
-      opt.textContent = o.label;
-      if (o.value === current) opt.selected = true;
-      select.appendChild(opt);
-    });
-  }
-
-  // ----------------------------
-  // RENDER LIST
-  // ----------------------------
-  function renderProviders(list) {
-    const container = document.getElementById('directory-list');
-    const summary = document.getElementById('tm-summary');
-    const t = TEXT[currentLanguage];
-
-    if (!container) return;
-    container.innerHTML = '';
-
-    if (!list || list.length === 0) {
-      container.innerHTML = `<p class="tm-empty">${t.empty}</p>`;
-      if (summary) summary.textContent = '';
-      return;
+    * {
+      box-sizing: border-box;
     }
 
-    list.forEach((p) => {
-      const card = document.createElement('div');
-      card.className = 'tm-card';
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1e163d 0, #050310 45%, #000 100%);
+      color: var(--tm-text);
+      min-height: 100vh;
+    }
 
-      const emails = p.emails || p.email || '';
-      const website = p.website || '';
+    .tm-shell {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1.25rem 1rem 2.5rem;
+    }
 
-      const categoryLabel =
-        CATEGORY_LABELS[p.category]?.[currentLanguage] || p.category || '';
+    .tm-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
 
-      const descMap = DESCRIPTION_LABELS[p.id];
-      const description = descMap
-        ? descMap[currentLanguage] || descMap.vi || p.description || ''
-        : p.description || '';
+    .tm-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
 
-      card.innerHTML = `
-        <div class="tm-card-main">
-          <div class="tm-card-headline">
-            <div class="tm-company-name">${p.company || ''}</div>
-            ${
-              p.piAccept
-                ? `<div class="tm-badge-pi" data-level="${p.piLevel || ''}">
-                    <span>Pi-ready</span>
-                    <span>${p.piLevel || ''}</span>
-                  </div>`
-                : ''
-            }
-          </div>
+    .tm-logo-small {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      object-fit: cover;
+      border: 1px solid rgba(250, 250, 250, 0.4);
+      box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.5);
+    }
 
-          <div class="tm-meta-line">
-            ${
-              categoryLabel
-                ? `<span><span class="tm-dot"></span>${categoryLabel}</span>`
-                : ''
-            }
-            ${
-              p.area
-                ? `<span><span class="tm-dot"></span>${p.area}</span>`
-                : ''
-            }
-          </div>
+    .tm-brand-name {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+    }
 
-          ${
-            description
-              ? `<div class="tm-description">${description}</div>`
-              : ''
+    .tm-brand-sub {
+      font-size: 0.75rem;
+      color: var(--tm-muted);
+    }
+
+    .tm-lang-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.12rem 0.4rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      gap: 0.25rem;
+      color: var(--tm-muted);
+    }
+
+    .tm-lang-btn {
+      background: transparent;
+      border: none;
+      padding: 0 0.4rem;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .tm-lang-btn:hover {
+      opacity: 0.7;
+    }
+
+    .tm-lang-btn.active {
+      font-weight: 700;
+      text-decoration: underline;
+      color: var(--tm-text);
+    }
+
+    .tm-panel {
+      background: linear-gradient(135deg, #0b0718, #120c28);
+      border-radius: 1rem;
+      border: 1px solid var(--tm-border);
+      padding: 1.25rem 1rem;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .tm-panel-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .tm-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .tm-subtitle {
+      font-size: 0.8rem;
+      color: var(--tm-muted);
+      max-width: 420px;
+    }
+
+    .tm-counter {
+      font-size: 0.78rem;
+      color: var(--tm-muted);
+    }
+
+    .tm-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .tm-select,
+    .tm-input {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--tm-text);
+      border-radius: 999px;
+      padding: 0.35rem 0.8rem;
+      font-size: 0.8rem;
+      min-width: 200px;
+      flex: 1;
+      outline: none;
+    }
+
+    .tm-input::placeholder {
+      color: var(--tm-muted);
+    }
+
+    .tm-select:focus,
+    .tm-input:focus {
+      border-color: var(--tm-accent);
+      box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.4);
+    }
+
+    .tm-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.85rem;
+    }
+
+    .tm-card {
+      background: radial-gradient(circle at top left, #1f153b, #070515 55%);
+      border-radius: 0.9rem;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      padding: 0.8rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tm-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      background: conic-gradient(
+        from 210deg,
+        rgba(168, 85, 247, 0.55),
+        transparent 22%,
+        transparent 60%,
+        rgba(96, 165, 250, 0.55),
+        transparent 82%,
+        transparent
+      );
+      opacity: 0;
+      transition: opacity 150ms ease-out;
+      z-index: 0;
+    }
+
+    .tm-card:hover::before {
+      opacity: 0.22;
+    }
+
+    .tm-card-main {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .tm-card-headline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .tm-company-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .tm-badge-pi {
+      font-size: 0.7rem;
+      border-radius: 999px;
+      padding: 0.12rem 0.55rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      background: var(--tm-accent-soft);
+      border: 1px solid rgba(168, 85, 247, 0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .tm-badge-pi[data-level="Basic"] {
+      border-color: var(--tm-badge-basic);
+      color: var(--tm-badge-basic);
+      background: rgba(74, 222, 128, 0.08);
+    }
+
+    .tm-badge-pi[data-level="Standard"] {
+      border-color: var(--tm-badge-standard);
+      color: var(--tm-badge-standard);
+      background: rgba(56, 189, 248, 0.08);
+    }
+
+    .tm-badge-pi[data-level="Full"] {
+      border-color: var(--tm-badge-full);
+      color: var(--tm-badge-full);
+      background: rgba(250, 204, 21, 0.08);
+    }
+
+    .tm-meta-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.75rem;
+      font-size: 0.78rem;
+      color: var(--tm-muted);
+    }
+
+    .tm-meta-line span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      white-space: nowrap;
+    }
+
+    .tm-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.9);
+    }
+
+    .tm-description {
+      font-size: 0.78rem;
+      color: #e5e7eb;
+      line-height: 1.4;
+    }
+
+    .tm-footer-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.35rem;
+      font-size: 0.75rem;
+    }
+
+    .tm-contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem 0.6rem;
+      color: var(--tm-muted);
+    }
+
+    .tm-contact span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .tm-empty,
+    .tm-loading,
+    .tm-error {
+      font-size: 0.8rem;
+      color: var(--tm-muted);
+      padding: 0.6rem 0.2rem;
+    }
+
+    @media (max-width: 640px) {
+      .tm-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .tm-panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .tm-footer-line {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="tm-shell">
+    <header class="tm-header">
+      <div class="tm-brand">
+        <img src="../assets/trm-logo-nav.png" alt="Tranmarket logo" class="tm-logo-small" />
+        <div>
+          <div class="tm-brand-name">TRANMARKET</div>
+          <div class="tm-brand-sub">Pi-ready service marketplace directory</div>
+        </div>
+      </div>
+      <div class="tm-lang-pill">
+        <button id="lang-vi" class="tm-lang-btn active" data-lang="vi">VI</button>
+        <span>/</span>
+        <button id="lang-en" class="tm-lang-btn" data-lang="en">EN</button>
+        <span>/</span>
+        <button id="lang-cz" class="tm-lang-btn" data-lang="cz">CZ</button>
+      </div>
+    </header>
+
+    <section class="tm-panel">
+      <div class="tm-panel-header">
+        <div>
+          <div class="tm-title" id="directory-title"></div>
+          <div class="tm-subtitle" id="directory-subtitle"></div>
+        </div>
+        <div class="tm-counter" id="tm-summary"></div>
+      </div>
+
+      <div class="tm-filters">
+        <select id="filter-category" class="tm-select">
+          <!-- options sẽ render bằng JS -->
+        </select>
+
+        <select id="filter-pi" class="tm-select">
+          <!-- options sẽ render bằng JS -->
+        </select>
+
+        <input
+          id="filter-search"
+          type="text"
+          class="tm-input"
+          placeholder=""
+        />
+      </div>
+
+      <div id="directory-list" class="tm-grid"></div>
+    </section>
+  </div>
+
+  <script>
+    // ----------------------------
+    // TEXT & LABELS
+    // ----------------------------
+    const TEXT = {
+      vi: {
+        title: 'Danh sách doanh nghiệp đã đăng ký',
+        subtitle:
+          'Các đơn vị dưới đây đã gửi form KYB cho Tranmarket và được kiểm tra thủ công. Badge Pi cho biết mức độ sẵn sàng nhận thanh toán bằng Pi.',
+        filterAllCategories: 'Tất cả danh mục',
+        filterAllPi: 'Tất cả mức Pi-ready',
+        filterPiBasic: 'Basic – Pi-ready (Basic)',
+        filterPiStandard: 'Standard – Pi-ready (Standard)',
+        filterPiFull: 'Full – Pi-ready (Full)',
+        filterPiOnly: 'PiOnly – Chỉ nhận thanh toán Pi',
+        searchPlaceholder: 'Tìm theo tên, khu vực, ngành nghề...',
+        loading: 'Đang tải dữ liệu...',
+        empty: 'Chưa có doanh nghiệp phù hợp với bộ lọc hiện tại.',
+        error: 'Không tải được danh sách doanh nghiệp. Vui lòng thử lại sau.',
+        summary: (shown, total, piReady) =>
+          `${shown} doanh nghiệp hiển thị · ${piReady}/${total} sẵn sàng nhận Pi`,
+      },
+      en: {
+        title: 'Directory of registered businesses',
+        subtitle:
+          'These providers have submitted KYB forms and were manually reviewed by Tranmarket. The Pi badge indicates the level of readiness to accept Pi payments.',
+        filterAllCategories: 'All categories',
+        filterAllPi: 'All Pi-ready levels',
+        filterPiBasic: 'Basic – Pi-ready (Basic)',
+        filterPiStandard: 'Standard – Pi-ready (Standard)',
+        filterPiFull: 'Full – Pi-ready (Full)',
+        filterPiOnly: 'PiOnly – Pi-only payments',
+        searchPlaceholder: 'Search by name, region, industry...',
+        loading: 'Loading data...',
+        empty: 'No businesses match the current filters.',
+        error: 'Unable to load the business directory. Please try again later.',
+        summary: (shown, total, piReady) =>
+          `${shown} businesses shown · ${piReady}/${total} Pi-ready`,
+      },
+      cz: {
+        title: 'Seznam registrovaných podniků',
+        subtitle:
+          'Tito poskytovatelé podali KYB formulář a byli ručně ověřeni Tranmarketem. Odznak Pi označuje úroveň připravenosti přijímat platby v Pi.',
+        filterAllCategories: 'Všechny kategorie',
+        filterAllPi: 'Všechny úrovně Pi-ready',
+        filterPiBasic: 'Basic – Pi-ready (Basic)',
+        filterPiStandard: 'Standard – Pi-ready (Standard)',
+        filterPiFull: 'Full – Pi-ready (Full)',
+        filterPiOnly: 'PiOnly – Platby pouze v Pi',
+        searchPlaceholder: 'Hledat podle názvu, oblasti, oboru...',
+        loading: 'Načítání dat...',
+        empty: 'Žádný podnik neodpovídá zvoleným filtrům.',
+        error: 'Seznam podniků se nepodařilo načíst. Zkuste to prosím znovu.',
+        summary: (shown, total, piReady) =>
+          `${shown} podniků zobrazeno · ${piReady}/${total} připraveno přijímat Pi`,
+      },
+    };
+
+    // Map category text (VN trong JSON) → label đa ngữ
+    const CATEGORY_LABELS = {
+      'Gửi hàng – Chuyển phát': {
+        vi: 'Gửi hàng – Chuyển phát',
+        en: 'CZ–VN parcel & cargo',
+        cz: 'CZ–VN zásilky & cargo',
+      },
+      'Làm đẹp – Nails – Salon': {
+        vi: 'Làm đẹp – Nails – Salon',
+        en: 'Beauty – Nails – Salon',
+        cz: 'Beauty – Nehty – Salon',
+      },
+      'Oto – Sửa chữa – Bảo dưỡng': {
+        vi: 'Oto – Sửa chữa – Bảo dưỡng',
+        en: 'Auto service & repairs',
+        cz: 'Auto servis & opravy',
+      },
+    };
+
+    // ----------------------------
+    // CONFIG & STATE
+    // ----------------------------
+    const DATA_URL = 'kyb-text.json'; // /providers/kyb-text.json
+    let allProviders = [];
+    let currentLanguage = 'vi';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setupLangSwitch();
+      renderStaticText();      // set VN mặc định
+      setupFilters();
+      loadProviders();
+    });
+
+    // ----------------------------
+    // LOAD DATA
+    // ----------------------------
+    function loadProviders() {
+      const container = document.getElementById('directory-list');
+      const t = TEXT[currentLanguage];
+
+      if (container) {
+        container.innerHTML = `<p class="tm-loading">${t.loading}</p>`;
+      }
+
+      fetch(DATA_URL)
+        .then((res) => res.json())
+        .then((data) => {
+          if (!Array.isArray(data)) {
+            console.error('Providers JSON is not an array:', data);
+            allProviders = [];
+          } else {
+            allProviders = data;
           }
 
-          <div class="tm-footer-line">
-            <div class="tm-contact">
-              ${p.contact ? `<span>👤 ${p.contact}</span>` : ''}
-              ${p.phone ? `<span>☎ ${p.phone}</span>` : ''}
-              ${emails ? `<span>✉ ${emails}</span>` : ''}
+          renderCategoryFilterOptions(); // sau khi có data
+          renderPiFilterOptions();
+          applyCategoryFromQuery();
+          applyFilters();
+        })
+        .catch((err) => {
+          console.error('Error loading providers:', err);
+          if (container) {
+            container.innerHTML = `<p class="tm-error">${t.error}</p>`;
+          }
+        });
+    }
+
+    // ----------------------------
+    // FILTER SELECT OPTIONS
+    // ----------------------------
+    function renderCategoryFilterOptions() {
+      const select = document.getElementById('filter-category');
+      if (!select) return;
+
+      const t = TEXT[currentLanguage];
+      const current = select.value || 'all';
+
+      select.innerHTML = '';
+
+      // option All
+      const optAll = document.createElement('option');
+      optAll.value = 'all';
+      optAll.textContent = t.filterAllCategories;
+      select.appendChild(optAll);
+
+      const categories = new Set();
+      allProviders.forEach((p) => {
+        if (p.category) categories.add(p.category);
+      });
+
+      Array.from(categories)
+        .sort()
+        .forEach((cat) => {
+          const opt = document.createElement('option');
+          opt.value = cat;
+          const labels = CATEGORY_LABELS[cat];
+          opt.textContent = labels ? labels[currentLanguage] : cat;
+          if (cat === current) opt.selected = true;
+          select.appendChild(opt);
+        });
+    }
+
+    function renderPiFilterOptions() {
+      const select = document.getElementById('filter-pi');
+      if (!select) return;
+
+      const t = TEXT[currentLanguage];
+      const current = select.value || 'all';
+
+      const options = [
+        { value: 'all', label: t.filterAllPi },
+        { value: 'Basic', label: t.filterPiBasic },
+        { value: 'Standard', label: t.filterPiStandard },
+        { value: 'Full', label: t.filterPiFull },
+        { value: 'PiOnly', label: t.filterPiOnly },
+      ];
+
+      select.innerHTML = '';
+      options.forEach((o) => {
+        const opt = document.createElement('option');
+        opt.value = o.value;
+        opt.textContent = o.label;
+        if (o.value === current) opt.selected = true;
+        select.appendChild(opt);
+      });
+    }
+
+    // ----------------------------
+    // RENDER LIST
+    // ----------------------------
+    function renderProviders(list) {
+      const container = document.getElementById('directory-list');
+      const summary = document.getElementById('tm-summary');
+      const t = TEXT[currentLanguage];
+
+      if (!container) return;
+      container.innerHTML = '';
+
+      if (!list || list.length === 0) {
+        container.innerHTML = `<p class="tm-empty">${t.empty}</p>`;
+        if (summary) summary.textContent = '';
+        return;
+      }
+
+      list.forEach((p) => {
+        const card = document.createElement('div');
+        card.className = 'tm-card';
+
+        const emails = p.emails || p.email || '';
+        const website = p.website || '';
+        const categoryLabel =
+          CATEGORY_LABELS[p.category]?.[currentLanguage] || p.category || '';
+
+        card.innerHTML = `
+          <div class="tm-card-main">
+            <div class="tm-card-headline">
+              <div class="tm-company-name">${p.company || ''}</div>
               ${
-                website
-                  ? `<span>🌐 <a href="${website}" target="_blank" rel="noopener noreferrer">Website</a></span>`
+                p.piAccept
+                  ? `<div class="tm-badge-pi" data-level="${p.piLevel || ''}">
+                      <span>Pi-ready</span>
+                      <span>${p.piLevel || ''}</span>
+                    </div>`
                   : ''
               }
             </div>
+
+            <div class="tm-meta-line">
+              ${
+                categoryLabel
+                  ? `<span><span class="tm-dot"></span>${categoryLabel}</span>`
+                  : ''
+              }
+              ${
+                p.area
+                  ? `<span><span class="tm-dot"></span>${p.area}</span>`
+                  : ''
+              }
+            </div>
+
+            ${
+              p.description
+                ? `<div class="tm-description">${p.description}</div>`
+                : ''
+            }
+
+            <div class="tm-footer-line">
+              <div class="tm-contact">
+                ${p.contact ? `<span>👤 ${p.contact}</span>` : ''}
+                ${p.phone ? `<span>☎ ${p.phone}</span>` : ''}
+                ${emails ? `<span>✉ ${emails}</span>` : ''}
+                ${
+                  website
+                    ? `<span>🌐 <a href="${website}" target="_blank" rel="noopener noreferrer">Website</a></span>`
+                    : ''
+                }
+              </div>
+            </div>
           </div>
-        </div>
-      `;
+        `;
 
-      container.appendChild(card);
-    });
+        container.appendChild(card);
+      });
 
-    if (summary) {
-      const total = allProviders.length;
-      const piReady = allProviders.filter((p) => p.piAccept).length;
-      summary.textContent = t.summary(list.length, total, piReady);
+      if (summary) {
+        const total = allProviders.length;
+        const piReady = allProviders.filter((p) => p.piAccept).length;
+        summary.textContent = t.summary(list.length, total, piReady);
+      }
     }
-  }
 
-  // ----------------------------
-  // FILTERS
-  // ----------------------------
-  function setupFilters() {
-    const catSelect = document.getElementById('filter-category');
-    const piSelect = document.getElementById('filter-pi');
-    const searchInp = document.getElementById('filter-search');
+    // ----------------------------
+    // FILTERS
+    // ----------------------------
+    function setupFilters() {
+      const catSelect = document.getElementById('filter-category');
+      const piSelect = document.getElementById('filter-pi');
+      const searchInp = document.getElementById('filter-search');
 
-    if (catSelect) catSelect.addEventListener('change', applyFilters);
-    if (piSelect) piSelect.addEventListener('change', applyFilters);
-    if (searchInp) searchInp.addEventListener('input', applyFilters);
-  }
-
-  function applyFilters() {
-    const catSelect = document.getElementById('filter-category');
-    const piSelect = document.getElementById('filter-pi');
-    const searchInp = document.getElementById('filter-search');
-
-    const catValue = catSelect ? catSelect.value : 'all';
-    const piValue = piSelect ? piSelect.value : 'all';
-    const keyword = searchInp ? searchInp.value.trim().toLowerCase() : '';
-
-    const filtered = allProviders.filter((p) => {
-      if (catValue && catValue !== 'all') {
-        if (p.category !== catValue) return false;
-      }
-
-      if (piValue && piValue !== 'all') {
-        if (!p.piAccept) return false;
-        if ((p.piLevel || '') !== piValue) return false;
-      }
-
-      if (keyword) {
-        const haystack = `
-          ${p.company || ''}
-          ${p.category || ''}
-          ${p.area || ''}
-          ${p.description || ''}
-          ${p.contact || ''}
-          ${p.phone || ''}
-          ${p.emails || p.email || ''}
-        `.toLowerCase();
-
-        if (!haystack.includes(keyword)) return false;
-      }
-
-      return true;
-    });
-
-    renderProviders(filtered);
-  }
-
-  // ----------------------------
-  // LANGUAGE SWITCH
-  // ----------------------------
-  function setupLangSwitch() {
-    const btnVI = document.getElementById('lang-vi');
-    const btnEN = document.getElementById('lang-en');
-    const btnCZ = document.getElementById('lang-cz');
-
-    if (btnVI) btnVI.addEventListener('click', () => setLanguage('vi'));
-    if (btnEN) btnEN.addEventListener('click', () => setLanguage('en'));
-    if (btnCZ) btnCZ.addEventListener('click', () => setLanguage('cz'));
-  }
-
-  function setLanguage(lang) {
-    if (!TEXT[lang]) lang = 'vi';
-    currentLanguage = lang;
-
-    const btnVI = document.getElementById('lang-vi');
-    const btnEN = document.getElementById('lang-en');
-    const btnCZ = document.getElementById('lang-cz');
-    [btnVI, btnEN, btnCZ].forEach((btn) => btn && btn.classList.remove('active'));
-    if (lang === 'vi' && btnVI) btnVI.classList.add('active');
-    if (lang === 'en' && btnEN) btnEN.classList.add('active');
-    if (lang === 'cz' && btnCZ) btnCZ.classList.add('active');
-
-    renderStaticText();
-    renderCategoryFilterOptions();
-    renderPiFilterOptions();
-    applyFilters();
-  }
-
-  function renderStaticText() {
-    const t = TEXT[currentLanguage];
-    const titleEl = document.getElementById('directory-title');
-    const subtitleEl = document.getElementById('directory-subtitle');
-    const searchInp = document.getElementById('filter-search');
-
-    if (titleEl) titleEl.textContent = t.title;
-    if (subtitleEl) subtitleEl.textContent = t.subtitle;
-    if (searchInp) searchInp.placeholder = t.searchPlaceholder;
-  }
-
-  // ----------------------------
-  // CATEGORY FROM QUERY (?cat=...)
-  // ----------------------------
-  function applyCategoryFromQuery() {
-    const params = new URLSearchParams(window.location.search);
-    const cat = params.get('cat');
-    if (!cat) return;
-
-    const catSelect = document.getElementById('filter-category');
-    if (!catSelect) return;
-
-    const option = Array.from(catSelect.options).find((o) => o.value === cat);
-    if (option) {
-      catSelect.value = cat;
+      if (catSelect) catSelect.addEventListener('change', applyFilters);
+      if (piSelect) piSelect.addEventListener('change', applyFilters);
+      if (searchInp) searchInp.addEventListener('input', applyFilters);
     }
-  }
-</script>
+
+    function applyFilters() {
+      const catSelect = document.getElementById('filter-category');
+      const piSelect = document.getElementById('filter-pi');
+      const searchInp = document.getElementById('filter-search');
+
+      const catValue = catSelect ? catSelect.value : 'all';
+      const piValue = piSelect ? piSelect.value : 'all';
+      const keyword = searchInp ? searchInp.value.trim().toLowerCase() : '';
+
+      const filtered = allProviders.filter((p) => {
+        // category filter
+        if (catValue && catValue !== 'all') {
+          if (p.category !== catValue) return false;
+        }
+
+        // Pi-ready level
+        if (piValue && piValue !== 'all') {
+          if (!p.piAccept) return false;
+          if ((p.piLevel || '') !== piValue) return false;
+        }
+
+        // keyword filter
+        if (keyword) {
+          const haystack = `
+            ${p.company || ''}
+            ${p.category || ''}
+            ${p.area || ''}
+            ${p.description || ''}
+            ${p.contact || ''}
+            ${p.phone || ''}
+            ${p.emails || p.email || ''}
+          `.toLowerCase();
+
+          if (!haystack.includes(keyword)) return false;
+        }
+
+        return true;
+      });
+
+      renderProviders(filtered);
+    }
+
+    // ----------------------------
+    // LANGUAGE SWITCH
+    // ----------------------------
+    function setupLangSwitch() {
+      const btnVI = document.getElementById('lang-vi');
+      const btnEN = document.getElementById('lang-en');
+      const btnCZ = document.getElementById('lang-cz');
+
+      if (btnVI) btnVI.addEventListener('click', () => setLanguage('vi'));
+      if (btnEN) btnEN.addEventListener('click', () => setLanguage('en'));
+      if (btnCZ) btnCZ.addEventListener('click', () => setLanguage('cz'));
+    }
+
+    function setLanguage(lang) {
+      if (!TEXT[lang]) lang = 'vi';
+      currentLanguage = lang;
+
+      // toggle active button
+      const btnVI = document.getElementById('lang-vi');
+      const btnEN = document.getElementById('lang-en');
+      const btnCZ = document.getElementById('lang-cz');
+      [btnVI, btnEN, btnCZ].forEach((btn) => btn && btn.classList.remove('active'));
+      if (lang === 'vi' && btnVI) btnVI.classList.add('active');
+      if (lang === 'en' && btnEN) btnEN.classList.add('active');
+      if (lang === 'cz' && btnCZ) btnCZ.classList.add('active');
+
+      renderStaticText();
+      renderCategoryFilterOptions();
+      renderPiFilterOptions();
+      applyFilters(); // re-render list với label mới
+    }
+
+    function renderStaticText() {
+      const t = TEXT[currentLanguage];
+      const titleEl = document.getElementById('directory-title');
+      const subtitleEl = document.getElementById('directory-subtitle');
+      const searchInp = document.getElementById('filter-search');
+
+      if (titleEl) titleEl.textContent = t.title;
+      if (subtitleEl) subtitleEl.textContent = t.subtitle;
+      if (searchInp) searchInp.placeholder = t.searchPlaceholder;
+    }
+
+    // ----------------------------
+    // CATEGORY FROM QUERY (?cat=...)
+    // ----------------------------
+    function applyCategoryFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      const cat = params.get('cat');
+      if (!cat) return;
+
+      const catSelect = document.getElementById('filter-category');
+      if (!catSelect) return;
+
+      const option = Array.from(catSelect.options).find((o) => o.value === cat);
+      if (option) {
+        catSelect.value = cat;
+      }
+    }
+  </script>
 </body>
 </html>
