@@ -110,32 +110,40 @@
     }
 
     .tm-lang-toggle {
-    display: flex;
-    gap: 4px;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-}
-.tm-lang-toggle::-webkit-scrollbar {
-    display: none;
-}
+      display: flex;
+      gap: 4px;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
 
-.tm-lang-btn {
-    border: 0;
-    padding: 4px 10px;
-    border-radius: 999px;
-    background: transparent;
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    cursor: pointer;
-    min-width: 42px;
-}
-.tm-lang-btn.active {
-    background: var(--mint);
-    color: #021517;
-    font-weight: 600;
-}
+    .tm-lang-toggle::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tm-lang-label {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      margin-right: 4px;
+    }
+
+    .tm-lang-btn {
+      border: 0;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      cursor: pointer;
+      min-width: 42px;
+    }
+
+    .tm-lang-btn.active {
+      background: var(--mint);
+      color: #021517;
+      font-weight: 600;
+    }
 
     .tm-hero-row {
       display: flex;
@@ -258,15 +266,6 @@
       color: var(--text-muted);
     }
 
-    .cat-title-extra {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-top: 4px;
-      color: var(--mint);
-      font-weight: 600;
-    }
-
     .cat-tag {
       font-size: 0.7rem;
       text-transform: uppercase;
@@ -320,14 +319,14 @@
         </div>
 
         <div class="tm-lang-toggle">
-          <span class="tm-lang-label">LANG</span>
-          <button class="tm-lang-btn active" data-lang="vi" id="btn-lang-vi">
+          <span class="tm-lang-label" id="lang-label">LANG</span>
+          <button class="tm-lang-btn" data-lang="vi" id="btn-lang-vi">
             VI
           </button>
           <button class="tm-lang-btn" data-lang="en" id="btn-lang-en">
             EN
           </button>
-          <button class="tm-lang-btn" data-lang="cs" id="btn-lang-cs">
+          <button class="tm-lang-btn" data-lang="cz" id="btn-lang-cz">
             CZ
           </button>
         </div>
@@ -350,8 +349,12 @@
   </div>
 
   <script>
+    const LANG_STORAGE_KEY = "trm-lang";
+    const SUPPORTED_LANGS = ["vi", "en", "cz"];
+
     const TEXT = {
       vi: {
+        langLabel: "NGÔN NGỮ",
         brandSub: "Sân chơi dịch vụ Pi-ready cho cộng đồng Việt & quốc tế",
         heroTitle: "Chọn lĩnh vực dịch vụ bạn đang cần",
         heroSub:
@@ -364,6 +367,7 @@
         tagOther: "Mở rộng & đặc biệt",
       },
       en: {
+        langLabel: "LANG",
         brandSub: "Pi-ready service playground for Vietnamese & global users",
         heroTitle: "Choose the service area you are looking for",
         heroSub:
@@ -375,7 +379,8 @@
         tagMain: "For customers",
         tagOther: "Extension & special",
       },
-      cs: {
+      cz: {
+        langLabel: "JAZYK",
         brandSub: "Pi-ready platforma služeb pro vietnamskou i mezinárodní komunitu",
         heroTitle: "Vyberte oblast služeb, kterou zrovna hledáte",
         heroSub:
@@ -402,8 +407,8 @@
           main: "Logistics – Shipping – Transport",
           sub: "International & EU shipping, storage, containers…",
         },
-        cs: {
-          main: "Logistika – Zásilky / přeprava",
+        cz: {
+          main: "Logistika – Zásilky – Doprava",
           sub: "Mezinárodní i vnitro-EU přeprava, sklady, kontejnery…",
         },
       },
@@ -419,8 +424,8 @@
           main: "Documents – Translation – Papers",
           sub: "Certified translation, notary, legal forms, licenses…",
         },
-        cs: {
-          main: "Doklady – Tlumočení – Dokumenty",
+        cz: {
+          main: "Doklady – Překlady – Dokumenty",
           sub: "Soudní překlady, notář, formuláře, povolení…",
         },
       },
@@ -436,7 +441,7 @@
           main: "Repairs – Housing – Construction",
           sub: "Electricity, plumbing, renovation, cleaning, handyman…",
         },
-        cs: {
+        cz: {
           main: "Opravy – Bydlení – Stavebnictví",
           sub: "Elektro, voda, rekonstrukce, úklid, hodinový manžel…",
         },
@@ -447,13 +452,13 @@
         icon: "🚗",
         vi: {
           main: "Car & Garage – Gara xe",
-          sub: "Sửa chữa, bảo dưỡng, đăng kiểm, dán kính, detail…",
+          sub: "Sửa chữa, bảo dưỡng, đăng kiểm, dán kính, detailing…",
         },
         en: {
           main: "Car & Garage",
           sub: "Service, repairs, inspection, detailing…",
         },
-        cs: {
+        cz: {
           main: "Auto & Garage",
           sub: "Servis, opravy, STK, detailing…",
         },
@@ -470,7 +475,7 @@
           main: "Taxi – Personal transport",
           sub: "Airport runs, daily commute, long trips…",
         },
-        cs: {
+        cz: {
           main: "Taxi – Osobní doprava",
           sub: "Letiště, do práce, delší cesty…",
         },
@@ -487,7 +492,7 @@
           main: "Travel – Tours",
           sub: "Tours in CZ, EU, pilgrimage, holidays, custom trips…",
         },
-        cs: {
+        cz: {
           main: "Cestování – Zájezdy",
           sub: "Zájezdy po ČR, EU, poutě, dovolené, individuální trasy…",
         },
@@ -504,7 +509,7 @@
           main: "Beauty – Spa – Hair – Nails",
           sub: "Hair, nails, spa, massage, make-up, PMU…",
         },
-        cs: {
+        cz: {
           main: "Beauty – Spa – Vlasy – Nehty",
           sub: "Vlasy, nehty, spa, masáže, make-up, permanent…",
         },
@@ -521,7 +526,7 @@
           main: "Education – Tutoring – Language",
           sub: "Private classes, language courses, exam prep, skills…",
         },
-        cs: {
+        cz: {
           main: "Vzdělávání – Doučování – Jazyky",
           sub: "Soukromé lekce, jazyky, příprava na zkoušky…",
         },
@@ -538,7 +543,7 @@
           main: "Health – Support",
           sub: "Booking, medical interpreting, clinic guidance…",
         },
-        cs: {
+        cz: {
           main: "Zdraví – Podpora",
           sub: "Objednání, tlumočení u lékaře, doprovod…",
         },
@@ -555,7 +560,7 @@
           main: "Food – Restaurant – Groceries",
           sub: "Vietnamese food, booking, delivery, catering…",
         },
-        cs: {
+        cz: {
           main: "Jídlo – Restaurace – Obchody",
           sub: "Vietnamská jídla, rezervace, rozvoz, catering…",
         },
@@ -572,7 +577,7 @@
           main: "Business – Law – Company",
           sub: "Company setup, accounting, legal, HR…",
         },
-        cs: {
+        cz: {
           main: "Byznys – Právo – Firma",
           sub: "Založení firmy, účetnictví, právní služby, HR…",
         },
@@ -589,7 +594,7 @@
           main: "Experience – Fun – Events",
           sub: "Photo, video, workshops, teambuilding, events…",
         },
-        cs: {
+        cz: {
           main: "Zážitky – Zábava – Akce",
           sub: "Foto, video, workshopy, teambuilding, akce…",
         },
@@ -606,7 +611,7 @@
           main: "Rent – House / Flat / Dorm",
           sub: "Short & long term, shared rooms, flexible housing…",
         },
-        cs: {
+        cz: {
           main: "Pronájem – Byt / dům / kolej",
           sub: "Krátkodobě i dlouhodobě, spolubydlení…",
         },
@@ -623,7 +628,7 @@
           main: "Bazaars – Second-hand market",
           sub: "Clearance, consignment, online & offline bazaars…",
         },
-        cs: {
+        cz: {
           main: "Bazar – Second hand",
           sub: "Výprodeje, komisní prodej, online i offline bazar…",
         },
@@ -640,7 +645,7 @@
           main: "Real estate – Buy & Sell",
           sub: "Flats, houses, land, legal advisory & listing…",
         },
-        cs: {
+        cz: {
           main: "Reality – Prodej / nákup nemovitostí",
           sub: "Byty, domy, pozemky, právní poradenství, inzerce…",
         },
@@ -657,7 +662,7 @@
           main: "Ceremony – Wedding – Funerals",
           sub: "Weddings, celebrations, funerals & related services…",
         },
-        cs: {
+        cz: {
           main: "Ceremonie – Svatby – Pohřby",
           sub: "Svatby, oslavy, pohřební a doprovodné služby…",
         },
@@ -674,7 +679,7 @@
           main: "Pets – Pet care",
           sub: "Grooming, boarding, rescue & relocation…",
         },
-        cs: {
+        cz: {
           main: "Mazlíčci – Péče o zvířata",
           sub: "Stříhání, hlídání, záchrana a převoz…",
         },
@@ -692,14 +697,12 @@
           main: "Other – Extended services",
           sub: "Special or new services not yet covered by other categories.",
         },
-        cs: {
+        cz: {
           main: "Ostatní – Rozšířené služby",
           sub: "Speciální či nové služby mimo existující kategorie.",
         },
       },
     ];
-
-    let currentLang = "vi";
 
     const els = {
       brandSub: document.getElementById("brand-sub"),
@@ -708,14 +711,37 @@
       heroNote: document.getElementById("hero-note"),
       footerNote: document.getElementById("footer-note"),
       grid: document.getElementById("category-grid"),
+      langLabel: document.getElementById("lang-label"),
     };
 
     const langButtons = document.querySelectorAll(".tm-lang-btn");
 
+    function getInitialLang() {
+      const stored = localStorage.getItem(LANG_STORAGE_KEY);
+      if (stored && SUPPORTED_LANGS.includes(stored)) return stored;
+
+      const browserRaw = (navigator.language || navigator.userLanguage || "vi")
+        .slice(0, 2)
+        .toLowerCase();
+
+      if (browserRaw === "cs") return "cz";
+      if (browserRaw === "en") return "en";
+      return "vi";
+    }
+
+    let currentLang = getInitialLang();
+
     function applyLanguage(lang) {
+      if (!SUPPORTED_LANGS.includes(lang)) lang = "vi";
       currentLang = lang;
+      localStorage.setItem(LANG_STORAGE_KEY, lang);
+
+      // HTML lang attribute – Czech uses "cs"
+      document.documentElement.lang = lang === "cz" ? "cs" : lang;
+
       const t = TEXT[lang];
 
+      els.langLabel.textContent = t.langLabel;
       els.brandSub.textContent = t.brandSub;
       els.heroTitle.textContent = t.heroTitle;
       els.heroSub.textContent = t.heroSub;
@@ -759,23 +785,12 @@
         titleSub.className = "cat-title-sub";
         titleSub.textContent = data.sub;
 
-        const titleExtra = document.createElement("div");
-        titleExtra.className = "cat-title-extra";
-        if (currentLang === "vi") {
-          titleExtra.textContent = "";
-        } else if (currentLang === "en") {
-          titleExtra.textContent = "";
-        } else if (currentLang === "cs") {
-          titleExtra.textContent = "";
-        }
-
         const tag = document.createElement("div");
         tag.className = "cat-tag";
         tag.textContent = cat.other ? t.tagOther : t.tagMain;
 
         content.appendChild(titleMain);
         content.appendChild(titleSub);
-        if (titleExtra.textContent) content.appendChild(titleExtra);
         content.appendChild(tag);
 
         card.appendChild(icon);
@@ -794,7 +809,7 @@
       });
     });
 
-    applyLanguage("vi");
+    applyLanguage(currentLang);
   </script>
 </body>
 </html>
