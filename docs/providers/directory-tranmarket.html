@@ -152,11 +152,8 @@
       border-radius: 999px;
       padding: 0.35rem 0.8rem;
       font-size: 0.8rem;
-      min-width: 160px;
-  flex: 1;        /* auto nở theo không gian còn lại */
-  min-width: 240px;
-}
-
+      min-width: 200px;
+      flex: 1;
       outline: none;
     }
 
@@ -360,34 +357,26 @@
     <section class="tm-panel">
       <div class="tm-panel-header">
         <div>
-          <div class="tm-title" id="directory-title">
-            Danh sách doanh nghiệp đã đăng ký
-          </div>
-          <div class="tm-subtitle" id="directory-subtitle">
-            Các đơn vị dưới đây đã gửi form KYB cho Tranmarket và được kiểm tra thủ công. Badge Pi cho biết mức độ sẵn sàng nhận thanh toán bằng Pi.
-          </div>
+          <div class="tm-title" id="directory-title"></div>
+          <div class="tm-subtitle" id="directory-subtitle"></div>
         </div>
         <div class="tm-counter" id="tm-summary"></div>
       </div>
 
       <div class="tm-filters">
         <select id="filter-category" class="tm-select">
-          <option value="all" id="filter-all">Tất cả danh mục</option>
+          <!-- options sẽ render bằng JS -->
         </select>
 
         <select id="filter-pi" class="tm-select">
-          <option value="all">Tất cả mức Pi-ready</option>
-          <option value="Basic">Basic – Pi-ready (Basic)</option>
-          <option value="Standard">Standard – Pi-ready (Standard)</option>
-          <option value="Full">Full – Pi-ready (Full)</option>
-          <option value="PiOnly">PiOnly – Chỉ nhận thanh toán Pi</option>
+          <!-- options sẽ render bằng JS -->
         </select>
 
         <input
           id="filter-search"
           type="text"
           class="tm-input"
-          placeholder="Tìm theo tên, khu vực, ngành nghề..."
+          placeholder=""
         />
       </div>
 
@@ -397,17 +386,93 @@
 
   <script>
     // ----------------------------
+    // TEXT & LABELS
+    // ----------------------------
+    const TEXT = {
+      vi: {
+        title: 'Danh sách doanh nghiệp đã đăng ký',
+        subtitle:
+          'Các đơn vị dưới đây đã gửi form KYB cho Tranmarket và được kiểm tra thủ công. Badge Pi cho biết mức độ sẵn sàng nhận thanh toán bằng Pi.',
+        filterAllCategories: 'Tất cả danh mục',
+        filterAllPi: 'Tất cả mức Pi-ready',
+        filterPiBasic: 'Basic – Pi-ready (Basic)',
+        filterPiStandard: 'Standard – Pi-ready (Standard)',
+        filterPiFull: 'Full – Pi-ready (Full)',
+        filterPiOnly: 'PiOnly – Chỉ nhận thanh toán Pi',
+        searchPlaceholder: 'Tìm theo tên, khu vực, ngành nghề...',
+        loading: 'Đang tải dữ liệu...',
+        empty: 'Chưa có doanh nghiệp phù hợp với bộ lọc hiện tại.',
+        error: 'Không tải được danh sách doanh nghiệp. Vui lòng thử lại sau.',
+        summary: (shown, total, piReady) =>
+          `${shown} doanh nghiệp hiển thị · ${piReady}/${total} sẵn sàng nhận Pi`,
+      },
+      en: {
+        title: 'Directory of registered businesses',
+        subtitle:
+          'These providers have submitted KYB forms and were manually reviewed by Tranmarket. The Pi badge indicates the level of readiness to accept Pi payments.',
+        filterAllCategories: 'All categories',
+        filterAllPi: 'All Pi-ready levels',
+        filterPiBasic: 'Basic – Pi-ready (Basic)',
+        filterPiStandard: 'Standard – Pi-ready (Standard)',
+        filterPiFull: 'Full – Pi-ready (Full)',
+        filterPiOnly: 'PiOnly – Pi-only payments',
+        searchPlaceholder: 'Search by name, region, industry...',
+        loading: 'Loading data...',
+        empty: 'No businesses match the current filters.',
+        error: 'Unable to load the business directory. Please try again later.',
+        summary: (shown, total, piReady) =>
+          `${shown} businesses shown · ${piReady}/${total} Pi-ready`,
+      },
+      cz: {
+        title: 'Seznam registrovaných podniků',
+        subtitle:
+          'Tito poskytovatelé podali KYB formulář a byli ručně ověřeni Tranmarketem. Odznak Pi označuje úroveň připravenosti přijímat platby v Pi.',
+        filterAllCategories: 'Všechny kategorie',
+        filterAllPi: 'Všechny úrovně Pi-ready',
+        filterPiBasic: 'Basic – Pi-ready (Basic)',
+        filterPiStandard: 'Standard – Pi-ready (Standard)',
+        filterPiFull: 'Full – Pi-ready (Full)',
+        filterPiOnly: 'PiOnly – Platby pouze v Pi',
+        searchPlaceholder: 'Hledat podle názvu, oblasti, oboru...',
+        loading: 'Načítání dat...',
+        empty: 'Žádný podnik neodpovídá zvoleným filtrům.',
+        error: 'Seznam podniků se nepodařilo načíst. Zkuste to prosím znovu.',
+        summary: (shown, total, piReady) =>
+          `${shown} podniků zobrazeno · ${piReady}/${total} připraveno přijímat Pi`,
+      },
+    };
+
+    // Map category text (VN trong JSON) → label đa ngữ
+    const CATEGORY_LABELS = {
+      'Gửi hàng – Chuyển phát': {
+        vi: 'Gửi hàng – Chuyển phát',
+        en: 'CZ–VN parcel & cargo',
+        cz: 'CZ–VN zásilky & cargo',
+      },
+      'Làm đẹp – Nails – Salon': {
+        vi: 'Làm đẹp – Nails – Salon',
+        en: 'Beauty – Nails – Salon',
+        cz: 'Beauty – Nehty – Salon',
+      },
+      'Oto – Sửa chữa – Bảo dưỡng': {
+        vi: 'Oto – Sửa chữa – Bảo dưỡng',
+        en: 'Auto service & repairs',
+        cz: 'Auto servis & opravy',
+      },
+    };
+
+    // ----------------------------
     // CONFIG & STATE
     // ----------------------------
-    const DATA_URL = 'kyb-text.json'; // cùng thư mục /providers/ trên site
-
+    const DATA_URL = 'kyb-text.json'; // /providers/kyb-text.json
     let allProviders = [];
     let currentLanguage = 'vi';
 
     document.addEventListener('DOMContentLoaded', () => {
-      loadProviders();
-      setupFilters();
       setupLangSwitch();
+      renderStaticText();      // set VN mặc định
+      setupFilters();
+      loadProviders();
     });
 
     // ----------------------------
@@ -415,13 +480,15 @@
     // ----------------------------
     function loadProviders() {
       const container = document.getElementById('directory-list');
+      const t = TEXT[currentLanguage];
+
       if (container) {
-        container.innerHTML = '<p class="tm-loading">Đang tải dữ liệu...</p>';
+        container.innerHTML = `<p class="tm-loading">${t.loading}</p>`;
       }
 
       fetch(DATA_URL)
-        .then(res => res.json())
-        .then(data => {
+        .then((res) => res.json())
+        .then((data) => {
           if (!Array.isArray(data)) {
             console.error('Providers JSON is not an array:', data);
             allProviders = [];
@@ -429,38 +496,76 @@
             allProviders = data;
           }
 
-          populateCategoryOptions();
+          renderCategoryFilterOptions(); // sau khi có data
+          renderPiFilterOptions();
           applyCategoryFromQuery();
-          applyFilters(); // sẽ gọi renderProviders bên trong
+          applyFilters();
         })
-        .catch(err => {
+        .catch((err) => {
           console.error('Error loading providers:', err);
           if (container) {
-            container.innerHTML = '<p class="tm-error">Không tải được danh sách doanh nghiệp. Vui lòng thử lại sau.</p>';
+            container.innerHTML = `<p class="tm-error">${t.error}</p>`;
           }
         });
     }
 
     // ----------------------------
-    // POPULATE CATEGORY SELECT
+    // FILTER SELECT OPTIONS
     // ----------------------------
-    function populateCategoryOptions() {
-      const catSelect = document.getElementById('filter-category');
-      if (!catSelect) return;
+    function renderCategoryFilterOptions() {
+      const select = document.getElementById('filter-category');
+      if (!select) return;
 
-      // xóa các option cũ trừ "all"
-      catSelect.querySelectorAll('option:not([value="all"])').forEach(o => o.remove());
+      const t = TEXT[currentLanguage];
+      const current = select.value || 'all';
+
+      select.innerHTML = '';
+
+      // option All
+      const optAll = document.createElement('option');
+      optAll.value = 'all';
+      optAll.textContent = t.filterAllCategories;
+      select.appendChild(optAll);
 
       const categories = new Set();
-      allProviders.forEach(p => {
+      allProviders.forEach((p) => {
         if (p.category) categories.add(p.category);
       });
 
-      Array.from(categories).sort().forEach(cat => {
+      Array.from(categories)
+        .sort()
+        .forEach((cat) => {
+          const opt = document.createElement('option');
+          opt.value = cat;
+          const labels = CATEGORY_LABELS[cat];
+          opt.textContent = labels ? labels[currentLanguage] : cat;
+          if (cat === current) opt.selected = true;
+          select.appendChild(opt);
+        });
+    }
+
+    function renderPiFilterOptions() {
+      const select = document.getElementById('filter-pi');
+      if (!select) return;
+
+      const t = TEXT[currentLanguage];
+      const current = select.value || 'all';
+
+      const options = [
+        { value: 'all', label: t.filterAllPi },
+        { value: 'Basic', label: t.filterPiBasic },
+        { value: 'Standard', label: t.filterPiStandard },
+        { value: 'Full', label: t.filterPiFull },
+        { value: 'PiOnly', label: t.filterPiOnly },
+      ];
+
+      select.innerHTML = '';
+      options.forEach((o) => {
         const opt = document.createElement('option');
-        opt.value = cat;
-        opt.textContent = cat;
-        catSelect.appendChild(opt);
+        opt.value = o.value;
+        opt.textContent = o.label;
+        if (o.value === current) opt.selected = true;
+        select.appendChild(opt);
       });
     }
 
@@ -470,22 +575,25 @@
     function renderProviders(list) {
       const container = document.getElementById('directory-list');
       const summary = document.getElementById('tm-summary');
-      if (!container) return;
+      const t = TEXT[currentLanguage];
 
+      if (!container) return;
       container.innerHTML = '';
 
       if (!list || list.length === 0) {
-        container.innerHTML = '<p class="tm-empty">Chưa có doanh nghiệp phù hợp với bộ lọc hiện tại.</p>';
+        container.innerHTML = `<p class="tm-empty">${t.empty}</p>`;
         if (summary) summary.textContent = '';
         return;
       }
 
-      list.forEach(p => {
+      list.forEach((p) => {
         const card = document.createElement('div');
         card.className = 'tm-card';
 
         const emails = p.emails || p.email || '';
         const website = p.website || '';
+        const categoryLabel =
+          CATEGORY_LABELS[p.category]?.[currentLanguage] || p.category || '';
 
         card.innerHTML = `
           <div class="tm-card-main">
@@ -502,8 +610,16 @@
             </div>
 
             <div class="tm-meta-line">
-              ${p.category ? `<span><span class="tm-dot"></span>${p.category}</span>` : ''}
-              ${p.area ? `<span><span class="tm-dot"></span>${p.area}</span>` : ''}
+              ${
+                categoryLabel
+                  ? `<span><span class="tm-dot"></span>${categoryLabel}</span>`
+                  : ''
+              }
+              ${
+                p.area
+                  ? `<span><span class="tm-dot"></span>${p.area}</span>`
+                  : ''
+              }
             </div>
 
             ${
@@ -532,8 +648,8 @@
 
       if (summary) {
         const total = allProviders.length;
-        const piReady = allProviders.filter(p => p.piAccept).length;
-        summary.textContent = `${list.length} doanh nghiệp hiển thị · ${piReady}/${total} sẵn sàng nhận Pi`;
+        const piReady = allProviders.filter((p) => p.piAccept).length;
+        summary.textContent = t.summary(list.length, total, piReady);
       }
     }
 
@@ -559,8 +675,8 @@
       const piValue = piSelect ? piSelect.value : 'all';
       const keyword = searchInp ? searchInp.value.trim().toLowerCase() : '';
 
-      const filtered = allProviders.filter(p => {
-        // category
+      const filtered = allProviders.filter((p) => {
+        // category filter
         if (catValue && catValue !== 'all') {
           if (p.category !== catValue) return false;
         }
@@ -571,7 +687,7 @@
           if ((p.piLevel || '') !== piValue) return false;
         }
 
-        // keyword
+        // keyword filter
         if (keyword) {
           const haystack = `
             ${p.company || ''}
@@ -606,38 +722,33 @@
     }
 
     function setLanguage(lang) {
+      if (!TEXT[lang]) lang = 'vi';
       currentLanguage = lang;
 
-      const titleEl = document.getElementById('directory-title');
-      const subtitleEl = document.getElementById('directory-subtitle');
-
+      // toggle active button
       const btnVI = document.getElementById('lang-vi');
       const btnEN = document.getElementById('lang-en');
       const btnCZ = document.getElementById('lang-cz');
-
-      [btnVI, btnEN, btnCZ].forEach(btn => {
-        if (btn) btn.classList.remove('active');
-      });
-
+      [btnVI, btnEN, btnCZ].forEach((btn) => btn && btn.classList.remove('active'));
       if (lang === 'vi' && btnVI) btnVI.classList.add('active');
       if (lang === 'en' && btnEN) btnEN.classList.add('active');
       if (lang === 'cz' && btnCZ) btnCZ.classList.add('active');
 
-      if (!titleEl || !subtitleEl) return;
+      renderStaticText();
+      renderCategoryFilterOptions();
+      renderPiFilterOptions();
+      applyFilters(); // re-render list với label mới
+    }
 
-      if (lang === 'vi') {
-        titleEl.textContent = 'Danh sách doanh nghiệp đã đăng ký';
-        subtitleEl.textContent =
-          'Các đơn vị dưới đây đã gửi form KYB cho Tranmarket và được kiểm tra thủ công. Badge Pi cho biết mức độ sẵn sàng nhận thanh toán bằng Pi.';
-      } else if (lang === 'en') {
-        titleEl.textContent = 'Directory of registered businesses';
-        subtitleEl.textContent =
-          'These providers have submitted KYB forms and were manually reviewed by Tranmarket. The Pi badge indicates the level of readiness to accept Pi payments.';
-      } else if (lang === 'cz') {
-        titleEl.textContent = 'Seznam registrovaných podniků';
-        subtitleEl.textContent =
-          'Tito poskytovatelé podali KYB formulář a byli ručně ověřeni Tranmarketem. Odznak Pi označuje úroveň připravenosti přijímat platby v Pi.';
-      }
+    function renderStaticText() {
+      const t = TEXT[currentLanguage];
+      const titleEl = document.getElementById('directory-title');
+      const subtitleEl = document.getElementById('directory-subtitle');
+      const searchInp = document.getElementById('filter-search');
+
+      if (titleEl) titleEl.textContent = t.title;
+      if (subtitleEl) subtitleEl.textContent = t.subtitle;
+      if (searchInp) searchInp.placeholder = t.searchPlaceholder;
     }
 
     // ----------------------------
@@ -645,14 +756,13 @@
     // ----------------------------
     function applyCategoryFromQuery() {
       const params = new URLSearchParams(window.location.search);
-      const cat = params.get('cat'); // ví dụ: ?cat=Ôtô%20-%20Sửa%20chữa%20-%20Bảo%20dưỡng
-
+      const cat = params.get('cat');
       if (!cat) return;
 
       const catSelect = document.getElementById('filter-category');
       if (!catSelect) return;
 
-      const option = Array.from(catSelect.options).find(o => o.value === cat);
+      const option = Array.from(catSelect.options).find((o) => o.value === cat);
       if (option) {
         catSelect.value = cat;
       }
